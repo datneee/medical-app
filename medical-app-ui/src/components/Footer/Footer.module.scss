@@ -1,0 +1,14 @@
+footer {
+    background-color: var(--color-232f3e);
+
+    
+}
+.input-group-text {
+    .btn {
+        background-color: var(--color-131921) !important;
+    }       
+}
+footer:not(:first-child) {
+    border-top: 1px solid rgba($color: #000, $alpha: 0.1);
+
+}

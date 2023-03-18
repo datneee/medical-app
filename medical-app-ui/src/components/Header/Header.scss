@@ -1,0 +1,80 @@
+/* Header Css */
+.header-wrapper {
+    // position: -webkit-sticky;
+    // position: sticky;
+    // top: 0;
+    // z-index: 1000;
+    .header-top-strip {
+        border-bottom: 1px solid var(--color-3b4149);
+        background-color: var(--color-131921);
+      }
+    .header-upper {
+        background-color: var(--color-131921);
+        
+        .input-group-text {
+            background-color: var(--color-febd69);
+            }
+        .header-upper-links{
+            img {
+                width: 35px;
+                height: 35px;
+                fill: #ffff;
+            }
+        } 
+    }
+    .header-bottom {
+        background-color: var(--color-232f3e);
+        .dropdown-list {
+            margin-right: 15px;
+    
+            button {
+                margin-right: 15px;
+                color: #ffff;
+                font-style: 14px;
+                line-height: 18px;
+                font-weight: 400;
+                letter-spacing: 0.3;
+                text-transform: uppercase;
+                &:focus{
+                    box-shadow: none;
+                }
+                
+            }
+            .dropdown-menu {
+                padding: 0;
+                background-color: var(--color-232f3e);
+                width: 100%;
+                transform: translate3d(0px, 57px, 0px) !important;
+                .dropdown-item {
+                    color: white;
+                    padding: 20px;
+                    margin-bottom: 3px;
+                    border-bottom: 1px solid var(--color-3b4149);
+                    &:hover {
+                        background-color: transparent;
+                    }
+                }
+            }
+        }
+        .menu-links {
+            a {
+                &:last-child {
+                    margin: 0;
+                }
+                margin-right: 15px;
+                color: #ffff;
+                font-style: 14px;
+                line-height: 18px;
+                font-weight: 400;
+                letter-spacing: 0.3;
+                text-transform: uppercase;
+            }
+            
+        } 
+    }
+    .form-control:focus{
+        box-shadow: none;
+        border-color: transparent;
+    }
+    
+}
