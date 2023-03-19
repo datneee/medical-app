@@ -20,6 +20,13 @@
   padding: 13px 33px;
   border-radius: 15px;
 }
+.btn-2 {
+  background-color: var(--color-232f3e);
+  color: white;
+  font-size: 16px;
+  padding: 14px 48px;
+  border-radius: 15px;
+}
 .card-wrapper {
   background-color: white;
   box-shadow: 0 0 10px #0000001a;
@@ -35,6 +42,8 @@
   --color-ededed: #ededed;
   --color-bf4800: #bf4800;
   --color-1c1c1b: #1c1c1b;
+  --color-7777777: #777777;
+  --color-f7f7f7: #f7f7f7;
 }
 .flex-alight-center {
   display: flex;
@@ -55,3 +64,7 @@ p {
 }
 ul {}
 
+h1, h2, h3, h4, h5, h6 {
+  padding: 0;
+  margin: 0;
+}

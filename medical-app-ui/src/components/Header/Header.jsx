@@ -8,34 +8,14 @@ import InputGroup from "../InputGroup/InputGroup";
 const Header = () => {
   return (
     <header className="header-wrapper">
-      <div class="header-top-strip py-3">
-        <div class="container--xxl">
-          <div
-            style={{ margin: 0 }}
-            class="row w-100 d-flex align-items-center justify-content-between"
-          >
-            <div class="col-6">
-              <p class="text-white mb-0">
-                Free Shipping Over 100$ & Free Returns
-              </p>
-            </div>
-            <div class="col-5">
-              <p class="text-end text-white mb-0">
-                Hotline:
-                <a class="text-white" href="tel: +84 978315545">
-                  0978315545
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="header header-upper py-3">
         <div class="container container-xxl">
           <div class="row flex-alight-center align-items-center">
             <div class="col-2">
               <h1>
-                <Link class="text-white">Medical app</Link>
+                <Link to="/" class="text-white">
+                  Medical app
+                </Link>
               </h1>
             </div>
             <div class="col-5">
@@ -44,19 +24,28 @@ const Header = () => {
             <div class="col-5">
               <ul class="mb-0 header-upper-links d-flex align-items-center justify-content-between">
                 <li>
-                  <Link class="d-flex align-items-center gap-10 text-white">
+                  <Link
+                    to="/"
+                    class="d-flex align-items-center gap-10 text-white"
+                  >
                     <img src="/images/compare.svg" alt="" />
                     <p>Reload</p>
                   </Link>
                 </li>
                 <li>
-                  <Link class="d-flex align-items-center gap-10 text-white">
+                  <Link
+                    to="product-cared"
+                    class="d-flex align-items-center gap-10 text-white"
+                  >
                     <img src="/images/wishlist.svg" alt="" />
                     <p>Cared</p>
                   </Link>
                 </li>
                 <li>
-                  <Link class="d-flex align-items-center gap-10 text-white">
+                  <Link
+                    to="auth/login"
+                    class="d-flex align-items-center gap-10 text-white"
+                  >
                     <img src="/images/user.svg" alt="" />
                     <p>
                       Log in <br /> My Account
@@ -64,7 +53,10 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link class="d-flex align-items-center gap-10 text-white">
+                  <Link
+                    to="cart"
+                    class="d-flex align-items-center gap-10 text-white"
+                  >
                     <img src="/images/cart.svg" alt="" />
                     <div class="d-flex flex-column">
                       <span class="badge badge-warning bg-white text-dark">
@@ -90,9 +82,10 @@ const Header = () => {
                 <div class="menu-links">
                   <div class="d-flex align-items-center gap-15">
                     <NavLink to="/">Home</NavLink>
-                    <NavLink to="/">Our store</NavLink>
-                    <NavLink to="/">Blogs</NavLink>
-                    <NavLink to="/">Contact</NavLink>
+                    <NavLink to="/store">Our store</NavLink>
+                    <NavLink to="/blog">Blogs</NavLink>
+                    <NavLink to="/contact">Contact</NavLink>
+                    <NavLink to="/about">About</NavLink>
                   </div>
                 </div>
               </div>

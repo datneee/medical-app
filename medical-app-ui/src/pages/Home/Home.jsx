@@ -216,14 +216,61 @@ const Home = () => {
             </div>
           </div>
           <div className="row">
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            <ProductCard grid={3} />
+            <ProductCard grid={3} />
+            <ProductCard grid={3} />
+            <ProductCard grid={3} />
           </div>
         </div>
       </section>
-      <div className="special-product py-5 home-wrapper-2">
+      <section className="famous-wrapper py-5 home-wrapper-2">
+        <div className="container-xxl">
+          <div className="row">
+            <div className="col-12">
+              <h3 className="section-heading">Take Cared The Most</h3>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-4">
+              <div className="famous-card bg-dark ">
+                <div className="famous-content color-white ">
+                  <h5>Big Screen</h5>
+                  <h6>Smarrt Watch Series 7</h6>
+                  <p>From $399 or $16.62 / mo . forr 24 mo</p>
+                </div>
+                <div className="famous-image">
+                  <img src="images/famous-1.png" alt="" />
+                </div>
+              </div>
+            </div>
+            <div className="col-4">
+              <div className="famous-card  ">
+                <div className="famous-content color-dark">
+                  <h5>Big Screen</h5>
+                  <h6>Smarrt Watch Series 7</h6>
+                  <p>From $399 or $16.62 / mo . forr 24 mo</p>
+                </div>
+                <div className="famous-image">
+                  <img src="images/famous-2.png" alt="" />
+                </div>
+              </div>
+            </div>
+            <div className="col-4">
+              <div className="famous-card  ">
+                <div className="famous-content color-dark">
+                  <h5>Big Screen</h5>
+                  <h6>Smarrt Watch Series 7</h6>
+                  <p>From $399 or $16.62 / mo . forr 24 mo</p>
+                </div>
+                <div className="famous-image">
+                  <img src="images/famous-2.png" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="special-product py-5 home-wrapper-2">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
@@ -239,7 +286,43 @@ const Home = () => {
             <SpecialProduct />
           </div>
         </div>
-      </div>
+      </section>
+      <section className="brand-wrapper py-5">
+        <div className="container-xxl">
+          <div className="row">
+            <div className="col-12">
+              <div className="marque-inner bg-white p-3">
+                <Marquee className="d-flex">
+                  <div className="mx-4 w-25">
+                    <img src="images/brand-01.png" alt="brand" />
+                  </div>
+                  <div className="mx-4 w-25">
+                    <img src="images/brand-02.png" alt="brand" />
+                  </div>
+                  <div className="mx-4 w-25">
+                    <img src="images/brand-03.png" alt="brand" />
+                  </div>
+                  <div className="mx-4 w-25">
+                    <img src="images/brand-04.png" alt="brand" />
+                  </div>
+                  <div className="mx-4 w-25">
+                    <img src="images/brand-05.png" alt="brand" />
+                  </div>
+                  <div className="mx-4 w-25">
+                    <img src="images/brand-06.png" alt="brand" />
+                  </div>
+                  <div className="mx-4 w-25">
+                    <img src="images/brand-07.png" alt="brand" />
+                  </div>
+                  <div className="mx-4 w-25">
+                    <img src="images/brand-8.png" alt="brand" />
+                  </div>
+                </Marquee>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

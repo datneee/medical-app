@@ -1,3 +1,12 @@
 export { default as Home } from "./Home/Home";
 export { default as Contact } from "./Contact/Contact";
 export { default as About } from "./About/About";
+export { default as OurStore } from "./OurStore/OurStore";
+export { default as Blog } from "./Blog/Blog";
+export { default as SingleBlog } from "./SingleBlog/SingleBlog";
+export { default as ProductCared } from "./ProductCared/ProductCared";
+export { default as Cart } from "./Cart/Cart";
+export { default as SignUp } from "./Auth/SignUp/SignUp";
+export { default as Login } from "./Auth/Login/Login";
+export { default as ForgotPassword } from "./Auth/ForgotPassword/ForgotPassword";
+export { default as ResetPassword } from "./Auth/ResetPassword/ResetPassword";

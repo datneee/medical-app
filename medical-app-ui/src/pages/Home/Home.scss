@@ -68,6 +68,7 @@
 
       img {
          object-fit: contain;
+         width: 100%;
       }
 }
 
@@ -113,4 +114,61 @@
 }
 .special-product {
    
+}
+
+// famous card
+.famous-wrapper {
+   .famous-card{
+      display: grid;
+      grid-row: 1fr 2fr;
+      padding: 32px;
+      // height: 420px;
+      border-radius: 15px;
+      gap: 15px;
+
+
+      background-color: white;
+      img {
+         height: 215px;
+         border-bottom: 10px;
+         width: 100%;
+         object-fit: contain;
+      }
+      .famous-content {
+         
+
+         h5 {
+            font-size: 13px;
+            line-height: 20px;
+            font-weight: 400;
+            color: inherit;
+            margin-bottom: 7px;
+         }
+         h6 {
+            font-size: 28px;
+            line-height: 38px;
+            font-weight: 500;
+            color: inherit;
+
+         }
+         p {
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: 100;
+            color: inherit;
+         }
+      }
+      .famous-image {
+         display: flex;
+         align-items: center;
+         flex-direction: column;
+         justify-content: center;
+      }
+   }
+}
+.color-dark {
+   color: var(--color-131921);
+}
+.color-white {
+   color: white;
 }

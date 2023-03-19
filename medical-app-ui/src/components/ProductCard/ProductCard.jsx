@@ -5,16 +5,25 @@ import { AiOutlineHeart } from "react-icons/ai";
 import RatingChanged from "../RatingChanged/RatingChanged";
 import styles from "./ProductCard.scss";
 
-const ProductCard = () => {
+const ProductCard = (props) => {
+  const { grid, wishlist } = props;
   return (
-    <Link className="col-3" style={{ color: "black" }}>
-      <div className="product-card position-relative">
-        <div className="wishlist-icons position-absolute">
-          <Link>
-            <AiOutlineHeart size={32} />
-          </Link>
-        </div>
+    <div
+      className={`col-${grid} mb-3  d-flex align-items-center justify-content-center`}
+    >
+      <Link className="product-card position-relative text-dark w-100 ">
         <div className="product-image">
+          <div className="wishlist-icons position-absolute">
+            {!wishlist ? (
+              <Link className="tym-item">
+                <AiOutlineHeart size={32} />
+              </Link>
+            ) : (
+              <Link className="cancel-item">
+                <img src="images/cross.svg" alt="" className="img-fluid" />
+              </Link>
+            )}
+          </div>
           <img src="images/watch.jpg" alt="" />
         </div>
         <div className="product-details">
@@ -23,20 +32,26 @@ const ProductCard = () => {
             Kids headphone bulk 10 pack multi colored for students
           </h5>
           <RatingChanged />
+          <p className="description">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed
+            dolores amet quam alias quod, voluptate eveniet autem, expedita
+            nihil voluptates ad ab maiores explicabo cumque officia atque. Illo,
+            expedita excepturi.
+          </p>
           <p className="price">$100.00</p>
         </div>
         <div className="action-bar position-absolute">
           <div className="d-flex flex-column gap-10">
-            <Link>
+            <Link className="addCart-item-icon">
               <BsCartPlus size={32} />
             </Link>
-            <Link>
-              <img src="images/view.svg" alt="" />
+            <Link className="seeItem-icon">
+              <img width={32} src="images/view.svg" alt="" />
             </Link>
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 

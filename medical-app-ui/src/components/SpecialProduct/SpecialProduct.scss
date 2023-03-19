@@ -2,4 +2,34 @@
     padding: 20px 10px;
     border-radius: 10px;
     background-color: white;
+    .special-product-card-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        
+        .special-product-content {
+            
+            .brand {
+                color: var(--color-febd69);
+                font-size: 16px;
+            }
+
+            .title {
+                font-size: 16px;
+                word-wrap: break-word;
+                white-space: normal;
+                overflow: hidden;
+                display: -webkit-box;
+                text-overflow: ellipsis;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+            }
+            a {
+                margin-top: 10px;
+            }
+            .price .red-p {
+                color: red;
+            }
+        }
+    }
+    
 }

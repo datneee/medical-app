@@ -8,8 +8,8 @@ const SpecialProduct = () => {
   return (
     <div className="col-4 mb-3">
       <div className="special-product-card">
-        <div className="d-flex justify-content-between">
-          <div>
+        <div className="special-product-card-wrapper">
+          <div className="d-flex align-items-center">
             <img src="images/watch.jpg" className="img-fluid" alt="" />
           </div>
           <div>
@@ -17,6 +17,7 @@ const SpecialProduct = () => {
               <h5 className="brand">Havels</h5>
               <h6 className="title">
                 Samsung Galaxy Note10+ Mobie Phone, like a special product
+                productproduct Samsung Galaxy Note10+ Mobie Phone
               </h6>
               <RatingChanged />
               <p className="price">
