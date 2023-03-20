@@ -13,7 +13,7 @@ const Header = () => {
           <div class="row flex-alight-center align-items-center">
             <div class="col-2">
               <h1>
-                <Link to="/" class="text-white">
+                <Link to="/" class="text-white logo">
                   Medical app
                 </Link>
               </h1>

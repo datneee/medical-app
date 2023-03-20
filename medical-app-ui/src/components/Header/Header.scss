@@ -4,6 +4,11 @@
     // position: sticky;
     // top: 0;
     // z-index: 1000;
+    .logo {
+        white-space: nowrap;
+        font-size: 32px;
+        text-transform: capitalize;
+    }
     .header-top-strip {
         border-bottom: 1px solid var(--color-3b4149);
         background-color: var(--color-131921);

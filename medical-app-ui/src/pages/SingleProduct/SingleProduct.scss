@@ -1,0 +1,42 @@
+.main-product-wrapper {
+
+    .main-product-image {
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+
+        .main-image {
+            border: 1px solid rgba(0, 0, 0, $alpha: 0.25);
+            img {
+                width: 100% !important;
+                object-fit: cover;
+            }
+        }
+        .other-product-images {
+            margin-left: -7.5px;
+            background-color: white;
+
+            .sub-image {
+                border: 1px solid rgba(0, 0, 0, $alpha: 0.25);
+                padding: 12px;
+                
+                img {
+                    width: 100% !important;
+                    height: 100% !important;
+                    object-fit: contains;
+                }
+        
+                
+            }
+            
+        }
+        
+    }
+
+    .main-product-description {
+        h4 {
+            padding: 20px;
+        }
+    }
+     
+}
