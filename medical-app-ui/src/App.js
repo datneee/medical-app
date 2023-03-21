@@ -15,7 +15,8 @@ import {
   ForgotPassword,
   ResetPassword,
   SingleBlog,
-  SingleProduct
+  SingleProduct,
+  Checkout,
 } from "./pages";
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="product-cared" element={<ProductCared />} />
             <Route path="cart" element={<Cart />} />
+            <Route path="checkout" element={<Checkout />} />
             <Route path="auth/login" element={<Login />} />
             <Route path="auth/sign-up" element={<SignUp />} />
             <Route path="auth/forgot-password" element={<ForgotPassword />} />

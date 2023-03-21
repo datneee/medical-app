@@ -1,0 +1,100 @@
+.cart-wrapper {
+    .cart-wrapper-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #eaeaea;
+
+
+        h4 {
+            font-size: 14px;
+            color: var(--color-7777777);
+        }
+    }
+    .cart-wrapper-data {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .cart-wrapper-data__image {
+            img {
+
+                border-radius: 10px;
+            }
+        }
+        .delete-btn-itemCart {
+            color: red;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .title {
+            word-wrap: break-word;
+            white-space: normal;
+            overflow: hidden;
+            display: -webkit-box;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+        .price {
+            font-size: 16px;
+            color: var(--color-3b4149);
+        }
+        .buttons_added {
+            opacity:1;
+            display:inline-block;
+            display:-ms-inline-flexbox;
+            display:inline-flex;
+            white-space:nowrap;
+            vertical-align:top;
+        }
+        .is-form {
+            overflow:hidden;
+            position:relative;
+            background-color:#f9f9f9;
+            height:2.2rem;
+            width:1.9rem;
+            padding:0;
+            text-shadow:1px 1px 1px #fff;
+            border:1px solid #ddd;
+        }
+        .is-form:focus,.input-text:focus {
+            outline:none;
+        }
+        .is-form.minus {
+            border-radius:4px 0 0 4px;
+        }
+        .is-form.plus {
+            border-radius:0 4px 4px 0;
+        }
+        .input-qty {
+            background-color:#fff;
+            height:2.2rem;
+            text-align:center;
+            font-size:1rem;
+            display:inline-block;
+            vertical-align:top;
+            margin:0;
+            border-top:1px solid #ddd;
+            border-bottom:1px solid #ddd;
+            border-left:0;
+            border-right:0;
+            padding:0;
+        }
+        .input-qty::-webkit-outer-spin-button,.input-qty::-webkit-inner-spin-button {
+            -webkit-appearance:none;
+            margin:0;
+        }
+    }
+    .cart-col-1 {
+        width: 40%;
+    }
+    .cart-col-2 {
+        width: 10%;
+    }
+    .cart-col-3 {
+        width: 15%;
+    }
+    .cart-col-4 {
+        width: 15%;
+    }
+}

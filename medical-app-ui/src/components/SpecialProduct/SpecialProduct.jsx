@@ -7,7 +7,7 @@ import styles from "./SpecialProduct.scss";
 const SpecialProduct = () => {
   return (
     <div className="col-4 mb-3">
-      <div className="special-product-card">
+      <Link to="/product/1" className="special-product-card">
         <div className="special-product-card-wrapper">
           <div className="d-flex align-items-center">
             <img src="images/watch.jpg" className="img-fluid" alt="" />
@@ -46,7 +46,7 @@ const SpecialProduct = () => {
             </div>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };

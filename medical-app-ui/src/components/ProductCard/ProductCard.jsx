@@ -11,7 +11,10 @@ const ProductCard = (props) => {
     <div
       className={`col-${grid} mb-3  d-flex align-items-center justify-content-center`}
     >
-      <Link className="product-card position-relative text-dark w-100 ">
+      <Link
+        to="/product/1"
+        className="product-card position-relative text-dark w-100 "
+      >
         <div className="product-image">
           <div className="wishlist-icons position-absolute">
             {!wishlist ? (
@@ -20,11 +23,11 @@ const ProductCard = (props) => {
               </Link>
             ) : (
               <Link className="cancel-item">
-                <img src="images/cross.svg" alt="" className="img-fluid" />
+                <img src="/images/cross.svg" alt="" className="img-fluid" />
               </Link>
             )}
           </div>
-          <img src="images/watch.jpg" alt="" />
+          <img src="/images/watch.jpg" alt="" />
         </div>
         <div className="product-details">
           <h6 className="brand">Havels</h6>
@@ -46,7 +49,7 @@ const ProductCard = (props) => {
               <BsCartPlus size={32} />
             </Link>
             <Link className="seeItem-icon">
-              <img width={32} src="images/view.svg" alt="" />
+              <img width={32} src="/images/view.svg" alt="" />
             </Link>
           </div>
         </div>

@@ -1,0 +1,117 @@
+.checkout-wrapper {
+
+
+    .info-shipping {
+        background-color: white;
+        padding: 20px;
+
+        .info-shipping-title {
+            color: #ee4d2d;
+
+            h4 {
+                font-weight: 400;
+            }
+        }
+        .info-shipping-address {
+            padding: 0 10px;
+            h4 {
+                white-space: nowrap;
+                font-size: 20px;
+                font-weight: 300;
+            }
+            span {
+                padding: 4px;
+                font-size: 12px;
+                background-color: white;
+                border: 1px solid #ee4d2d ;
+            }
+        }
+    }
+    .checkout-products {
+        background-color: white;
+        padding: 20px;
+
+        .checkout-wrapper-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eaeaea;
+    
+    
+            h4 {
+                font-size: 14px;
+                color: var(--color-7777777);
+            }
+        }
+        .checkout-wrapper-data {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .checkout-wrapper-data__image {
+                img {
+    
+                    border-radius: 10px;
+                }
+            }
+            .delete-btn-itemwrapper {
+                color: red;
+                font-size: 24px;
+                cursor: pointer;
+            }
+            .title {
+                word-wrap: break-word;
+                white-space: normal;
+                overflow: hidden;
+                display: -webkit-box;
+                text-overflow: ellipsis;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+            }
+            .price {
+                font-size: 16px;
+                color: var(--color-3b4149);
+            }
+        }
+        .checkout-col-1 {
+            width: 40%;
+            
+        }
+        .checkout-col-2 {
+            width: 10%;
+        }
+        .checkout-col-3 {
+            width: 15%;
+        }
+        .checkout-col-4 {
+            width: 15%;
+        }
+    }
+    .checkout-voucher {
+        background-color: white;
+        padding: 20px;
+
+        .checkout-voucher-title {
+            .voucher-icons {
+                font-size: 20px;
+                color: #ee4d2d;
+            }
+            h4 {
+                font-size: 18px;
+                font-weight: 400;
+                margin: 0 8px;
+            }
+        }
+    }
+    .checkout-method {
+        background-color: white;
+        padding: 20px;
+
+        .checkout-method-title {
+            h4 {
+                font-size: 18px;
+                font-weight: 400;
+            }
+        }
+    }
+}

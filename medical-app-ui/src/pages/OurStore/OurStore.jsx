@@ -46,7 +46,7 @@ const OurStore = () => {
                 <Carousel className="product-hot-list">
                   <Carousel.Item interval={2000}>
                     <Link
-                      to={"#"}
+                      to="/product/1"
                       className="text-dark product-hot d-flex align-items-center mb-3"
                     >
                       <div className="w-50">
@@ -169,23 +169,45 @@ const OurStore = () => {
             <div className="col-9">
               <div className="filter-sort-grid mb-4">
                 <div className="d-flex justify-content-between align-items-center">
-                  <div className="d-flex align-items-center gap-10">
-                    <p className="mb-0 d-block">Short By: </p>
-                    <select name="" id="" className="form-control form-select">
-                      <option value="best-selling" selected>
-                        Best Selling
-                      </option>
-                      <option value="title-ascending">
-                        Alphabetically, A-Z
-                      </option>
-                      <option value="price-descending">
-                        Price, low to hight
-                      </option>
-                      <option value="price-ascending">
-                        Price, hight to low
-                      </option>
-                    </select>
+                  <div className="d-flex align-items-center gap-15">
+                    <div className="d-flex align-items-center gap-10">
+                      <p className="mb-0 d-block">Short By: </p>
+                      <select
+                        name=""
+                        id=""
+                        className="form-control form-select"
+                      >
+                        <option value="best-selling" selected>
+                          Best Selling
+                        </option>
+                        <option value="title-ascending">
+                          Alphabetically, A-Z
+                        </option>
+                        <option value="price-descending">
+                          Price, low to hight
+                        </option>
+                        <option value="price-ascending">
+                          Price, hight to low
+                        </option>
+                      </select>
+                    </div>
+                    <div className="d-flex align-items-center gap-10">
+                      <p className="mb-0 d-block">Category: </p>
+                      <select
+                        name=""
+                        id=""
+                        className="form-control form-select"
+                      >
+                        <option value="best-selling" selected>
+                          Category CategoryCategory 1
+                        </option>
+                        <option value="title-ascending">Category 2</option>
+                        <option value="price-descending">Category 3</option>
+                        <option value="price-ascending">Category 4</option>
+                      </select>
+                    </div>
                   </div>
+
                   <div className="d-flex align-items-center gap-10">
                     <p className="totalproducts">21 products</p>
                     <div className="d-flex gap-10 align-items-center grid">

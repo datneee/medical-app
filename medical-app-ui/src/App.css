@@ -27,6 +27,22 @@
   padding: 14px 48px;
   border-radius: 15px;
 }
+.btn-3 {
+  background-color: white;
+  font-weight: 300;
+  border: 1px solid var(--color-7777777);
+    border-radius: 5px;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    display: inline-flex;
+
+    
+}
+.btn-3:hover {
+  color: #ee2c4a;
+  border-color: #ee2c4a;
+}
 .card-wrapper {
   background-color: white;
   box-shadow: 0 0 10px #0000001a;
@@ -44,6 +60,7 @@
   --color-1c1c1b: #1c1c1b;
   --color-7777777: #777777;
   --color-f7f7f7: #f7f7f7;
+  --color-fafafa: #fafafa;
 }
 .flex-alight-center {
   display: flex;
