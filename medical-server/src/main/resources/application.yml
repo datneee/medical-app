@@ -1,0 +1,9 @@
+springdoc:
+  swagger-ui:
+    path: /api/swagger-ui
+
+mail:
+  username : ${MAIL_USERNAME}
+  password : ${MAIL_PASSWORD}
+storage:
+  location: upload-dir

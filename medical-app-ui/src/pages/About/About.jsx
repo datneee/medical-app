@@ -1,9 +1,10 @@
 import React from "react";
-import BreadCrum from "../../components/BreadCrum/BreadCrum";
+import { Meta, BreadCrum } from "../../components";
 
 const About = () => {
   return (
     <div>
+      <Meta title={"About"} />
       <BreadCrum title="About" />
     </div>
   );

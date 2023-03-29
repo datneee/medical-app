@@ -126,13 +126,48 @@ const Checkout = () => {
                     <div id="banking">
                       <img src="/images/QR.jfif" alt="" />
                     </div>
-                    <div id="ship-off">
+                    <div id="ship-off" style={{ display: "none" }}>
                       <h4 className="w-25">Thanh toán khi nhận hàng</h4>
                       <h4 className="22-50">
                         Phí thu hộ: 0Đ. Áp dụng ưu đãi về phí vận chuyển
                       </h4>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-12">
+              <div className="checkout-submit d-flex flex-column justify-content-center align-items-end gap-15">
+                <div className="d-flex align-items-center justify-content-between gap-45">
+                  <h5
+                    style={{ fontSize: 16, fontWeight: 400, marginRight: 70 }}
+                  >
+                    Tổng tiền hàng
+                  </h5>
+                  <span>$1000</span>
+                </div>
+                <div className="d-flex align-items-center justify-content-between gap-45">
+                  <h5
+                    style={{ fontSize: 16, fontWeight: 400, marginRight: 94 }}
+                  >
+                    Phí vận chuyển
+                  </h5>
+                  <span>$2</span>
+                </div>
+                <div className="d-flex align-items-center justify-content-between gap-45">
+                  <h5>Tổng thanh toán</h5>
+                  <span className="totalCheckout">$1002</span>
+                </div>
+              </div>
+              <div className="col-12">
+                <div className="checkout-submit-btn d-flex align-items-center justify-content-between">
+                  <div>
+                    <span>
+                      Nhấn "Đặt hàng" đồng nghĩa với việc bạn đồng ý tuân theo
+                      Điều khoản Medical Shop
+                    </span>
+                  </div>
+                  <button className="btn-3">Đặt hàng</button>
                 </div>
               </div>
             </div>

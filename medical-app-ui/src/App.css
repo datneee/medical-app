@@ -13,6 +13,9 @@
 .gap-30 {
   gap: 30px;
 }
+.gap-45 {
+  gap: 45px;
+}
 .button {
   background-color: var(--color-232f3e);
   color: white;

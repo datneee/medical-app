@@ -4,12 +4,14 @@ import Marquee from "react-fast-marquee";
 import { Carousel } from "@trendyol-js/react-carousel";
 
 import styles from "./Home.scss";
-import ProductCard from "../../components/ProductCard/ProductCard";
+import { ProductCard, Meta, BreadCrum } from "../../components";
 import SpecialProduct from "../../components/SpecialProduct/SpecialProduct";
 
 const Home = () => {
   return (
     <div>
+      <Meta title={"Medical home"} />
+      <BreadCrum title="Medical home" />
       <section class="home-wrapper-1">
         <div class="container-xxl">
           <div class="row p-3">

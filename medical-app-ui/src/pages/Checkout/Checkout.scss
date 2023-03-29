@@ -114,4 +114,27 @@
             }
         }
     }
+    .checkout-submit {
+        background-color: #fffefb;
+        padding: 20px;
+        border-bottom: 1px solid #eaeaea;
+
+
+        .totalCheckout {
+            font-size: 24px;
+            color: #ee4d2d;
+        }
+        
+    }
+    .checkout-submit-btn {
+        background-color: #fffefb;
+        padding: 20px;
+
+        .btn-3 {
+            background-color: #ee4d2d;
+            color: white;
+            padding: 12px 72px;
+        }
+
+    }
 }
