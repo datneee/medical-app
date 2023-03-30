@@ -11,6 +11,7 @@ public enum SearchOperation {
     MATCH_START,
     MATCH_END,
     IN,
+    OR,
     NOT_IN,
     LIKE,
     LIKE_END,

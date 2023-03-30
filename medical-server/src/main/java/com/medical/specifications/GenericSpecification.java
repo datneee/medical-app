@@ -117,6 +117,7 @@ public class GenericSpecification<T> implements Specification<T> {
                     this.joinCriteria.getJoinType());
             predicates.add(this.buildJoinPredicate(this.joinCriteria.getSearchOperation(), this.joinCriteria.getKey(),
                     this.joinCriteria.getValue(), builder, join));
+
         }
 
         for (SearchCriteria criteria : listSearchCriteria) {

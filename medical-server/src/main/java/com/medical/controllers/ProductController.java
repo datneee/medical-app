@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 
 @RestController
@@ -37,8 +38,11 @@ public class ProductController extends BaseController<Product> {
         if(productFilter.getEndId() != null)
             specification.add(new SearchCriteria("id", productFilter.getEndId(), SearchOperation.LESS_THAN_EQUAL));
         // Tìm kiếm
-        if(productFilter.getSearch() != null)
+        if(productFilter.getSearch() != null) {
             specification.add(new SearchCriteria("title", productFilter.getSearch(), SearchOperation.LIKE));
+            specification.add(new SearchCriteria("descriptions", productFilter.getSearch(), SearchOperation.OR));
+        }
+
 
         if(productFilter.getMnOPrice() != null)
             specification.add(new SearchCriteria("originalPrice", productFilter.getMnOPrice(), SearchOperation.GREATER_THAN_EQUAL));
