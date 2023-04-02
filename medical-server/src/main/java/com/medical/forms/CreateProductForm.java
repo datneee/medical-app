@@ -27,8 +27,9 @@ public class CreateProductForm {
 
     @Min(value = 0 , message = "Giá gốc phải hơn  0")
     private int promotionPrice;
-
-    @Min(value = 0 , message = "Giá gốc phải hơn  0")
+    @Min(value = 0 , message = "Số lượng tối thiểu  0")
+    private Integer currentAmount;
+    @Min(value = 1 , message = "Số lượng tối thiểu  1")
     private Integer amount;
 
     @NotNull
@@ -41,6 +42,7 @@ public class CreateProductForm {
                 descriptions,
                 originalPrice,
                 promotionPrice,
+                currentAmount,
                 amount);
         return p;
     }

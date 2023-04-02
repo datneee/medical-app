@@ -69,8 +69,9 @@
   display: flex;
   align-items: center;
 }
-body {
+html,body {
   font-family: 'Rubik', sans-serif;
+  scroll-behavior: smooth;
 }
 a {
   text-decoration: none;

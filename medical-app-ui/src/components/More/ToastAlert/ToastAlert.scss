@@ -1,0 +1,19 @@
+.alert-message {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 12px 68px;
+    font-size: 18px;
+    animation: showToast 1s ease-out;
+}
+@keyframes showToast {
+    0% {
+        opacity: .6;
+        transform: translateX(100%);
+    }
+    100%{
+        opacity: 1;
+        display: none;
+        transform: translateX(0);
+    }
+}

@@ -38,18 +38,20 @@ public class Product implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
     private Date createdDate;
-
+    @Column(name = "currentAmount",nullable = false)
+    private Integer currentAmount;
     @Column(name = "amount",nullable = false)
     private Integer amount;
 
     @Column(name = "`status`" , columnDefinition = "1")
         private StatusCodeProductEnum status;
 
-    public Product(String title, String descriptions, int originalPrice, int promotionPrice, Integer amount) {
+    public Product(String title, String descriptions, int originalPrice, int promotionPrice,Integer currentAmount, Integer amount) {
         this.title = title;
         this.descriptions = descriptions;
         this.originalPrice = originalPrice;
         this.promotionPrice = promotionPrice;
+        this.currentAmount = currentAmount;
         this.amount = amount;
     }
 

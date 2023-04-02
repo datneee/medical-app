@@ -26,6 +26,24 @@
                     border: none;
                 }
             }
+            .but-3 {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+            .loading-search {
+                font-size: 28px;
+                animation: spinner 1s linear infinite;
+            }
+            @keyframes spinner {
+                from {
+                    transform: translateY(-50%) rotate(0);
+                }
+                to {
+                    transform: translateY(-50%) rotate(360deg);
+                }
+            }
         }
         a {
             font-size: 14px;

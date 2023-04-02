@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 
 import styles from "./SpecialProduct.scss";
 
-const SpecialProduct = () => {
+const SpecialProduct = (props) => {
+  const { product, key } = props;
   return (
-    <div className="col-4 mb-3">
-      <Link to="/product/1" className="special-product-card">
+    <div key={key} className="col-4 mb-3">
+      <Link to={"/product/" + product.id} className="special-product-card">
         <div className="special-product-card-wrapper">
           <div className="d-flex align-items-center">
             <img src="images/watch.jpg" className="img-fluid" alt="" />
@@ -31,7 +32,7 @@ const SpecialProduct = () => {
               </div>
               <div className="product-count">
                 <p>Products: 5</p>
-                <div class="progress">
+                <div className="progress">
                   <div
                     className="progress-bar"
                     role="progressbar"

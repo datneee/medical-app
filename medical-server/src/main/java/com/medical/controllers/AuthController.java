@@ -23,10 +23,12 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -55,10 +57,12 @@ public class AuthController {
     @Autowired
     private IEmailService mailService;
 
-
+    @Transactional
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestBody @Valid SignUpDTO signUpDTO) throws MessagingException {
+    public ResponseEntity<?> signUp(@RequestBody @Valid SignUpDTO signUpDTO) throws MessagingException, UnsupportedEncodingException {
+
         User oldUser = userService.findByUsername(signUpDTO.getUsername());
+        oldUser = oldUser != null ? oldUser : userService.findByEmail(signUpDTO.getEmail());
         if (oldUser != null) {
             throw new AppException(Common.MSG_USERNAME_EXISTS);
         }
@@ -68,7 +72,8 @@ public class AuthController {
         final String jwt = jwtUtil.generateToken(userDetails);
 
         registrationUserTokenService.createNewRegistrationUserToken(user, jwt);
-        mailService.send(Common.MSG_SUBJECT_MAIL, Common.MSG_CONTENT+ jwt, user.getEmail(), true);
+        String linkActive = "<br /><a href ='localhost:8080/api/v1/auth/active/'>localhost:8080/api/v1/auth/active/" +jwt+" </a>";
+        mailService.send(Common.MSG_SUBJECT_MAIL, Common.MSG_CONTENT + linkActive, user.getEmail(), true);
         return new ResponseEntity<>(Common.MSG_SIGNUP_SUCCESS, HttpStatus.CREATED);
     }
 

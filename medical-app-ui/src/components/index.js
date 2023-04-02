@@ -6,3 +6,5 @@ export { default as SpecialProduct } from "./SpecialProduct/SpecialProduct";
 export { default as BreadCrum } from "./BreadCrum/BreadCrum";
 export { default as Meta } from "./Meta/Meta";
 export { default as BlogCard } from "./BlogCard/BlogCard";
+export { default as Logger } from "./More/Logger/Logger";
+export { default as ToastAlert } from "./More/ToastAlert/ToastAlert";

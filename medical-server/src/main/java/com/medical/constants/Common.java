@@ -17,7 +17,7 @@ public class Common {
 
     public static final String MSG_SUBJECT_MAIL = "Đăng ký tài khoản mới";
 
-    public static final String MSG_CONTENT = "Bạn đã đăng ký tài khoản thành công, vui lòng kích vào đường dẫn bên dưới để tiến hành kích hoạt tài khoản:\nlocalhost:8080/api/v1/auth/active/";
+    public static final String MSG_CONTENT = "Bạn đã đăng ký tài khoản thành công, vui lòng kích vào đường dẫn bên dưới để tiến hành kích hoạt tài khoản:\n ";
 
     public static final String MSG_SIGNUP_SUCCESS = "Đăng ký thành công, vui lòng kiểm tra email của bạn";
 

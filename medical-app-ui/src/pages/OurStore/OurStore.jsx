@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { Carousel } from "react-bootstrap";
 import { Meta, ProductCard, RatingChanged, BreadCrum } from "../../components";
+import { fetchAllProducts } from "../../redux/actions/serviceActions";
 
 import styles from "./OurStore.scss";
+import { useSelector, useDispatch } from "react-redux";
 
 const categories = [
   {
@@ -32,7 +34,12 @@ const OurStore = () => {
   let [checkedBrand, setCheckedBrand] = useState();
 
   const [grid, setGrid] = useState(3);
+  const dispatch = useDispatch();
 
+  const medicals = useSelector((state) => state?.service?.products);
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, []);
   return (
     <div>
       <Meta title={"Our Store"} />
@@ -93,7 +100,7 @@ const OurStore = () => {
                 <div>
                   <div className="ps-0">
                     {categories.map((category) => (
-                      <div class="form-check" key={category.id}>
+                      <div className="form-check" key={category.id}>
                         <input
                           className="form-check-input"
                           type="checkbox"
@@ -118,7 +125,7 @@ const OurStore = () => {
                 <div>
                   <div className="ps-0">
                     {brands.map((brand) => (
-                      <div class="form-check" key={brand.id}>
+                      <div className="form-check" key={brand.id}>
                         <input
                           className="form-check-input"
                           type="checkbox"
@@ -143,7 +150,7 @@ const OurStore = () => {
                 <div style={{ padding: 6 }}>
                   <h5 className="sub-title">Price</h5>
                   <div className="d-flex align-items-center gap-10">
-                    <div class="form-floating mb-3">
+                    <div className="form-floating mb-3">
                       <input
                         type="number"
                         defaultValue={0}
@@ -153,7 +160,7 @@ const OurStore = () => {
                       />
                       <label htmlFor="inputFrom">$ From</label>
                     </div>
-                    <div class="form-floating mb-3">
+                    <div className="form-floating mb-3">
                       <input
                         type="number"
                         className="form-control"
@@ -241,39 +248,30 @@ const OurStore = () => {
               </div>
               {grid == 3 && (
                 <div className="products-list pb-5 row align-items-center d-flex">
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
+                  {medicals.map((product, index) => (
+                    <ProductCard key={index} product={product} grid={grid} />
+                  ))}
                 </div>
               )}
               {grid == 4 && (
                 <div className="products-list pb-5 row align-items-center d-flex">
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
+                  {medicals.map((product, index) => (
+                    <ProductCard key={index} product={product} grid={grid} />
+                  ))}
                 </div>
               )}
               {grid == 6 && (
                 <div className="products-list pb-5 row align-items-center d-flex">
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
+                  {medicals.map((product, index) => (
+                    <ProductCard key={index} product={product} grid={grid} />
+                  ))}
                 </div>
               )}
               {grid == 12 && (
                 <div className="products-list pb-5 row align-items-center d-flex">
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
+                  {medicals.map((product, index) => (
+                    <ProductCard key={index} product={product} grid={grid} />
+                  ))}
                 </div>
               )}
             </div>

@@ -6,13 +6,14 @@ import RatingChanged from "../RatingChanged/RatingChanged";
 import styles from "./ProductCard.scss";
 
 const ProductCard = (props) => {
-  const { grid, wishlist } = props;
+  const { grid, wishlist, product } = props;
   return (
     <div
+      key={product.id}
       className={`col-${grid} mb-3  d-flex align-items-center justify-content-center`}
     >
       <Link
-        to="/product/1"
+        to={"/product/" + product?.id}
         className="product-card position-relative text-dark w-100 "
       >
         <div className="product-image">
@@ -27,21 +28,26 @@ const ProductCard = (props) => {
               </Link>
             )}
           </div>
-          <img src="/images/watch.jpg" alt="" />
+          <img
+            src={
+              "http://127.0.0.1:8887" +
+              "/" +
+              product?.productImages[0]?.imageUrl
+            }
+            alt=""
+          />
         </div>
         <div className="product-details">
           <h6 className="brand">Havels</h6>
-          <h5 className="product-title">
-            Kids headphone bulk 10 pack multi colored for students
-          </h5>
+          <h5 className="product-title">{product?.title}</h5>
           <RatingChanged />
-          <p className="description">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed
-            dolores amet quam alias quod, voluptate eveniet autem, expedita
-            nihil voluptates ad ab maiores explicabo cumque officia atque. Illo,
-            expedita excepturi.
+          <p className="description">{product?.descriptions}</p>
+          <p className="price">
+            {product?.originalPrice.toLocaleString("it-IT", {
+              style: "currency",
+              currency: "VND",
+            })}
           </p>
-          <p className="price">$100.00</p>
         </div>
         <div className="action-bar position-absolute">
           <div className="d-flex flex-column gap-10">

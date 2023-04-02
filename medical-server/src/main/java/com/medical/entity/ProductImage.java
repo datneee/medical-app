@@ -13,7 +13,7 @@ import java.util.Date;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "ProductImages")
+@Table(name = "ImagesService")
 public class ProductImage implements Serializable {
 
     @Column(name = "id")

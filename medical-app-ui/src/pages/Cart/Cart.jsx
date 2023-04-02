@@ -61,17 +61,17 @@ const Cart = () => {
                   <h5 className="price">${price}</h5>
                 </div>
                 <div className="cart-col-3 d-flex align-items-center gap-10">
-                  <div class="buttons_added">
+                  <div className="buttons_added">
                     <input
                       onClick={handleReduceQuantity}
-                      class="minus is-form"
+                      className="minus is-form"
                       type="button"
                       value="-"
                     />
                     <input
                       onChange={handleChangeInput}
                       aria-label="quantity"
-                      class="input-qty"
+                      className="input-qty"
                       name="quantity"
                       min={1}
                       max={100}
@@ -80,7 +80,7 @@ const Cart = () => {
                     />
                     <input
                       onClick={increasingQuantity}
-                      class="plus is-form"
+                      className="plus is-form"
                       type="button"
                       value="+"
                     />
