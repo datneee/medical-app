@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Dropdown = () => {
+const Dropdown = ({ categories }) => {
   return (
     <div className="dropdown-list">
       <div className="dropdown">
@@ -14,21 +15,16 @@ const Dropdown = () => {
           Medical categories
         </button>
         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li>
-            <a className="dropdown-item" href="#">
-              Action
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Another action
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Something else here
-            </a>
-          </li>
+          {categories.map((category, index) => (
+            <li key={category.id}>
+              <Link
+                className="dropdown-item"
+                to={"/store?category=" + category?.id}
+              >
+                {category?.name}
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

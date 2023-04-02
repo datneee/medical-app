@@ -112,6 +112,9 @@
    padding: 12px;
 }
 .featured-product {
+   .product-card-wrapper {
+      width: 100% !important;
+  }
   
 }
 .special-product {
@@ -173,4 +176,16 @@
 }
 .color-white {
    color: white;
+}
+.carousel-container ul {
+   display: flex !important;
+   gap: 36px !important;
+}
+.see-more {
+   background-color: var(--color-232f3e);
+   color: white;
+   border: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+   text-decoration: dashed;
 }

@@ -9,5 +9,12 @@ const ProductServices = {
         .then((res) => resolve(res.result))
         .catch((rej) => reject(rej));
     }),
+  getCategories: () =>
+    new Promise((resolve, reject) => {
+      axiosClient
+        .get(paths.CATEGORIES)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej));
+    }),
 };
 export default ProductServices;

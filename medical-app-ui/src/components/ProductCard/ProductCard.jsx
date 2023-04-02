@@ -9,8 +9,9 @@ const ProductCard = (props) => {
   const { grid, wishlist, product } = props;
   return (
     <div
+      style={{ width: "100%!important" }}
       key={product.id}
-      className={`col-${grid} mb-3  d-flex align-items-center justify-content-center`}
+      className={`mb-3 product-card-wrapper col-${grid} d-flex align-items-center justify-content-center`}
     >
       <Link
         to={"/product/" + product?.id}
@@ -28,14 +29,24 @@ const ProductCard = (props) => {
               </Link>
             )}
           </div>
-          <img
-            src={
-              "http://127.0.0.1:8887" +
-              "/" +
-              product?.productImages[0]?.imageUrl
-            }
-            alt=""
-          />
+          <div className="product-image-content">
+            <img
+              src={
+                "http://127.0.0.1:8887" +
+                "/" +
+                product?.productImages[0]?.imageUrl
+              }
+              alt=""
+            />
+            <img
+              src={
+                "http://127.0.0.1:8887" +
+                "/" +
+                product?.productImages[1]?.imageUrl
+              }
+              alt=""
+            />
+          </div>
         </div>
         <div className="product-details">
           <h6 className="brand">Havels</h6>

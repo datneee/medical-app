@@ -111,7 +111,7 @@ const OurStore = () => {
                         />
                         <label
                           className="form-check-label"
-                          for="flexCheckDefault"
+                          htmlFor="flexCheckDefault"
                         >
                           {category.name}
                         </label>
@@ -136,7 +136,7 @@ const OurStore = () => {
                         />
                         <label
                           className="form-check-label"
-                          for="flexCheckDefault"
+                          htmlFor="flexCheckDefault"
                         >
                           {brand.name}
                         </label>

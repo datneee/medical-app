@@ -1,5 +1,6 @@
 import React from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+
 import { BsSearch } from "react-icons/bs";
 import { HiLogout } from "react-icons/hi";
 import styles from "./Header.scss";
@@ -11,6 +12,8 @@ import { authLogoutAction } from "../../redux/actions/userActions";
 const Header = () => {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
+  const categories = useSelector((state) => state?.service?.categories);
+
   const handleLogout = () => {
     dispatch(authLogoutAction());
   };
@@ -108,7 +111,7 @@ const Header = () => {
             <div className="col-12">
               <div className="menu-bottom d-flex align-items-center">
                 <div>
-                  <Dropdown />
+                  <Dropdown categories={categories} />
                 </div>
                 <div className="menu-links">
                   <div className="d-flex align-items-center gap-15">

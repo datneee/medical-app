@@ -2,20 +2,43 @@ import React from "react";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
-import { Carousel } from "@trendyol-js/react-carousel";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 import styles from "./Home.scss";
 import { ProductCard, Meta, BreadCrum } from "../../components";
 import SpecialProduct from "../../components/SpecialProduct/SpecialProduct";
-import { fetchAllProducts } from "../../redux/actions/serviceActions";
+import {
+  fetchAllProducts,
+  fetchAllCategory,
+} from "../../redux/actions/serviceActions";
 import { useDispatch, useSelector } from "react-redux";
-
+import ListSpecialProducts from "../../components/ListSpecialProducts/ListSpecialProducts";
+const responsive = {
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 4,
+    slidesToSlide: 4, // optional, default to 1.
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2,
+    slidesToSlide: 2, // optional, default to 1.
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+    slidesToSlide: 1, // optional, default to 1.
+  },
+};
 const Home = () => {
   const dispatch = useDispatch();
   const medicals = useSelector((state) => state?.service?.products);
+  const categories = useSelector((state) => state?.service?.categories);
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchAllProducts());
+    dispatch(fetchAllCategory());
   }, []);
 
   return (
@@ -162,10 +185,24 @@ const Home = () => {
             </div>
           </div>
           <div className="row">
-            {medicals.length > 0 &&
-              medicals.map((element, index) => (
-                <ProductCard key={index} product={element} grid={3} />
-              ))}
+            <Carousel
+              responsive={responsive}
+              //showDots={true}
+              ssr={true} // means to render carousel on server-side.
+              infinite={true}
+              autoPlaySpeed={1000}
+              keyBoardControl={true}
+              customTransition="all .5"
+              transitionDuration={500}
+              containerClass="carousel-container"
+              removeArrowOnDeviceType={["tablet", "mobile"]}
+              dotListClass="custom-dot-list-style"
+            >
+              {medicals.length > 0 &&
+                medicals.map((element, index) => (
+                  <ProductCard key={index} product={element} grid={3} />
+                ))}
+            </Carousel>
           </div>
         </div>
       </section>
@@ -216,20 +253,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="special-product py-5 home-wrapper-2">
-        <div className="container-xxl">
-          <div className="row">
-            <div className="col-12">
-              <h3 className="section-heading">Special Products</h3>
-            </div>
-          </div>
-          <div className="row">
-            {medicals.map((product, index) => (
-              <SpecialProduct key={product?.id} product={product} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <ListSpecialProducts products={medicals} />
       <section className="brand-wrapper py-5">
         <div className="container-xxl">
           <div className="row">

@@ -14,10 +14,12 @@ export const UserAuth = {
 };
 export const Service = {
   GET_PRODUCTS: "GET LIST PRODUCTS",
+  GET_CATEGORIES: "GET LIST CATEGORIES",
   ERROR: "HAVE AN ERROR",
 };
 export const paths = {
   PRODUCTS: "/products",
+  CATEGORIES: "/categories",
   LOGIN: "/auth/login",
   REGISTRATION: "/auth/signup",
   RESET_PASSWORD: "/auth/reset-password",
