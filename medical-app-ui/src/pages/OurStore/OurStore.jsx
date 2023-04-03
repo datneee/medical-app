@@ -2,22 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { Carousel } from "react-bootstrap";
+import Pagination from "react-js-pagination";
+import "react-bootstrap";
+
 import { Meta, ProductCard, RatingChanged, BreadCrum } from "../../components";
 import { fetchAllProducts } from "../../redux/actions/serviceActions";
 
 import styles from "./OurStore.scss";
 import { useSelector, useDispatch } from "react-redux";
 
-const categories = [
-  {
-    id: 1,
-    name: "Watch",
-  },
-  {
-    id: 2,
-    name: "TV",
-  },
-];
 const brands = [
   {
     id: 1,
@@ -32,11 +25,17 @@ const brands = [
 const OurStore = () => {
   let [checkedCategory, setCheckCategory] = useState();
   let [checkedBrand, setCheckedBrand] = useState();
+  let [activePage, setActivePage] = useState(1);
 
   const [grid, setGrid] = useState(3);
   const dispatch = useDispatch();
 
+  const categories = useSelector((state) => state?.service?.categories);
   const medicals = useSelector((state) => state?.service?.products);
+  const handlePageChange = (pageNumber) => {
+    console.log(`active page is ${pageNumber}`);
+    this.setState({ activePage: pageNumber });
+  };
   useEffect(() => {
     dispatch(fetchAllProducts());
   }, []);
@@ -198,21 +197,6 @@ const OurStore = () => {
                         </option>
                       </select>
                     </div>
-                    <div className="d-flex align-items-center gap-10">
-                      <p className="mb-0 d-block">Category: </p>
-                      <select
-                        name=""
-                        id=""
-                        className="form-control form-select"
-                      >
-                        <option value="best-selling" selected>
-                          Category CategoryCategory 1
-                        </option>
-                        <option value="title-ascending">Category 2</option>
-                        <option value="price-descending">Category 3</option>
-                        <option value="price-ascending">Category 4</option>
-                      </select>
-                    </div>
                   </div>
 
                   <div className="d-flex align-items-center gap-10">
@@ -247,33 +231,42 @@ const OurStore = () => {
                 </div>
               </div>
               {grid == 3 && (
-                <div className="products-list pb-5 row align-items-center d-flex">
+                <div className="products-list row align-items-center d-flex">
                   {medicals.map((product, index) => (
                     <ProductCard key={index} product={product} grid={grid} />
                   ))}
                 </div>
               )}
               {grid == 4 && (
-                <div className="products-list pb-5 row align-items-center d-flex">
+                <div className="products-list row align-items-center d-flex">
                   {medicals.map((product, index) => (
                     <ProductCard key={index} product={product} grid={grid} />
                   ))}
                 </div>
               )}
               {grid == 6 && (
-                <div className="products-list pb-5 row align-items-center d-flex">
+                <div className="products-list row align-items-center d-flex">
                   {medicals.map((product, index) => (
                     <ProductCard key={index} product={product} grid={grid} />
                   ))}
                 </div>
               )}
               {grid == 12 && (
-                <div className="products-list pb-5 row align-items-center d-flex">
+                <div className="products-list row align-items-center d-flex">
                   {medicals.map((product, index) => (
                     <ProductCard key={index} product={product} grid={grid} />
                   ))}
                 </div>
               )}
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Pagination
+                  activePage={activePage}
+                  itemsCountPerPage={10}
+                  totalItemsCount={450}
+                  pageRangeDisplayed={5}
+                  onChange={(event) => handlePageChange(event.target.value)}
+                />
+              </div>
             </div>
           </div>
         </div>

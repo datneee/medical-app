@@ -1,4 +1,4 @@
-import { Service, paths } from "../../utils/constants/common";
+import { Service } from "../../utils/constants/common";
 import ProductServices from "../../utils/httpsRequests/ProducServices";
 
 const getProductAction = (products) => {

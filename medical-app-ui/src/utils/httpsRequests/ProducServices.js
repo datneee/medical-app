@@ -1,4 +1,4 @@
-import { UserAuth, paths } from "../../utils/constants/common";
+import { paths } from "../../utils/constants/common";
 import axiosClient from "./axiosClient";
 
 const ProductServices = {

@@ -33,7 +33,7 @@ const ProductCard = (props) => {
             <img
               src={
                 "http://127.0.0.1:8887" +
-                "/" +
+                "/products/" +
                 product?.productImages[0]?.imageUrl
               }
               alt=""
@@ -41,7 +41,7 @@ const ProductCard = (props) => {
             <img
               src={
                 "http://127.0.0.1:8887" +
-                "/" +
+                "/products/" +
                 product?.productImages[1]?.imageUrl
               }
               alt=""

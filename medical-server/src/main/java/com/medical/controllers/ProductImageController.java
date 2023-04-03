@@ -2,7 +2,7 @@ package com.medical.controllers;
 
 import com.medical.base.BaseController;
 import com.medical.entity.Product;
-import com.medical.entity.ProductImage;
+import com.medical.entity.ProductImages;
 import com.medical.exceptions.AppException;
 import com.medical.exceptions.NotFoundException;
 import com.medical.helpers.FileHelper;
@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/product-images")
-public class ProductImageController extends BaseController<ProductImage> {
+public class ProductImageController extends BaseController<ProductImages> {
     @Autowired
     private IProductImageService productImageService;
 
@@ -47,7 +47,7 @@ public class ProductImageController extends BaseController<ProductImage> {
             throw new NotFoundException("Not found product");
         }
 
-        List<ProductImage> productImages = productImageService.createOrUpdateMany(product, files);
+        List<ProductImages> productImages = productImageService.createOrUpdateMany(product, files);
 
         return this.resListSuccess(productImages);
     }

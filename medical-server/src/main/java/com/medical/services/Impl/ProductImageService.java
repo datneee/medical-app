@@ -2,7 +2,7 @@ package com.medical.services.Impl;
 
 import com.medical.constants.Common;
 import com.medical.entity.Product;
-import com.medical.entity.ProductImage;
+import com.medical.entity.ProductImages;
 import com.medical.forms.CreateProductImageForm;
 import com.medical.helpers.FileHelper;
 import com.medical.repositories.IProductImagesRepository;
@@ -30,10 +30,10 @@ public class ProductImageService implements IProductImageService {
 
 
     @Override
-    public List<ProductImage> createProductImages(List<CreateProductImageForm> images , Product product) {
-        List<ProductImage> productImages = new ArrayList<>();
+    public List<ProductImages> createProductImages(List<CreateProductImageForm> images , Product product) {
+        List<ProductImages> productImages = new ArrayList<>();
         for (CreateProductImageForm img:images) {
-            ProductImage image = img.toEntity();
+            ProductImages image = img.toEntity();
             image.setProduct(product);
             productImages.add(image);
             repository.save(image);
@@ -47,10 +47,10 @@ public class ProductImageService implements IProductImageService {
     }
 
     @Override
-    public List<ProductImage> createOrUpdateMany(Product product, MultipartFile[] files) {
+    public List<ProductImages> createOrUpdateMany(Product product, MultipartFile[] files) {
         this.deleteByProductId(product.getId());
         storageService.deleteFilesByPrefix(String.valueOf(product.getId()), Common.PRODUCT_IMAGE_UPLOAD_PATH);
-        List<ProductImage> productImages = new ArrayList<>();
+        List<ProductImages> productImages = new ArrayList<>();
         for (MultipartFile file : files) {
             String randomUniqueFileName = FileHelper.randomUniqueFileName(product.getId() + "-" + file.getOriginalFilename());
             String imageUrl = storageService.store(
@@ -58,9 +58,9 @@ public class ProductImageService implements IProductImageService {
                     file,
                     randomUniqueFileName
             );
-            ProductImage productImage = new ProductImage(null, imageUrl, randomUniqueFileName, product, null, null);
-            ProductImage newProductImage = repository.save(productImage);
-            productImages.add(newProductImage);
+            ProductImages productImages1 = new ProductImages(null, imageUrl, randomUniqueFileName, product, null, null);
+            ProductImages newProductImages = repository.save(productImages1);
+            productImages.add(newProductImages);
         }
         return productImages;
     }

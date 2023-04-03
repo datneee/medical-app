@@ -1,7 +1,7 @@
 package com.medical.repositories;
 
-import com.medical.entity.ProductImage;
+import com.medical.entity.ProductImages;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IProductImageRepository extends JpaRepository<ProductImage, Integer> {
+public interface IProductImageRepository extends JpaRepository<ProductImages, Integer> {
 }

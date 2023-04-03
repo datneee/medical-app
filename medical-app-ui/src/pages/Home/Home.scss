@@ -1,5 +1,14 @@
 // Home Wrapper 1
+.main-banner > .img-fluid, 
+.small-banner > .img-fluid{
+   width: 100% !important;
+   height: 100% !important;
+   object-fit: cover;
+}
 .main-banner {
+   width: 100%;
+   height: 100%;
+   
    .main-banner-content {
      top: 15%;
      left: 5%;

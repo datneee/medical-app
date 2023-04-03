@@ -1,6 +1,7 @@
 package com.medical.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.medical.constants.IsHotProductEnum;
 import com.medical.constants.StatusCodeProductEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,8 +44,10 @@ public class Product implements Serializable {
     @Column(name = "amount",nullable = false)
     private Integer amount;
 
+    @Column(name = "`isHot`", columnDefinition = "0")
+    private IsHotProductEnum isHot;
     @Column(name = "`status`" , columnDefinition = "1")
-        private StatusCodeProductEnum status;
+    private StatusCodeProductEnum status;
 
     public Product(String title, String descriptions, int originalPrice, int promotionPrice,Integer currentAmount, Integer amount) {
         this.title = title;
@@ -62,7 +65,7 @@ public class Product implements Serializable {
 
     @OneToMany(mappedBy = "product")
     @Cascade(value = {org.hibernate.annotations.CascadeType.REMOVE, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    private List<ProductImage> productImages;
+    private List<ProductImages> productImages;
 
     @OneToMany(mappedBy = "product")
     @Cascade(value = {org.hibernate.annotations.CascadeType.REMOVE, org.hibernate.annotations.CascadeType.SAVE_UPDATE})

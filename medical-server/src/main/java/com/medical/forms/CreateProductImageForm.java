@@ -1,6 +1,6 @@
 package com.medical.forms;
 
-import com.medical.entity.ProductImage;
+import com.medical.entity.ProductImages;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,8 +10,8 @@ public class CreateProductImageForm {
 
     private String imageUrl;
 
-    public ProductImage toEntity(){
-        return new ProductImage(imageUrl);
+    public ProductImages toEntity(){
+        return new ProductImages(imageUrl);
     }
 
 }

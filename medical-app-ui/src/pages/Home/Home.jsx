@@ -7,7 +7,6 @@ import "react-multi-carousel/lib/styles.css";
 
 import styles from "./Home.scss";
 import { ProductCard, Meta, BreadCrum } from "../../components";
-import SpecialProduct from "../../components/SpecialProduct/SpecialProduct";
 import {
   fetchAllProducts,
   fetchAllCategory,
@@ -35,6 +34,9 @@ const Home = () => {
   const dispatch = useDispatch();
   const medicals = useSelector((state) => state?.service?.products);
   const categories = useSelector((state) => state?.service?.categories);
+  const mainCategory = categories[0];
+  const listSubCategories = categories.slice(1, 6);
+  console.log("categories: ", categories);
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchAllProducts());
@@ -47,72 +49,50 @@ const Home = () => {
       <BreadCrum title="Medical home" />
       <section className="home-wrapper-1">
         <div className="container-xxl">
-          <div className="row p-3">
-            <div className="col-6">
-              <div className="main-banner position-relative">
+          <div className="row p-3" style={{ height: 420 }}>
+            <Link
+              to={`/store?category=${mainCategory?.id}`}
+              className="col-6"
+              style={{ height: "100%" }}
+            >
+              <div
+                className="main-banner position-relative"
+                style={{ height: "100%" }}
+              >
                 <img
                   className="img-fluid rounded-3"
-                  src="images/main-banner.jpg"
+                  src={`http://127.0.0.1:8887/categories/${mainCategory?.categoryImages[0]?.imageUrl}`}
                   alt=""
                 />
                 <div className="main-banner-content position-absolute">
-                  <h4>SUBPERCHARGED FOR PROS</h4>
-                  <h5>Ipad S14+ pro</h5>
-                  <p>From $99.00 or more $41.62/Pro</p>
-                  <Link className="button">BUY NOW</Link>
+                  <h4>{mainCategory?.name}</h4>
+
+                  <Link className="button">VIEW NOW</Link>
                 </div>
               </div>
-            </div>
-            <div className="col-6">
-              <div className="d-flex flex-wrap justify-content-between align-items-center gap-10">
-                <div className="small-banner position-relative">
-                  <img
-                    className="img-fluid rounded-3"
-                    src="images/catbanner-01.jpg"
-                    alt=""
-                  />
-                  <div className="small-banner-content position-absolute">
-                    <h4>SUBPERCHARGED FOR PROS</h4>
-                    <h5>Ipad S14+ pro</h5>
-                    <p>From $99.00 or more $41.62/Pro</p>
-                  </div>
-                </div>
-                <div className="small-banner position-relative">
-                  <img
-                    className="img-fluid rounded-3"
-                    src="images/catbanner-02.jpg"
-                    alt=""
-                  />
-                  <div className="small-banner-content position-absolute">
-                    <h4>SUBPERCHARGED FOR PROS</h4>
-                    <h5>Ipad S14+ pro</h5>
-                    <p>From $99.00 or more $41.62/Pro</p>
-                  </div>
-                </div>
-                <div className="small-banner position-relative">
-                  <img
-                    className="img-fluid rounded-3"
-                    src="images/catbanner-03.jpg"
-                    alt=""
-                  />
-                  <div className="small-banner-content position-absolute">
-                    <h4>SUBPERCHARGED FOR PROS</h4>
-                    <h5>Ipad S14+ pro</h5>
-                    <p>From $99.00 or more $41.62/Pro</p>
-                  </div>
-                </div>
-                <div className="small-banner position-relative">
-                  <img
-                    className="img-fluid rounded-3"
-                    src="images/catbanner-04.jpg"
-                    alt=""
-                  />
-                  <div className="small-banner-content position-absolute">
-                    <h4>SUBPERCHARGED FOR PROS</h4>
-                    <h5>Ipad S14+ pro</h5>
-                    <p>From $99.00 or more $41.62/Pro</p>
-                  </div>
-                </div>
+            </Link>
+            <div className="col-6" style={{ height: "100%" }}>
+              <div
+                style={{ height: "100%" }}
+                className="d-flex flex-wrap justify-content-between align-items-center gap-10"
+              >
+                {listSubCategories?.map((item) => (
+                  <Link
+                    key={item?.id}
+                    to={`/store?category=${item?.id}`}
+                    className="small-banner position-relative"
+                    style={{ height: "49%" }}
+                  >
+                    <img
+                      className="img-fluid rounded-3"
+                      src={`http://127.0.0.1:8887/categories/${item?.categoryImages[0]?.imageUrl}`}
+                      alt=""
+                    />
+                    <div className="small-banner-content position-absolute">
+                      <h4>{item?.name}</h4>
+                    </div>
+                  </Link>
+                ))}
               </div>
             </div>
           </div>

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.medical.constants.StatusCodeEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,6 +25,10 @@ public class Category implements Serializable {
 
     @Column(name = "`status`")
     private StatusCodeEnum status;
+
+    @OneToMany(mappedBy = "category")
+    @Cascade(value = {org.hibernate.annotations.CascadeType.REMOVE, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    private List<CategoryImage> categoryImages;
 
     @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonManagedReference

@@ -1,10 +1,10 @@
 package com.medical.repositories;
 
-import com.medical.entity.ProductImage;
+import com.medical.entity.ProductImages;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IProductImagesRepository extends JpaRepository<ProductImage , Integer> {
-    ProductImage findByImageUrl(String imageUrl);
+public interface IProductImagesRepository extends JpaRepository<ProductImages, Integer> {
+    ProductImages findByImageUrl(String imageUrl);
 
     void deleteByProductId(Integer productId);
 }

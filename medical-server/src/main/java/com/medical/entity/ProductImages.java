@@ -13,8 +13,8 @@ import java.util.Date;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "ImagesService")
-public class ProductImage implements Serializable {
+@Table(name = "ProductImages")
+public class ProductImages implements Serializable {
 
     @Column(name = "id")
     @Id
@@ -44,7 +44,7 @@ public class ProductImage implements Serializable {
     @CreationTimestamp //Deafault now
     private Date updatedAt;
 
-    public ProductImage(String imageUrl) {
+    public ProductImages(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 }
