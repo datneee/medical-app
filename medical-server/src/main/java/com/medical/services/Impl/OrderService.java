@@ -7,6 +7,8 @@ import com.medical.services.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderService implements IOrderService {
 
@@ -15,8 +17,13 @@ public class OrderService implements IOrderService {
 
 
     @Override
-    public Order getOrderByUserId(Integer userId) {
-        return repository.findOrderByUserId(userId);
+    public Order createOrder(Order order) {
+        return repository.save(order);
+    }
+
+    @Override
+    public List<Order> getOrdersByUserId(Integer userId) {
+        return repository.getAllByUserId(userId);
     }
 
     @Override

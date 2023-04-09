@@ -2,6 +2,7 @@ package com.medical.controllers;
 
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import com.medical.constants.Common;
+import com.medical.dto.CustomerDTO;
 import com.medical.dto.SignUpDTO;
 import com.medical.dto.UserResetPasswordDTO;
 import com.medical.entity.ResetPasswordUserToken;
@@ -15,6 +16,7 @@ import com.medical.services.IResetPasswordUserTokenService;
 import com.medical.services.IUserService;
 import com.medical.services.Impl.MyUserDetailsService;
 import com.medical.utils.JwtUtil;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +38,9 @@ import java.io.UnsupportedEncodingException;
 public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     private IUserService userService;
@@ -61,8 +66,8 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody @Valid SignUpDTO signUpDTO) throws MessagingException, UnsupportedEncodingException {
 
-        User oldUser = userService.findByUsername(signUpDTO.getUsername());
-        oldUser = oldUser != null ? oldUser : userService.findByEmail(signUpDTO.getEmail());
+        User oldUser = userService.getUserByUsername(signUpDTO.getUsername());
+        oldUser = oldUser != null ? oldUser : userService.getUserByEmail(signUpDTO.getEmail());
         if (oldUser != null) {
             throw new AppException(Common.MSG_USERNAME_EXISTS);
         }
@@ -87,7 +92,8 @@ public class AuthController {
         }
         final UserDetails userDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String jwt = jwtUtil.generateToken(userDetails);
-        User user = userService.findByUsername(authenticationRequest.getUsername());
+        CustomerDTO user = userService.findByUsername(authenticationRequest.getUsername());
+
         return new ResponseEntity<>(new AuthenticationResponse(jwt, user), HttpStatus.OK);
     }
 
@@ -100,9 +106,9 @@ public class AuthController {
 
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestBody @Valid UserResetPasswordDTO userResetPasswordDTO) throws Exception {
-        User user = userService.findByEmail(userResetPasswordDTO.getEmail());
+        User user = userService.getUserByEmail(userResetPasswordDTO.getEmail());
 
-        if(user == null)
+        if(user == null || user.getStatus().toString() == "NOT_ACTIVE")
             throw new AppException(Common.MSG_NOT_FOUND);
 
         String newPassword = NanoIdUtils.randomNanoId(NanoIdUtils.DEFAULT_NUMBER_GENERATOR,

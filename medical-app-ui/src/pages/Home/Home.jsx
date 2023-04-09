@@ -6,10 +6,11 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 import styles from "./Home.scss";
-import { ProductCard, Meta, BreadCrum } from "../../components";
+import { ProductCard, Meta, BreadCrum, Loading } from "../../components";
 import {
   fetchAllProducts,
   fetchAllCategory,
+  fetchAllBrand,
 } from "../../redux/actions/serviceActions";
 import { useDispatch, useSelector } from "react-redux";
 import ListSpecialProducts from "../../components/ListSpecialProducts/ListSpecialProducts";
@@ -32,19 +33,23 @@ const responsive = {
 };
 const Home = () => {
   const dispatch = useDispatch();
-  const medicals = useSelector((state) => state?.service?.products);
-  const categories = useSelector((state) => state?.service?.categories);
+  const service = useSelector((state) => state?.service);
+  const medicals = service?.products;
+  const categories = service?.categories;
+  const brands = service?.brands;
   const mainCategory = categories[0];
   const listSubCategories = categories.slice(1, 6);
-  console.log("categories: ", categories);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchAllProducts());
     dispatch(fetchAllCategory());
+    dispatch(fetchAllBrand());
   }, []);
 
   return (
     <div>
+      {service?.loading && <Loading />}
       <Meta title={"Medical home"} />
       <BreadCrum title="Medical home" />
       <section className="home-wrapper-1">
@@ -98,7 +103,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="home-wrapper-2 py-5">
+      <section className="home-wrapper-2 py-3">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
@@ -143,7 +148,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="marque-wrapper py-5">
+      <section className="marque-wrapper py-3">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
@@ -157,7 +162,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="featured-product home-wrapper-2 py-5">
+      <section className="featured-product home-wrapper-2 py-3">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
@@ -186,7 +191,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="famous-wrapper py-5 home-wrapper-2">
+      <section className="famous-wrapper py-3 home-wrapper-2">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
@@ -233,37 +238,22 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <ListSpecialProducts products={medicals} />
-      <section className="brand-wrapper py-5">
+      {medicals && <ListSpecialProducts products={medicals} />}
+      <section className="brand-wrapper py-3">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
               <div className="marque-inner bg-white p-3">
                 <Marquee className="d-flex">
-                  <div className="mx-4 w-25">
-                    <img src="images/brand-01.png" alt="brand" />
-                  </div>
-                  <div className="mx-4 w-25">
-                    <img src="images/brand-02.png" alt="brand" />
-                  </div>
-                  <div className="mx-4 w-25">
-                    <img src="images/brand-03.png" alt="brand" />
-                  </div>
-                  <div className="mx-4 w-25">
-                    <img src="images/brand-04.png" alt="brand" />
-                  </div>
-                  <div className="mx-4 w-25">
-                    <img src="images/brand-05.png" alt="brand" />
-                  </div>
-                  <div className="mx-4 w-25">
-                    <img src="images/brand-06.png" alt="brand" />
-                  </div>
-                  <div className="mx-4 w-25">
-                    <img src="images/brand-07.png" alt="brand" />
-                  </div>
-                  <div className="mx-4 w-25">
-                    <img src="images/brand-8.png" alt="brand" />
-                  </div>
+                  {brands?.map((item) => (
+                    <div key={item?.id} className="mx-4 w-25">
+                      <img
+                        src={item?.logo}
+                        style={{ width: "120px" }}
+                        alt="brand"
+                      />
+                    </div>
+                  ))}
                 </Marquee>
               </div>
             </div>

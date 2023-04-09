@@ -24,6 +24,14 @@ public class ResetPasswordUserToken {
     @JoinColumn(nullable = false, name = "userId")
     private User user;
 
+    @Override
+    public String toString() {
+        return "ResetPasswordUserToken{" +
+                "id=" + id +
+                ", token='" + token + '\'' +
+                ", user=" + user +
+                '}';
+    }
 
     public ResetPasswordUserToken(User user, String token) {
         this.user = user;

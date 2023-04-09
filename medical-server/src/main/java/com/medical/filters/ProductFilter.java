@@ -1,11 +1,15 @@
 package com.medical.filters;
 
+import com.medical.entity.Category;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 public class ProductFilter {
+
+    private Integer categoryId;
+
     private Integer startId;
 
     private Integer endId;

@@ -1,12 +1,16 @@
 import { UserAuth } from "../../utils/constants/common";
 
 const initState = {
-  error: "",
+  error: null,
+  success: false,
   token: "",
   user: null,
   id: "",
+  cart: [],
+  buyedTotal: null,
+  checkout: null,
+  order: [],
   loading: false,
-  success: false,
   message: "",
 };
 
@@ -20,7 +24,17 @@ const reducer = (state = initState, { type, payload }) => {
     case UserAuth.SUCCESS:
       return {
         ...state,
+        success: payload,
+      };
+    case UserAuth.BUY_PRODUCT:
+      return {
+        ...state,
         success: true,
+      };
+    case UserAuth.ERROR:
+      return {
+        ...state,
+        error: payload,
       };
     case UserAuth.LOGIN:
       return {
@@ -33,11 +47,7 @@ const reducer = (state = initState, { type, payload }) => {
         ...state,
         message: payload,
       };
-    case UserAuth.REGISTER:
-      return {
-        ...state,
-        id: payload.id,
-      };
+
     case UserAuth.LOG_OUT:
       return {
         error: "",
@@ -45,8 +55,38 @@ const reducer = (state = initState, { type, payload }) => {
         user: "",
         id: "",
       };
+    case UserAuth.ADD_TO_CART:
+      return {
+        ...state,
+        success: payload,
+      };
+    case UserAuth.CHECKOUT:
+      return {
+        ...state,
+        checkout: payload,
+      };
+    case UserAuth.GET_CART:
+      return {
+        ...state,
+        cart: payload,
+      };
+    case UserAuth.DELETE_CARTITEM:
+      return {
+        ...state,
+        success: payload,
+      };
+    case UserAuth.CHANGE_QUANTITY_CARTITEM:
+      return {
+        ...state,
+        success: payload,
+      };
+    case UserAuth.SET_PRICE_CHECKOUT:
+      return {
+        ...state,
+        buyedTotal: payload,
+      };
     default:
-      return state;
+      return { ...state };
   }
 };
 

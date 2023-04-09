@@ -1,6 +1,7 @@
 package com.medical.controllers;
 
 import com.medical.base.BaseController;
+import com.medical.dto.ProductDTO;
 import com.medical.dto.pagination.PaginateDTO;
 import com.medical.entity.Product;
 import com.medical.entity.Rating;
@@ -67,9 +68,10 @@ public class ProductRateController extends BaseController<Rating> {
     public ResponseEntity<?> createReview(@RequestBody @Valid CreateProductRateForm createProductRateForm, HttpServletRequest request) throws Exception {
         User requestUser = (User) request.getAttribute("user");
 
-        Product  product = productService.getProductById(createProductRateForm.getProductId());
-        if(product == null)
+        ProductDTO productDTO = productService.getProductById(createProductRateForm.getProductId());
+        if(productDTO == null)
             throw new NotFoundException("Not found this product");
+
 
         GenericSpecification<Rating> specification = new GenericSpecification<Rating>().getBasicQuery(request);
         specification.add((new SearchCriteria("product", createProductRateForm.getProductId(), SearchOperation.EQUAL)));

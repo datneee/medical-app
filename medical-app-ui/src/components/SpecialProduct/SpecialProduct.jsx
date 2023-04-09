@@ -5,25 +5,41 @@ import { Link } from "react-router-dom";
 import styles from "./SpecialProduct.scss";
 
 const SpecialProduct = (props) => {
-  const { product, key } = props;
+  const { product } = props;
   return (
-    <div key={key} className="col-4 mb-3">
+    <div className="col-4 mb-3">
       <Link to={"/product/" + product.id} className="special-product-card">
-        <div className="special-product-card-wrapper">
+        <div className="special-product-card-wrapper gap-10">
           <div className="d-flex align-items-center">
-            <img src="images/watch.jpg" className="img-fluid" alt="" />
+            <img
+              src={
+                "http://127.0.0.1:8887" +
+                "/products/" +
+                product?.productImages[0]?.imageUrl
+              }
+              className="img-fluid"
+              alt=""
+            />
           </div>
           <div>
             <div className="special-product-content">
-              <h5 className="brand">Havels</h5>
-              <h6 className="title">
-                Samsung Galaxy Note10+ Mobie Phone, like a special product
-                productproduct Samsung Galaxy Note10+ Mobie Phone
-              </h6>
+              <h5 className="brand">{product?.brand?.name}</h5>
+              <h6 className="title">{product?.title}</h6>
               <RatingChanged />
               <p className="price">
-                <span className="red-p">$100</span> &nbsp;
-                <strike>$200</strike>
+                <span className="red-p">
+                  {product?.originalPrice.toLocaleString("it-IT", {
+                    style: "currency",
+                    currency: "VND",
+                  })}
+                </span>{" "}
+                &nbsp;
+                <strike>
+                  {product?.originalPrice.toLocaleString("it-IT", {
+                    style: "currency",
+                    currency: "VND",
+                  })}
+                </strike>
               </p>
               <div className="discount-till d-flex align-items-center">
                 <p className="mb-0">
@@ -31,12 +47,16 @@ const SpecialProduct = (props) => {
                 </p>
               </div>
               <div className="product-count">
-                <p>Products: 5</p>
+                <p>Products: {product?.currentAmount}</p>
                 <div className="progress">
                   <div
                     className="progress-bar"
                     role="progressbar"
-                    style={{ width: "25%" }}
+                    style={{
+                      width: `${
+                        (product?.currentAmount / product?.currentAmount) * 100
+                      }%`,
+                    }}
                     aria-valuenow="25"
                     aria-valuemin="0"
                     aria-valuemax="100"

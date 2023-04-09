@@ -10,6 +10,6 @@ public class AddCartParams {
 
     private Integer userId;
     private Integer productId;
-    private Integer Amount;
+    private Integer amount;
 
 }

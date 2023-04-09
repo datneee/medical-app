@@ -25,45 +25,62 @@ const loadAction = (payload) => {
     type: UserAuth.LOADING,
   };
 };
-const successAction = () => {
+const haveErrorAction = (error) => {
+  return {
+    type: UserAuth.ERROR,
+    payload: error,
+  };
+};
+export const isSuccessAction = (payload) => {
   return {
     type: UserAuth.SUCCESS,
+    payload: payload,
   };
 };
 export const login =
   ({ username, password }, navigate) =>
   async (dispatch) => {
-    dispatch(successAction(false));
-
     dispatch(loadAction(true));
-    await AuthServices.signIn(username, password)
-      .then((res) => {
-        if (!res) {
-          dispatch(loadAction(false));
-          dispatch(successAction(true));
-        }
+    try {
+      const res = await AuthServices.signIn(username, password);
+      if (
+        JSON.stringify(res).includes("Error") ||
+        JSON.stringify(res).includes("500")
+      ) {
+        dispatch(
+          haveErrorAction(
+            "Tài khoản hoặc mật khẩu không chính xác, vui lòng nhập lại !"
+          )
+        );
+      } else {
         dispatch(authLoginAction(res));
-        setTimeout(() => {
-          navigate("/");
-          dispatch(successAction(false));
-        }, 2000);
-      })
-      .catch((rej) => {
-        console.log(rej);
-      });
-  };
-export const registration = (body, navigate) => async (dispatch) => {
-  dispatch(loadAction(true));
-  dispatch(successAction(false));
-
-  await AuthServices.signUp(body).then((res) => {
-    if (res) {
-      dispatch(successAction(true));
+        navigate("/");
+      }
+    } catch (error) {
+      dispatch(
+        haveErrorAction(
+          "Tài khoản hoặc mật khẩu không chính xác, vui lòng nhập lại !"
+        )
+      );
+    } finally {
+      dispatch(loadAction(false));
+      dispatch(isSuccessAction(false));
     }
+  };
+export const registration = (body) => async (dispatch) => {
+  dispatch(loadAction(true));
+  try {
+    console.log(body);
+    const res = await AuthServices.signUp(body);
+    if (res) {
+      dispatch(authSignUpAction(res));
+    }
+  } catch (error) {
+    console.log(error);
+  } finally {
     dispatch(loadAction(false));
-    dispatch(authSignUpAction(res));
-    dispatch(successAction(false));
-  });
+    dispatch(isSuccessAction(false));
+  }
 };
 export const authLogoutAction = () => {
   return {
@@ -72,14 +89,193 @@ export const authLogoutAction = () => {
 };
 export const resetPassword = (email, navigate) => async (dispatch) => {
   dispatch(loadAction(true));
-  dispatch(successAction(false));
-
-  await AuthServices.resetPassword(email).then((res) => {
-    if (res) {
-      dispatch(successAction(true));
-    }
+  await AuthServices.resetPassword(email)
+    .then((res) => {
+      if (
+        JSON.stringify(res).includes("Error") ||
+        JSON.stringify(res).includes("500")
+      ) {
+        dispatch(
+          haveErrorAction(
+            "Email này không tồn tại hoặc chưa được kích hoạt, vui lòng kiểm tra lại !"
+          )
+        );
+      } else {
+        dispatch(authResetPassword(res));
+      }
+    })
+    .catch((rej) => {
+      dispatch(
+        haveErrorAction(
+          "Email này không tồn tại hoặc chưa được kích hoạt, vui lòng kiểm tra lại !"
+        )
+      );
+    })
+    .finally(() => {
+      dispatch(loadAction(false));
+      dispatch(haveErrorAction(null));
+      dispatch(isSuccessAction(false));
+    });
+};
+/**Cart */
+const addToCartAction = (payload) => {
+  return {
+    type: UserAuth.ADD_TO_CART,
+    payload: payload,
+  };
+};
+export const addToCart = (userId, productId, amount) => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.addItemToCart(userId, productId, amount)
+    .then((res) => {
+      if (
+        JSON.stringify(res).includes("Error") ||
+        JSON.stringify(res).includes("500")
+      ) {
+        dispatch(haveErrorAction("Có lỗi, vui lòng thử lại !"));
+      } else {
+        dispatch(addToCartAction(true));
+      }
+    })
+    .catch((rej) => {
+      dispatch(haveErrorAction("Có lỗi, vui lòng thử lại !"));
+    })
+    .finally(() => {
+      dispatch(addToCartAction(false));
+      dispatch(loadAction(false));
+    });
+};
+export const deleteCartItemAction = (payload) => {
+  return {
+    type: UserAuth.DELETE_CARTITEM,
+    payload: payload,
+  };
+};
+export const deleteCart = (id, userId) => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.deleteCartItem(id, userId)
+    .then((res) => {
+      if (
+        JSON.stringify(res).includes("Error") ||
+        JSON.stringify(res).includes("500")
+      ) {
+        dispatch(haveErrorAction("Có lỗi, vui lòng thử lại !"));
+      } else {
+        dispatch(deleteCartItemAction(true));
+      }
+    })
+    .catch((rej) => {
+      console.log(rej);
+    })
+    .finally(() => {
+      dispatch(loadAction(false));
+    });
+};
+const changeAmountCartItemAction = (payload) => {
+  return {
+    type: UserAuth.CHANGE_QUANTITY_CARTITEM,
+    payload: payload,
+  };
+};
+export const changeAmountCartItem = (id, amount) => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.updateQuantityCartItem(id, amount)
+    .then((res) => {
+      if (
+        JSON.stringify(res).includes("Error") ||
+        JSON.stringify(res).includes("500")
+      ) {
+        dispatch(haveErrorAction("Có lỗi, vui lòng thử lại !"));
+      } else {
+        dispatch(changeAmountCartItemAction(true));
+      }
+    })
+    .catch((rej) => {
+      console.log(rej);
+    })
+    .finally(() => {
+      dispatch(loadAction(false));
+      dispatch(isSuccessAction(false));
+    });
+};
+const getCartItemAction = (payload) => {
+  return {
+    type: UserAuth.GET_CART,
+    payload: payload,
+  };
+};
+export const getCartItem = (id) => async (dispatch) => {
+  try {
+    dispatch(loadAction(true));
+    const res = await AuthServices.getCartItem(id);
+    dispatch(getCartItemAction(res.cartItemList));
+  } catch (error) {
+    console.log("error: ", error);
+  } finally {
     dispatch(loadAction(false));
-    dispatch(authResetPassword(res));
-    dispatch(successAction(false));
-  });
+    dispatch(isSuccessAction(false));
+  }
+};
+export const setCheckout = (payload) => {
+  return {
+    type: UserAuth.CHECKOUT,
+    payload: payload,
+  };
+};
+export const setTotalPriceToCheckoutAction = (total) => {
+  return {
+    type: UserAuth.SET_PRICE_CHECKOUT,
+    payload: total,
+  };
+};
+export const fetchBuyCart = (userId) => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.buyCart(userId)
+    .then((res) => {
+      if (
+        JSON.stringify(res).includes("Error") ||
+        JSON.stringify(res).includes("500")
+      ) {
+        dispatch(haveErrorAction("Có lỗi, vui lòng thử lại !"));
+      } else {
+        setCheckout(null);
+        dispatch(buyAction(true));
+      }
+    })
+    .catch((rej) => {
+      dispatch(haveErrorAction("Có lỗi, " + rej));
+    })
+    .finally(() => {
+      dispatch(loadAction(false));
+      dispatch(isSuccessAction(false));
+    });
+};
+export const fetchBuyProductOnly =
+  (userId, productId, amount) => async (dispatch) => {
+    dispatch(loadAction(true));
+    await AuthServices.buyProductOnly(userId, productId, amount)
+      .then((res) => {
+        if (
+          JSON.stringify(res).includes("Error") ||
+          JSON.stringify(res).includes("500")
+        ) {
+          dispatch(haveErrorAction("Có lỗi, vui lòng thử lại !"));
+        } else {
+          setCheckout(null);
+          dispatch(buyAction(true));
+        }
+      })
+      .catch((rej) => {
+        dispatch(haveErrorAction("Có lỗi," + rej));
+      })
+      .finally(() => {
+        dispatch(loadAction(false));
+        dispatch(isSuccessAction(false));
+      });
+  };
+const buyAction = (payload) => {
+  return {
+    type: UserAuth.BUY_PRODUCT,
+    payload: payload,
+  };
 };

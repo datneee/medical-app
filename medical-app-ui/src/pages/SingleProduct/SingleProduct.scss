@@ -16,23 +16,10 @@
                 object-fit: cover;
             }
         }
-        .other-product-images {
-            margin-left: -18.5px;
-            background-color: white;
-
-            .sub-image {
-                border: 1px solid rgba(0, 0, 0, $alpha: 0.25);
-                padding: 12px;
-                
-                img {
-                    width: 100% !important;
-                    height: 100% !important;
-                    object-fit: contains;
-                }
-        
-                
-            }
-            
+        .thumbs-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
     }
@@ -87,9 +74,12 @@
                 font-weight: 500;
             }
             h6 {
-                font-size: 16px;
-                font-weight: 400;
-                color: var(--color-1c1c1b);
+                a {
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: #1da1f2;
+                    cursor: pointer;
+                }
             }
         }
         .product-delivery {
@@ -200,3 +190,7 @@
     }
      
 }
+.carousel-container ul {
+    display: flex !important;
+    gap: 36px !important;
+ }

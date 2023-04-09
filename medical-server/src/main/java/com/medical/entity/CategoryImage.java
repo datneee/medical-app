@@ -10,11 +10,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+
+@Table(name = "CategoryImages")
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "CategoryImages")
-@Entity
 public class CategoryImage implements Serializable {
 
     @Id
@@ -44,6 +45,18 @@ public class CategoryImage implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp //Deafault now
     private Date updatedAt;
+
+    @Override
+    public String toString() {
+        return "CategoryImage{" +
+                "id=" + id +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", imagePublicId='" + imagePublicId + '\'' +
+                ", category=" + category +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 
     public CategoryImage(String imageUrl) {
         this.imageUrl = imageUrl;

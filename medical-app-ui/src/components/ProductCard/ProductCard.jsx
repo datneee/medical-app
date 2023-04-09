@@ -49,7 +49,7 @@ const ProductCard = (props) => {
           </div>
         </div>
         <div className="product-details">
-          <h6 className="brand">Havels</h6>
+          <h6 className="brand">{product?.brand?.name}</h6>
           <h5 className="product-title">{product?.title}</h5>
           <RatingChanged />
           <p className="description">{product?.descriptions}</p>

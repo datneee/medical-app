@@ -6,7 +6,7 @@ import rootReducer from "../redux/reducers";
 
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
+  composeWithDevTools(applyMiddleware(...[thunk]))
 );
 
 export default store;

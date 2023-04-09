@@ -2,7 +2,9 @@ package com.medical.controllers;
 
 import com.medical.base.BaseController;
 import com.medical.constants.Common;
+import com.medical.dto.ProductDTO;
 import com.medical.dto.pagination.PaginateDTO;
+import com.medical.dto.pagination.PaginationDTO;
 import com.medical.entity.Product;
 import com.medical.exceptions.NotFoundException;
 import com.medical.filters.ProductFilter;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -33,6 +36,7 @@ public class ProductController extends BaseController<Product> {
     public ResponseEntity<?> getAllProducts(ProductFilter productFilter, HttpServletRequest request){
         GenericSpecification<Product> specification = new GenericSpecification<Product>().getBasicQuery(request);
 
+
         if(productFilter.getStartId() != null)
             specification.add(new SearchCriteria("id", productFilter.getStartId(), SearchOperation.GREATER_THAN_EQUAL));
         if(productFilter.getEndId() != null)
@@ -40,9 +44,10 @@ public class ProductController extends BaseController<Product> {
         // Tìm kiếm
         if(productFilter.getSearch() != null) {
             specification.add(new SearchCriteria("title", productFilter.getSearch(), SearchOperation.LIKE));
-            specification.add(new SearchCriteria("descriptions", productFilter.getSearch(), SearchOperation.OR));
         }
-
+        if (productFilter.getCategoryId() != null) {
+            specification.add(new SearchCriteria("category", productFilter.getCategoryId(), SearchOperation.EQUAL));
+        }
 
         if(productFilter.getMnOPrice() != null)
             specification.add(new SearchCriteria("originalPrice", productFilter.getMnOPrice(), SearchOperation.GREATER_THAN_EQUAL));
@@ -55,14 +60,22 @@ public class ProductController extends BaseController<Product> {
         return this.resPagination(paginateProducts);
     }
 
-
+    @GetMapping(value = "/inCategory")
+    @ResponseBody
+    public ResponseEntity<?> getProductByCategoryIdId(@RequestParam(name = "id") Integer id, ProductFilter productFilter){
+        List<Product> products  = service.getProductByCategoryId(id);
+        if(products == null)
+            throw new NotFoundException(Common.MSG_NOT_FOUND);
+        return this.resSuccess(products);
+    }
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getProductById(@PathVariable("id") Integer id){
-        Product product  = service.getProductById(id);
+        ProductDTO product  = service.getProductById(id);
         if(product == null)
             throw new NotFoundException(Common.MSG_NOT_FOUND);
-        return this.resSuccess(product);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
+
 
     @GetMapping(value = "/title/{title}")
     public ResponseEntity<?> getProductByTitle(@PathVariable("title") String title){
@@ -77,6 +90,11 @@ public class ProductController extends BaseController<Product> {
             return new ResponseEntity<>(service.existsProductByTitle(title) , HttpStatus.OK);
     }
 
+    @PostMapping(value = "/buy")
+    public ResponseEntity<?> buyProduct(@RequestParam(name = "userId") Integer userId, @RequestParam(name = "productId") Integer productId, @RequestParam(name = "amount") Integer amount){
+        service.buyOneItem(userId, productId, amount);
+        return new ResponseEntity<>(Common.MSG_SUCCESS, HttpStatus.OK);
+    }
 
     @PostMapping
 //    @PreAuthorize("@userAuthorizer.isAdmin(authentication)")

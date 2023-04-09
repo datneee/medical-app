@@ -13,10 +13,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-@Data
+
 @Entity
-@NoArgsConstructor
 @Table(name = "products")
+@Data
+@NoArgsConstructor
 public class Product implements Serializable {
     @Column(name = "id")
     @Id
@@ -63,6 +64,10 @@ public class Product implements Serializable {
     @JoinColumn(name = "categoryId",nullable = false)
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "brandId", nullable = false)
+    private Brand brand;
+
     @OneToMany(mappedBy = "product")
     @Cascade(value = {org.hibernate.annotations.CascadeType.REMOVE, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<ProductImages> productImages;
@@ -80,6 +85,24 @@ public class Product implements Serializable {
     @JsonIgnore
     @Cascade(value = {org.hibernate.annotations.CascadeType.REMOVE, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<OrderItem> orderItems;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", descriptions='" + descriptions + '\'' +
+                ", originalPrice=" + originalPrice +
+                ", promotionPrice=" + promotionPrice +
+                ", createdDate=" + createdDate +
+                ", currentAmount=" + currentAmount +
+                ", amount=" + amount +
+                ", isHot=" + isHot +
+                ", status=" + status +
+                ", productImages=" + productImages +
+                ", productRatesList=" + productRatesList +
+                '}';
+    }
 
     @PrePersist
     public void PrePersist(){

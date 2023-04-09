@@ -2,6 +2,7 @@ package com.medical.services.Impl;
 
 import com.medical.base.BasePagination;
 import com.medical.constants.StatusCodeEnum;
+import com.medical.dto.CustomerDTO;
 import com.medical.dto.SignUpDTO;
 import com.medical.dto.pagination.PaginateDTO;
 import com.medical.dto.update.UpdateUserDTO;
@@ -40,13 +41,23 @@ public class UserService extends BasePagination<User, IUserRepository> implement
     }
 
     @Override
-    public User findByEmail(String email) {
+    public CustomerDTO findByEmail(String email) {
+
+        User user = userRepository.findByEmail(email);
+        CustomerDTO dto = modelMapper.map(user, CustomerDTO.class);
+        return dto;
+    }
+    public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-
-    @Override
-    public User findByUsername(String username) {
+    public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+    @Override
+    public CustomerDTO findByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        CustomerDTO dto = modelMapper.map(user, CustomerDTO.class);
+        return dto;
     }
 
     @Override

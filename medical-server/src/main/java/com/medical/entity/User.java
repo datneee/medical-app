@@ -3,16 +3,22 @@ package com.medical.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.medical.constants.RoleEnum;
 import com.medical.constants.StatusCodeEnum;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 
-@Data
+
 @Entity
 @Table(name = "`users`")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable {
     @Id
     @Column(name = "id")
@@ -28,13 +34,13 @@ public class User implements Serializable {
     @Column(name = "fullname", nullable = false, unique = true)
     private  String fullName;
 
-    @Column(nullable = false)
+    @Column(name = "`password`",nullable = false)
     private String password;
 
     @Column(name = "phone", nullable = false, unique = true)
     private String phoneNumber;
 
-    @Column(nullable = false)
+    @Column(name = "address",nullable = false)
     private String address;
 
     @Column(name = "`role`")
@@ -51,9 +57,25 @@ public class User implements Serializable {
     @JsonIgnore
     private Cart cart;
 
-    @OneToOne(mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private  Order order;
+    private List<Order> order;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", password='" + password + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", role='" + role + '\'' +
+                ", status=" + status +
+                ", avatar='" + avatar + '\'' +
+                '}';
+    }
 
     @PrePersist
     public void prePersist() {

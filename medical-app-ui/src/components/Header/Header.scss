@@ -83,3 +83,12 @@
     }
     
 }
+.cart {
+    position: relative;
+
+    .cart-quantity {
+        position: absolute;
+        top: -8px;
+        right: -16px;
+    }
+}

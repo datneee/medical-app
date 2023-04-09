@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.medical.constants.StatusOrderItem;
 //import com.smartphoneshop.constants.StatusOrderItemConvert;
 import com.medical.constants.StatusOrderItemConvert;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,13 +14,16 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.util.Date;
 
-@Data
-@NoArgsConstructor
+
 @Entity
 @Table(name = "orderItems")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderItem {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -60,6 +64,18 @@ public class OrderItem {
     public void PrePersist(){
         if(this.status == null)
             this.status = StatusOrderItem.Processing;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", createdDate=" + createdDate +
+                ", receivedDate=" + receivedDate +
+                ", amount=" + amount +
+                ", status=" + status +
+                ", product=" + product +
+                '}';
     }
 
     public OrderItem(Integer amount, Order order, Product product) {

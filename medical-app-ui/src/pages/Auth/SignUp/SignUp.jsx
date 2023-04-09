@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { BreadCrum, Meta } from "../../../components";
+import { BreadCrum, Meta, Loading } from "../../../components";
 import styles from "./SignUp.scss";
 import { useState } from "react";
 import { red } from "@mui/material/colors";
@@ -20,27 +20,22 @@ const SignUp = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state?.auth);
 
   const checkEmail = true;
   const handleSignUp = async () => {
     dispatch(
-      registration(
-        {
-          username: username,
-          fullName: fullName,
-          phoneNumber: phoneNumber,
-          email: email,
-          address: address,
-          password: password,
-          avatar: "avatar.jpg",
-        },
-        navigate
-      )
+      registration({
+        username: username,
+        fullName: fullName,
+        phoneNumber: phoneNumber,
+        email: email,
+        address: address,
+        password: password,
+        avatar: "avatar.jpg",
+      })
     );
-    if (user?.success) {
-      clearFrom();
-    }
+    clearFrom();
   };
   const clearFrom = () => {
     setAddress("");
@@ -54,6 +49,7 @@ const SignUp = () => {
   useEffect(() => {}, []);
   return (
     <div>
+      {auth?.loading && <Loading />}
       <Meta title="Register account" />
       <BreadCrum title="Register account" />
       <div className="signup-wrapper home-wrapper-2 py-5">
@@ -140,8 +136,8 @@ const SignUp = () => {
                 )}
               </div>
               <div>
-                {user?.message && (
-                  <p style={{ color: "orange" }}>{user?.message}</p>
+                {auth?.message && (
+                  <p style={{ color: "orange" }}>{auth?.message}</p>
                 )}
               </div>
               <div>
@@ -150,11 +146,8 @@ const SignUp = () => {
                     type="button"
                     className="button btn-2 but-3"
                     onClick={handleSignUp}
-                    disabled={user?.success}
+                    disabled={auth?.success}
                   >
-                    {user?.loading && (
-                      <CgSpinnerTwo className={"loading-search"} />
-                    )}
                     Signup
                   </button>
                   <Link to="/auth/login" className="">

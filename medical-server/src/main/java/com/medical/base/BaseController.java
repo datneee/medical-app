@@ -20,7 +20,11 @@ public class BaseController<T>{
         map.put("data", data);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO<>(HttpStatus.OK.value(), Common.MSG_SUCCESS, map));
     }
-
+    public ResponseEntity<?> resSuccess(List<T> data) {
+        Map<String, List<T>> map = new HashMap<>();
+        map.put("data", data);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO<>(HttpStatus.OK.value(), Common.MSG_SUCCESS, map));
+    }
     public ResponseEntity<?> createdSuccess(T data){
         Map<String, T> map = new HashMap<>();
         map.put("data", data);

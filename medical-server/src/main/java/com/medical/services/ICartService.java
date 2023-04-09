@@ -8,7 +8,7 @@ public interface ICartService {
 
     void addCartItemToCart(AddCartParams params) throws Exception;
 
-    void buyCartItem(Integer userId , Integer cartItemId);
+
 
     void buyListCartItems(Integer userId);
 

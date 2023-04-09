@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Carousel } from "react-bootstrap";
-import Pagination from "react-js-pagination";
+import { Pagination } from "react-headless-pagination";
 import "react-bootstrap";
 
-import { Meta, ProductCard, RatingChanged, BreadCrum } from "../../components";
-import { fetchAllProducts } from "../../redux/actions/serviceActions";
+import { useDebounce } from "../../hooks";
+
+import {
+  Meta,
+  ProductCard,
+  RatingChanged,
+  BreadCrum,
+  Loading,
+} from "../../components";
+import {
+  fetchAllProducts,
+  fetchAllCategory,
+} from "../../redux/actions/serviceActions";
 
 import styles from "./OurStore.scss";
 import { useSelector, useDispatch } from "react-redux";
@@ -25,22 +36,104 @@ const brands = [
 const OurStore = () => {
   let [checkedCategory, setCheckCategory] = useState();
   let [checkedBrand, setCheckedBrand] = useState();
-  let [activePage, setActivePage] = useState(1);
-
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState();
   const [grid, setGrid] = useState(3);
+  const [page, setPage] = useState(0);
+  const [selectFilter, setSelectFilter] = useState("best-selling");
   const dispatch = useDispatch();
+  const service = useSelector((state) => state?.service);
+  let medicals = service?.products;
+  const categories = service?.categories;
 
-  const categories = useSelector((state) => state?.service?.categories);
-  const medicals = useSelector((state) => state?.service?.products);
+  const useQuery = new URLSearchParams(useLocation().search);
+  const searchValue = useQuery.get("search");
+  const category = useQuery.get("category");
+  const handlePickProductByCategory = (id) => {
+    setCheckCategory(id);
+  };
+  const pagination = service?.pagination;
   const handlePageChange = (pageNumber) => {
-    console.log(`active page is ${pageNumber}`);
-    this.setState({ activePage: pageNumber });
+    dispatch(
+      fetchAllProducts(
+        pageNumber + 1,
+        (12 / grid) * 2,
+        checkedCategory ? JSON.parse(checkedCategory) : category,
+        searchValue
+      )
+    );
+    setPage(pageNumber);
+  };
+  const handleChangeMinPrice = (e) => {
+    const searchValue = e.target.value;
+
+    if (!searchValue.startsWith(" ")) {
+      setMinPrice(searchValue);
+    }
+  };
+  const handleChangeMaxPrice = (e) => {
+    const searchValue = e.target.value;
+
+    if (!searchValue.startsWith(" ")) {
+      setMaxPrice(searchValue);
+    }
+  };
+  const debouncedMinValue = useDebounce(minPrice, 650);
+  const debouncedMaxValue = useDebounce(maxPrice, 650);
+  const handleChangeSelectFilter = (e) => {
+    setSelectFilter(e.target.value);
   };
   useEffect(() => {
-    dispatch(fetchAllProducts());
-  }, []);
+    window.scrollTo(0, 0);
+    dispatch(
+      fetchAllProducts(
+        page + 1,
+        (12 / grid) * 2,
+        checkedCategory ? JSON.parse(checkedCategory) : category,
+        searchValue,
+        debouncedMinValue,
+        debouncedMaxValue
+      )
+    );
+    switch (selectFilter) {
+      case "best-selling":
+        break;
+      case "title-ascending":
+        break;
+      case "title-descending":
+        break;
+      case "price-descending":
+        break;
+      case "price-ascending":
+        break;
+      default:
+        break;
+    }
+  }, [
+    grid,
+    checkedCategory,
+    debouncedMinValue,
+    debouncedMaxValue,
+    selectFilter,
+  ]);
+  useEffect(() => {
+    setCheckCategory(category);
+    window.scrollTo(0, 0);
+    dispatch(fetchAllCategory());
+    dispatch(
+      fetchAllProducts(
+        page + 1,
+        (12 / grid) * 2,
+        checkedCategory ? JSON.parse(checkedCategory) : category,
+        searchValue,
+        debouncedMinValue,
+        debouncedMaxValue
+      )
+    );
+  }, [grid, category]);
   return (
     <div>
+      {service?.loading && <Loading />}
       <Meta title={"Our Store"} />
       <BreadCrum title="Our Store" />
       <div className="store-wrapper home-wrapper-2 py-5">
@@ -98,24 +191,30 @@ const OurStore = () => {
                 <h3 className="filter-title">Shop By Categories</h3>
                 <div>
                   <div className="ps-0">
-                    {categories.map((category) => (
-                      <div className="form-check" key={category.id}>
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                          checked={checkedCategory == category.id}
-                          onChange={() => setCheckCategory(category.id)}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="flexCheckDefault"
-                        >
-                          {category.name}
-                        </label>
-                      </div>
-                    ))}
+                    {categories &&
+                      categories.map((category) => (
+                        <div className="form-check" key={category.id}>
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                            checked={
+                              checkedCategory &&
+                              JSON.parse(checkedCategory) === category.id
+                            }
+                            onChange={() =>
+                              handlePickProductByCategory(category.id)
+                            }
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="flexCheckDefault"
+                          >
+                            {category.name}
+                          </label>
+                        </div>
+                      ))}
                   </div>
                 </div>
               </div>
@@ -151,6 +250,8 @@ const OurStore = () => {
                   <div className="d-flex align-items-center gap-10">
                     <div className="form-floating mb-3">
                       <input
+                        value={minPrice}
+                        onChange={handleChangeMinPrice}
                         type="number"
                         defaultValue={0}
                         className="form-control"
@@ -161,6 +262,8 @@ const OurStore = () => {
                     </div>
                     <div className="form-floating mb-3">
                       <input
+                        value={maxPrice}
+                        onChange={handleChangeMaxPrice}
                         type="number"
                         className="form-control"
                         id="inputTo"
@@ -179,13 +282,13 @@ const OurStore = () => {
                     <div className="d-flex align-items-center gap-10">
                       <p className="mb-0 d-block">Short By: </p>
                       <select
+                        onChange={handleChangeSelectFilter}
+                        value={selectFilter}
                         name=""
                         id=""
                         className="form-control form-select"
                       >
-                        <option value="best-selling" selected>
-                          Best Selling
-                        </option>
+                        <option value="best-selling">Best Selling</option>
                         <option value="title-ascending">
                           Alphabetically, A-Z
                         </option>
@@ -200,7 +303,7 @@ const OurStore = () => {
                   </div>
 
                   <div className="d-flex align-items-center gap-10">
-                    <p className="totalproducts">21 products</p>
+                    <p className="totalproducts">{pagination.total} products</p>
                     <div className="d-flex gap-10 align-items-center grid">
                       <img
                         onClick={() => setGrid(3)}
@@ -232,40 +335,64 @@ const OurStore = () => {
               </div>
               {grid == 3 && (
                 <div className="products-list row align-items-center d-flex">
-                  {medicals.map((product, index) => (
-                    <ProductCard key={index} product={product} grid={grid} />
-                  ))}
+                  {medicals &&
+                    medicals.map((product, index) => (
+                      <ProductCard key={index} product={product} grid={grid} />
+                    ))}
                 </div>
               )}
               {grid == 4 && (
                 <div className="products-list row align-items-center d-flex">
-                  {medicals.map((product, index) => (
-                    <ProductCard key={index} product={product} grid={grid} />
-                  ))}
+                  {medicals &&
+                    medicals.map((product, index) => (
+                      <ProductCard key={index} product={product} grid={grid} />
+                    ))}
                 </div>
               )}
               {grid == 6 && (
                 <div className="products-list row align-items-center d-flex">
-                  {medicals.map((product, index) => (
-                    <ProductCard key={index} product={product} grid={grid} />
-                  ))}
+                  {medicals &&
+                    medicals.map((product, index) => (
+                      <ProductCard key={index} product={product} grid={grid} />
+                    ))}
                 </div>
               )}
               {grid == 12 && (
                 <div className="products-list row align-items-center d-flex">
-                  {medicals.map((product, index) => (
-                    <ProductCard key={index} product={product} grid={grid} />
-                  ))}
+                  {medicals &&
+                    medicals.map((product, index) => (
+                      <ProductCard key={index} product={product} grid={grid} />
+                    ))}
                 </div>
               )}
-              <div style={{ display: "flex", justifyContent: "center" }}>
+              <div className="pagination-wrapper">
+                <div className="current-page">Current page: {page + 1}</div>
                 <Pagination
-                  activePage={activePage}
-                  itemsCountPerPage={10}
-                  totalItemsCount={450}
-                  pageRangeDisplayed={5}
-                  onChange={(event) => handlePageChange(event.target.value)}
-                />
+                  currentPage={page}
+                  setCurrentPage={handlePageChange}
+                  totalPages={pagination.lastPage}
+                  edgePageCount={2}
+                  middlePagesSiblingCount={2}
+                  className="pagination"
+                  truncableText="..."
+                  truncableClassName=""
+                >
+                  <Pagination.PrevButton className="">
+                    Previous
+                  </Pagination.PrevButton>
+
+                  <div className="d-flex align-items-center justify-content-center flex-grow gap-15">
+                    <Pagination.PageButton
+                      activeClassName=""
+                      inactiveClassName=""
+                      className=""
+                    />
+                  </div>
+
+                  <Pagination.NextButton className="">
+                    Next
+                  </Pagination.NextButton>
+                </Pagination>
               </div>
             </div>
           </div>

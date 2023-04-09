@@ -46,6 +46,7 @@ public class BasePagination<E, R extends JpaRepository<E, ?> & JpaSpecificationE
 
         Page<E> pageData = this.repository.findAll(specification,
                 PageRequest.of(page - 1, perPage, specification.getSort()));
+
         PaginationDTO.Pagination pagination = new PaginationDTO.Pagination(page, perPage, pageData.getTotalPages(), pageData.getTotalElements());
         return new PaginateDTO<>(pageData, pagination);
     }

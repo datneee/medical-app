@@ -1,6 +1,7 @@
 package com.medical.controllers;
 
 import com.medical.base.BaseController;
+import com.medical.dto.ProductDTO;
 import com.medical.entity.Product;
 import com.medical.entity.ProductImages;
 import com.medical.exceptions.AppException;
@@ -8,6 +9,7 @@ import com.medical.exceptions.NotFoundException;
 import com.medical.helpers.FileHelper;
 import com.medical.services.IProductImageService;
 import com.medical.services.IProductService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,9 @@ public class ProductImageController extends BaseController<ProductImages> {
     @Autowired
     private IProductService productService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
 
     @PostMapping
 //    @PreAuthorize("@userAuthorizer.isAdmin(authentication)")
@@ -41,12 +46,12 @@ public class ProductImageController extends BaseController<ProductImages> {
             }
         }
 
-        Product product = productService.getProductById(productId);
+        ProductDTO productDTO = productService.getProductById(productId);
 
-        if (product == null) {
+        if (productDTO == null) {
             throw new NotFoundException("Not found product");
         }
-
+        Product product = modelMapper.map(productDTO, Product.class);
         List<ProductImages> productImages = productImageService.createOrUpdateMany(product, files);
 
         return this.resListSuccess(productImages);

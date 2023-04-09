@@ -1,5 +1,6 @@
 package com.medical.filters;
 
+import com.medical.dto.CustomerDTO;
 import com.medical.entity.User;
 import com.medical.services.IUserService;
 import com.medical.services.Impl.MyUserDetailsService;
@@ -46,7 +47,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                    User user = userService.findByUsername(username);
+                    CustomerDTO user = userService.findByUsername(username);
                     request.setAttribute("user", user);
                 }
             }

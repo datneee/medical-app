@@ -10,10 +10,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { authLogoutAction } from "../../redux/actions/userActions";
 
 const Header = () => {
-  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const categories = useSelector((state) => state?.service?.categories);
-
+  const auth = useSelector((state) => state?.auth);
+  const user = auth?.user;
   const handleLogout = () => {
     dispatch(authLogoutAction());
   };
@@ -87,16 +87,18 @@ const Header = () => {
                 )}
 
                 <li>
-                  <Link
-                    to="cart"
-                    className="d-flex align-items-center gap-10 text-white"
-                  >
+                  <Link to="cart" className="cart text-white">
                     <img src="/images/cart.svg" alt="" />
-                    <div className="d-flex flex-column">
-                      <span className="badge badge-warning bg-white text-dark">
-                        0
+                    <div className="">
+                      <span className="badge cart-quantity badge-warning bg-white text-dark">
+                        {user?.cart?.amount || 0}
                       </span>
-                      <p>$ 500</p>
+                      {/* <p>
+                        {total?.toLocaleString("it-IT", {
+                          style: "currency",
+                          currency: "VND",
+                        })}
+                      </p> */}
                     </div>
                   </Link>
                 </li>

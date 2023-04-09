@@ -18,6 +18,7 @@ import {
   SingleProduct,
   Checkout,
 } from "./pages";
+import Verification from "./components/Verification/Verification";
 
 function App() {
   return (
@@ -32,9 +33,31 @@ function App() {
             <Route path="blog" element={<Blog />} />
             <Route path="blog/:id" element={<SingleBlog />} />
             <Route path="contact" element={<Contact />} />
-            <Route path="product-cared" element={<ProductCared />} />
-            <Route path="cart" element={<Cart />} />
-            <Route path="checkout" element={<Checkout />} />
+            <Route
+              path="product-cared"
+              element={
+                <Verification>
+                  <ProductCared />
+                </Verification>
+              }
+            />
+            <Route
+              path="cart"
+              element={
+                <Verification>
+                  <Cart />
+                </Verification>
+              }
+            />
+            <Route
+              path="checkout"
+              element={
+                <Verification>
+                  {" "}
+                  <Checkout />
+                </Verification>
+              }
+            />
             <Route path="auth/login" element={<Login />} />
             <Route path="auth/sign-up" element={<SignUp />} />
             <Route path="auth/forgot-password" element={<ForgotPassword />} />

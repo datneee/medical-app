@@ -70,29 +70,27 @@ public class UserController extends BaseController<User> {
             throw new NotFoundException(Common.MSG_NOT_FOUND);
         }
 
-        if (user.getOrder().getOrderItems().size() != 0) {
-            throw new AppException(Common.MSG_DELETE_FAIL);
-        }
+
 
         userService.deleteById(userId);
 
         return new ResponseEntity<>(Common.MSG_DELETE_SUCCESS, HttpStatus.OK);
     }
 
-    @PatchMapping("/password")
-    public ResponseEntity<?> changePassword(@RequestBody @Valid UserChangePasswordDTO userChangePasswordDTO, HttpServletRequest request) {
-        User requestedUser = (User) request.getAttribute("user");
-
-        User user = userService.findByUsername(requestedUser.getUsername());
-
-        if (!passwordEncoder.matches(userChangePasswordDTO.getOldPassword(), user.getPassword())) {
-            throw new AppException(Common.MSG_OLD_PASSWORD_INVALID);
-        }
-
-        user.setPassword(passwordEncoder.encode(userChangePasswordDTO.getNewPassword()));
-
-        User updatedUser = userService.updateUser(user);
-
-        return this.resSuccess(updatedUser);
-    }
+//    @PatchMapping("/password")
+//    public ResponseEntity<?> changePassword(@RequestBody @Valid UserChangePasswordDTO userChangePasswordDTO, HttpServletRequest request) {
+//        User requestedUser = (User) request.getAttribute("user");
+//
+//        User user = userService.findByUsername(requestedUser.getUsername());
+//
+//        if (!passwordEncoder.matches(userChangePasswordDTO.getOldPassword(), user.getPassword())) {
+//            throw new AppException(Common.MSG_OLD_PASSWORD_INVALID);
+//        }
+//
+//        user.setPassword(passwordEncoder.encode(userChangePasswordDTO.getNewPassword()));
+//
+//        User updatedUser = userService.updateUser(user);
+//
+//        return this.resSuccess(updatedUser);
+//    }
 }

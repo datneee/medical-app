@@ -1,6 +1,7 @@
 package com.medical.services.Impl;
 
 import com.medical.constants.RoleEnum;
+import com.medical.dto.CustomerDTO;
 import com.medical.services.IUserAuthorizerService;
 import com.medical.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class UserAuthorizerService implements IUserAuthorizerService {
     @Override
     public boolean isYourself(Authentication authentication, Integer userId) {
         User userAuth = (User) authentication.getPrincipal();
-        com.medical.entity.User user = userService.findByUsername(userAuth.getUsername());
+        CustomerDTO user = userService.findByUsername(userAuth.getUsername());
         if (!Objects.equals(user.getId(), userId)) {
             throw new AccessDeniedException("Access denied");
         }

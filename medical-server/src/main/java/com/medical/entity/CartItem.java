@@ -3,16 +3,18 @@ package com.medical.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Data
-@NoArgsConstructor
 @Entity
 @Table(name = "cartItems")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CartItem implements Serializable {
 
     @Id
@@ -37,5 +39,14 @@ public class CartItem implements Serializable {
         this.amount = amount;
         this.cart = cart;
         this.product = product;
+    }
+
+    @Override
+    public String toString() {
+        return "CartItem{" +
+                "id=" + id +
+                ", amount=" + amount +
+                ", product=" + product +
+                '}';
     }
 }

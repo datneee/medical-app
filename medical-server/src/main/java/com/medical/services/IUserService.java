@@ -1,5 +1,6 @@
 package com.medical.services;
 
+import com.medical.dto.CustomerDTO;
 import com.medical.dto.SignUpDTO;
 import com.medical.dto.pagination.PaginateDTO;
 import com.medical.dto.update.UpdateUserDTO;
@@ -9,9 +10,10 @@ import com.medical.specifications.GenericSpecification;
 public interface IUserService  {
     PaginateDTO<User> getList(Integer page, Integer perPage, GenericSpecification<User> specification);
 
-    User findByEmail(String email);
-
-    User findByUsername(String username);
+    CustomerDTO findByEmail(String email);
+    User getUserByEmail(String email);
+    CustomerDTO findByUsername(String username);
+    User getUserByUsername(String username);
 
     User create(SignUpDTO signUpDTO);
 

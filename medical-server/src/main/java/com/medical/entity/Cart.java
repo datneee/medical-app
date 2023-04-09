@@ -1,15 +1,20 @@
 package com.medical.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Data
+
 @Entity
-@Table(name = "cart")
+@Table(name = "carts")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cart implements Serializable {
     @Column(name = "id")
     @Id
@@ -28,10 +33,20 @@ public class Cart implements Serializable {
     @OneToMany(mappedBy = "cart")
     private List<CartItem> cartItemList;
 
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", user=" + user +
+                ", amount=" + amount +
+                ", cartItemList=" + cartItemList +
+                '}';
+    }
 
     @PrePersist
     public void PrePersist(){
         this.amount = this.cartItemList.size();
     }
+
 
 }

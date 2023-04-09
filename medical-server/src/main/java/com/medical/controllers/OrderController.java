@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/api/v1/orders")
 @CrossOrigin("*")
@@ -16,8 +18,7 @@ public class OrderController {
 
     @GetMapping(value = "/{userId}")
     public ResponseEntity<?> getOrderByUserId(@PathVariable("userId") Integer userId){
-        Order order = service.getOrderByUserId(userId);
-        order = service.updateOrderAmount(order.getOrderItems().toArray().length , order);
-        return  new ResponseEntity<>(order , HttpStatus.OK);
+        List<Order> orders = service.getOrdersByUserId(userId);
+        return  new ResponseEntity<>(orders , HttpStatus.OK);
     }
 }

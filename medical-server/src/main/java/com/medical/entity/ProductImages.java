@@ -9,11 +9,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-@Data
+
 @Entity
+@Table(name = "ProductImages")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "ProductImages")
 public class ProductImages implements Serializable {
 
     @Column(name = "id")
@@ -43,6 +44,17 @@ public class ProductImages implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp //Deafault now
     private Date updatedAt;
+
+    @Override
+    public String toString() {
+        return "ProductImages{" +
+                "id=" + id +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", imagePublicId='" + imagePublicId + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 
     public ProductImages(String imageUrl) {
         this.imageUrl = imageUrl;

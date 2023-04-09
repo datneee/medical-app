@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CgSpinnerTwo } from "react-icons/cg";
 
 import styles from "./Login.scss";
-import { BreadCrum, Meta } from "../../../components";
+import { BreadCrum, Meta, Loading } from "../../../components";
 import { login } from "../../../redux/actions/userActions";
 
 const Login = () => {
@@ -13,7 +13,7 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state?.auth);
   const handleLogin = async () => {
     dispatch(login({ username, password }, navigate));
   };
@@ -21,6 +21,7 @@ const Login = () => {
 
   return (
     <div style={{ position: "relative", overflow: "hidden" }}>
+      {auth.loading && <Loading />}
       <Meta title="Login my account" />
       <BreadCrum title="Login my account" />
       <div className="login-wrapper home-wrapper-2 py-5">
@@ -48,17 +49,15 @@ const Login = () => {
               </div>
               <div>
                 <Link to="/auth/forgot-password">Forgot Password ?</Link>
+                {auth?.error && <p style={{ color: "red" }}>{auth?.error}</p>}
                 <div className="d-flex gap-15 flex-column align-items-center justify-content-center">
                   <button
                     className="button btn-2"
                     type="button"
-                    disabled={user?.loading && true}
+                    disabled={auth?.loading && true}
                     onClick={handleLogin}
                   >
                     <div className="but-3">
-                      {user?.loading && (
-                        <CgSpinnerTwo className={"loading-search"} />
-                      )}
                       <p>Login</p>
                     </div>
                   </button>

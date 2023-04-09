@@ -135,6 +135,9 @@ public class GenericSpecification<T> implements Specification<T> {
             } else if (criteria.getOperation().equals(SearchOperation.NOT_EQUAL)) {
                 predicates.add(builder.notEqual(root.get(criteria.getKey()), criteria.getValue()));
             } else if (criteria.getOperation().equals(SearchOperation.EQUAL)) {
+                if (criteria.getKey() == "category") {
+                    predicates.add(builder.equal(root.get("category").get("id"), criteria.getValue()));
+                }
                 predicates.add(builder.equal(root.get(criteria.getKey()), criteria.getValue()));
             } else if (criteria.getOperation().equals(SearchOperation.LIKE)) {
                 predicates.add(builder.like(builder.lower(root.get(criteria.getKey())),

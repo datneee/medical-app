@@ -2,6 +2,7 @@ package com.medical.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,10 +11,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Data
+
 @Entity
-@NoArgsConstructor
 @Table(name = "`rating`" )
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Rating implements Serializable {
     @Column(name = "id")
     @Id
@@ -43,4 +46,14 @@ public class Rating implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateAt;
 
+    @Override
+    public String toString() {
+        return "Rating{" +
+                "id=" + id +
+                ", user=" + user +
+                ", comment='" + comment + '\'' +
+                ", createdAt=" + createdAt +
+                ", updateAt=" + updateAt +
+                '}';
+    }
 }

@@ -2,6 +2,7 @@ package com.medical.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.medical.constants.StatusCodeEnum;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
@@ -10,10 +11,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Data
 @Entity
-@NoArgsConstructor
 @Table(name = "categories")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Category implements Serializable {
     @Column(name = "id")
     @Id
@@ -40,4 +42,14 @@ public class Category implements Serializable {
             this.status = StatusCodeEnum.ACTIVE;
     }
 
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                ", categoryImages=" + categoryImages +
+                ", products=" + products +
+                '}';
+    }
 }

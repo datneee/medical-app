@@ -3,19 +3,21 @@ import SpecialProduct from "../SpecialProduct/SpecialProduct";
 import { useState, useEffect } from "react";
 
 const ListSpecialProducts = ({ products }) => {
-  const [specialProducts, setSpecialProducts] = useState(products.slice(0, 6));
+  const [specialProducts, setSpecialProducts] = useState();
 
   const [seeMore, setSeeMore] = useState(false);
 
   const handleSeeMore = () => {
-    setSeeMore(true);
     setSpecialProducts(products);
+    setSeeMore(true);
   };
   const handleSeeLess = () => {
+    setSpecialProducts(products.slice(0, 6));
     setSeeMore(false);
-    setSpecialProducts((prev) => prev.slice(0, 6));
   };
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setSeeMore(true);
+  }, []);
   return (
     <section className="special-product py-5 home-wrapper-2">
       <div className="container-xxl">
@@ -25,9 +27,13 @@ const ListSpecialProducts = ({ products }) => {
           </div>
         </div>
         <div className="row">
-          {specialProducts.map((product, index) => (
-            <SpecialProduct key={product?.id} product={product} />
-          ))}
+          {specialProducts
+            ? specialProducts.map((product, index) => (
+                <SpecialProduct key={product?.id} product={product} />
+              ))
+            : products.map((product, index) => (
+                <SpecialProduct key={product?.id} product={product} />
+              ))}
         </div>
         <div className="row">
           <div

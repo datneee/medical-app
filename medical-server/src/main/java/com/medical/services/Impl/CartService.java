@@ -1,9 +1,11 @@
 package com.medical.services.Impl;
 
+import com.medical.dto.ProductDTO;
 import com.medical.entity.*;
 import com.medical.filters.AddCartParams;
 import com.medical.repositories.ICartRepository;
 import com.medical.services.*;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +28,13 @@ public class CartService implements ICartService {
     private IOrderItemService orderItemService;
 
     @Autowired
+    private IUserService userService;
+
+    @Autowired
     private IOrderService orderService;
 
-
+    @Autowired
+    private ModelMapper modelMapper;
     @Override
     public Cart getCartByUserId(Integer id) {
 
@@ -37,11 +43,12 @@ public class CartService implements ICartService {
 
     @Override
     public void addCartItemToCart(AddCartParams params) throws Exception {
+        System.out.println(params);
         Cart cart = repository.findCartByUserId(params.getUserId());
-        Product product = productService.getProductById(params.getProductId());
-        if(product.getAmount() == 0)
+        ProductDTO productDTO = productService.getProductById(params.getProductId());
+        if(productDTO.getAmount() == 0)
             throw new Exception("Sản phẩm đã hết hàng");
-
+        Product product = modelMapper.map(productDTO, Product.class);
         CartItem cartItem = null;
         for (CartItem item:cart.getCartItemList()) {
             if(item.getProduct().getId() == product.getId()){
@@ -59,35 +66,21 @@ public class CartService implements ICartService {
         }
     }
 
-    @Override
-    public void buyCartItem(Integer userId , Integer cartItemId) {
-        Cart cart = repository.findCartByUserId(userId);
-        Order order = orderService.getOrderByUserId(userId);
-        CartItem cartItem = cartItemService.getCartItemById(cartItemId);
-        OrderItem orderItem = new OrderItem(cartItem.getAmount() ,cart.getUser().getOrder() , cartItem.getProduct());
-        orderItemService.createOrderItems(orderItem);
-        cartItemService.deleteById(cartItemId , userId);
 
-        updateCartAmount(cart.getCartItemList().size() , cart);
-        orderService.updateOrderAmount(order.getOrderItems().size(), order);
-        productService.updateProductAmount(cartItem.getProduct() , cartItem.getProduct().getAmount() - cartItem.getAmount());
-    }
 
     @Override
     public void buyListCartItems(Integer userId) {
-        Cart cart = repository.findCartByUserId(userId);
-        Order order = orderService.getOrderByUserId(userId);
+        Cart cart = this.getCartByUserId(userId);
+        Order order = new Order(userService.findById(userId), 0);
+        orderService.createOrder(order);
         List<Integer> listId = new ArrayList<>();
         for (CartItem item: cart.getCartItemList()) {
-            productService.updateProductAmount(item.getProduct() , item.getProduct().getAmount() - item.getAmount());
+            productService.updateProductAmount(item.getProduct() , item.getProduct().getCurrentAmount() - item.getAmount());
             OrderItem orderItem = new OrderItem(item.getAmount() , order , item.getProduct());
             orderItemService.createOrderItems(orderItem);
             listId.add(item.getId());
         }
         cartItemService.deleteByIdIn(listId , userId);
-        updateCartAmount(cart.getCartItemList().size() , cart);
-        orderService.updateOrderAmount(order.getOrderItems().size(), order);
-
     }
 
     @Override
