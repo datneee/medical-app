@@ -76,6 +76,7 @@ CREATE TABLE `cartItems` (
 	FOREIGN KEY(product_Id) REFERENCES products(id),
 	FOREIGN KEY(cart_Id) REFERENCES carts(id)
 );	
+<<<<<<< HEAD
 DROP TABLE IF EXISTS blogs;
 CREATE TABLE blogs (
 	id 		TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -100,11 +101,15 @@ CREATE TABLE `blogImage`(
     blog_id						TINYINT UNSIGNED,
     FOREIGN KEY(blog_id) REFERENCES blogs(id)
 );
+=======
+
+>>>>>>> 0e2ecaad1e3e8d93b3db202156b862451f0c614f
 DROP TABLE IF EXISTS `rating`;
 CREATE TABLE `rating`(
 	id 								TINYINT unsigned PRIMARY KEY AUTO_INCREMENT,
     user_Id 						TINYINT unsigned not null,
     product_Id 						TINYINT unsigned not null,
+    blog_id							TINYINT unsigned,
     `comment` 						VARCHAR(1000) NOT NULL,
     created_At 						DATETIME DEFAULT NOW(),
     update_At 						DATETIME,
@@ -168,7 +173,6 @@ CREATE TABLE ResetPasswordUserToken(
     userId  TINYINT UNSIGNED UNIQUE KEY,
     FOREIGN KEY(userId) REFERENCES users(id)
 );
-
 -- -- ====================================  TRIGGER  ============================================
 DROP TRIGGER IF EXISTS auto_rendCart_withUSer;
 DELIMITER $$
@@ -226,25 +230,6 @@ DELIMITER ;
 INSERT INTO `users` (`email`, `username`, `fullname`, `password`,`phone`, `role`, `address`, `status` , avatar) VALUES
 ('pvd14092001@gmail.com', 'medical_admin', 'Phạm Văn Đạt', '$2a$12$34v8mMKqNaTTSgARBNE8leWz3.8dGIGQ6VKNUUeZjs3j2u4NedKL2','0978315545', 'ADMIN', 'Ha Noi', 1 ,'123'),
 ('test@gmail.com', 'test_employye', 'Le Chi Kiet', '$2a$12$16RqQAIKqbO8UrPEOzmZSu/dnsgN6y5XkzrF85vwL2hDOsoJS0krS','0123456789','CLIENT', 'Ha Tinh', 1 , '123');
-
-INSERT INTO blogs(`title`, `heading`, `body`) VALUES 
-('a', 'b', 'c'),
-('a', 'b', 'c'),
-('a', 'b', 'c'),
-('a', 'b', 'c');
-INSERT INTO `blogImage`(image_Url, blog_id) VALUES 
-('blog-1.jpg', 1),
-('blog-2.jpg', 2),
-('blog-3.jpg', 3),
-('blog-4.jpg', 4);
-INSERT INTO `comments`(title, blog_id) VALUES
-('rẻ lắm ạ', 1),
-('rẻ', 2),
-('rẻ', 3),
-('rẻ', 4),
-('Oke', 1),
-('Nice', 2),
-('Good', 1);
 
 INSERT INTO categories (`name`) VALUES
 ('Chăm sóc sắc đẹp'),
