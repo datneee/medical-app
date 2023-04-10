@@ -100,7 +100,7 @@ CREATE TABLE `blogImage`(
     blog_id						TINYINT UNSIGNED,
     FOREIGN KEY(blog_id) REFERENCES blogs(id)
 );
-DROP TABLE IF EXISTS `rating`; 
+DROP TABLE IF EXISTS `rating`;
 CREATE TABLE `rating`(
 	id 								TINYINT unsigned PRIMARY KEY AUTO_INCREMENT,
     user_Id 						TINYINT unsigned not null,
@@ -220,7 +220,7 @@ BEGIN
     WHERE o.id = _orderId;
 END $$
 DELIMITER ;
-
+	
 -- -- ====================================  INSERT DATA ============================================
 -- password : 123456
 INSERT INTO `users` (`email`, `username`, `fullname`, `password`,`phone`, `role`, `address`, `status` , avatar) VALUES
