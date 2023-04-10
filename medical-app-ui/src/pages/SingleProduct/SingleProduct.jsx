@@ -3,8 +3,6 @@ import ReactImageZoom from "react-image-zoom";
 import { FaShippingFast } from "react-icons/fa";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Lightbox } from "react-modal-image";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Carousel as CarouselImage } from "react-responsive-carousel";
 
 import { FcShipped } from "react-icons/fc";
 import { BsCartPlus } from "react-icons/bs";
@@ -75,7 +73,7 @@ const SingleProduct = () => {
     }
   };
   const handleZoomImage = (event) => {
-    setOpenImage(event.target.children[0].src);
+    setOpenImage(event.target.children[0].currentSrc);
   };
   const closeLightbox = () => {
     setOpenImage(false);
@@ -128,7 +126,7 @@ const SingleProduct = () => {
             <div className="row bg-white">
               <div className="col-6">
                 <div className="main-product-image">
-                  <CarouselImage autoPlay>
+                  <Carousel>
                     <div className="sub-image" onClick={handleZoomImage}>
                       <img
                         src={
@@ -162,7 +160,7 @@ const SingleProduct = () => {
                         alt=""
                       />
                     </div>
-                  </CarouselImage>
+                  </Carousel>
                 </div>
               </div>
               <div className="col-6 border-left">
