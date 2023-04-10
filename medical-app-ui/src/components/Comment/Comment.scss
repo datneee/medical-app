@@ -1,0 +1,24 @@
+.comment-wrapper {
+    background-color: transparent;
+    margin-top: 12px;
+
+    .comment-avatar-user {
+        font-size: 42px;
+    }
+    .comment-main {
+        .comment-main__author-name {
+            color: #385898;
+            font-size: 14px;
+            line-height: 1.3;
+            font-weight: 600;
+        }
+        .comment-main__time {
+            font-size: .75rem;
+            color: rgba(0,0,0,.54);
+        }
+        .comment-main__content {
+            margin-top: 10px;
+            
+        }
+    }
+}
