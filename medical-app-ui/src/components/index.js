@@ -11,3 +11,4 @@ export { default as ToastAlert } from "./More/ToastAlert/ToastAlert";
 export { default as Loading } from "./More/Loading/Loading";
 export { default as CartItem } from "./CartItem/CartItem";
 export { default as Verification } from "./Verification/Verification";
+export { default as Comment } from "./Comment/Comment";

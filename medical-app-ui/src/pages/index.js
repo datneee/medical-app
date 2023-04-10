@@ -12,3 +12,4 @@ export { default as Login } from "./Auth/Login/Login";
 export { default as ForgotPassword } from "./Auth/ForgotPassword/ForgotPassword";
 export { default as ResetPassword } from "./Auth/ResetPassword/ResetPassword";
 export { default as SingleProduct } from "./SingleProduct/SingleProduct";
+export { default as Chat } from "./Chat/Chat";

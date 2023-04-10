@@ -17,6 +17,7 @@ import {
   SingleBlog,
   SingleProduct,
   Checkout,
+  Chat,
 } from "./pages";
 import Verification from "./components/Verification/Verification";
 
@@ -33,8 +34,9 @@ function App() {
             <Route path="blog" element={<Blog />} />
             <Route path="blog/:id" element={<SingleBlog />} />
             <Route path="contact" element={<Contact />} />
+            <Route path="chat" element={<Chat />} />
             <Route
-              path="product-cared"
+              path="ordered"
               element={
                 <Verification>
                   <ProductCared />

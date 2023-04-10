@@ -1,8 +1,9 @@
 import React from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 
-import { BsSearch } from "react-icons/bs";
+import { BsSearch, BsChatLeftDots } from "react-icons/bs";
 import { HiLogout } from "react-icons/hi";
+import { FiShoppingBag } from "react-icons/fi";
 import styles from "./Header.scss";
 import Dropdown from "../Dropdown/Dropdown";
 import InputGroup from "../InputGroup/InputGroup";
@@ -35,27 +36,28 @@ const Header = () => {
             </div>
             <div className="col-5">
               <ul className="mb-0 header-upper-links d-flex align-items-center justify-content-between">
-                <li>
+                <li style={{ fontSize: 18 }}>
                   <Link
-                    to="/"
+                    to="/chat"
                     className="d-flex align-items-center gap-10 text-white"
                   >
-                    <img src="/images/compare.svg" alt="" />
-                    <p>Reload</p>
+                    <BsChatLeftDots />
+                    <p>ChatAI</p>
                   </Link>
                 </li>
-                <li>
+                <li style={{ fontSize: 18 }}>
                   <Link
-                    to="product-cared"
+                    to="ordered"
                     className="d-flex align-items-center gap-10 text-white"
                   >
-                    <img src="/images/wishlist.svg" alt="" />
-                    <p>Cared</p>
+                    <FiShoppingBag />
+                    <p>Your ordered</p>
                   </Link>
                 </li>
                 {user ? (
                   <li
                     style={{
+                      fontSize: 18,
                       display: "flex",
                       alignItems: "center",
                       gap: "10px",
@@ -73,20 +75,20 @@ const Header = () => {
                     </Link>
                   </li>
                 ) : (
-                  <li>
+                  <li style={{ fontSize: 18 }}>
                     <Link
                       to="auth/login"
                       className="d-flex align-items-center gap-10 text-white"
                     >
                       <img src="/images/user.svg" alt="" />
-                      <p>
+                      <p style={{ lineHeight: 1.2 }}>
                         Log in <br /> My Account
                       </p>
                     </Link>
                   </li>
                 )}
 
-                <li>
+                <li style={{ fontSize: 18 }}>
                   <Link to="cart" className="cart text-white">
                     <img src="/images/cart.svg" alt="" />
                     <div className="">

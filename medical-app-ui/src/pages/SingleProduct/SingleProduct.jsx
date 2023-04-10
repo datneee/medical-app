@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from "react";
 import ReactImageZoom from "react-image-zoom";
-import { FaShippingFast } from "react-icons/fa";
+import { FaShippingFast, FaRegUserCircle } from "react-icons/fa";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Lightbox } from "react-modal-image";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -18,6 +18,7 @@ import {
   ProductCard,
   Loading,
   ToastAlert,
+  Comment,
 } from "../../components";
 import {
   fetchOneProduct,
@@ -279,6 +280,39 @@ const SingleProduct = () => {
                       {product?.descriptions.split(".").map((item, index) => (
                         <p key={index}>{item}</p>
                       ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-12 p-0">
+                <div className="main-comments">
+                  <h4>Comments</h4>
+                  <div className="bg-white p-3">
+                    <div className="d-flex flex-column gap-10">
+                      <div className="row">
+                        <div className="col-12 ">
+                          <div className="w-100 d-flex align-items-center gap-15 mt-4">
+                            <div className="avatar d-flex">
+                              <FaRegUserCircle />
+                            </div>
+                            <input
+                              placeholder="Viết bình luận ..."
+                              type="text"
+                              className="form-control"
+                            />
+                          </div>
+                          <button className="btn-comment" type="button">
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                      <Comment />
+                      <Comment />
+                      <Comment />
+                      <Comment />
+                      <Comment />
                     </div>
                   </div>
                 </div>

@@ -245,15 +245,16 @@ const Home = () => {
             <div className="col-12">
               <div className="marque-inner bg-white p-3">
                 <Marquee className="d-flex">
-                  {brands?.map((item) => (
-                    <div key={item?.id} className="mx-4 w-25">
-                      <img
-                        src={item?.logo}
-                        style={{ width: "120px" }}
-                        alt="brand"
-                      />
-                    </div>
-                  ))}
+                  {brands.length > 0 &&
+                    brands?.map((item) => (
+                      <div key={item?.id} className="mx-4 w-25">
+                        <img
+                          src={item?.logo}
+                          style={{ width: "120px" }}
+                          alt="brand"
+                        />
+                      </div>
+                    ))}
                 </Marquee>
               </div>
             </div>
