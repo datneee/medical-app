@@ -4,7 +4,6 @@ export { default as About } from "./About/About";
 export { default as OurStore } from "./OurStore/OurStore";
 export { default as Blog } from "./Blog/Blog";
 export { default as SingleBlog } from "./SingleBlog/SingleBlog";
-export { default as ProductCared } from "./ProductCared/ProductCared";
 export { default as Cart } from "./Cart/Cart";
 export { default as Checkout } from "./Checkout/Checkout";
 export { default as SignUp } from "./Auth/SignUp/SignUp";
@@ -13,3 +12,4 @@ export { default as ForgotPassword } from "./Auth/ForgotPassword/ForgotPassword"
 export { default as ResetPassword } from "./Auth/ResetPassword/ResetPassword";
 export { default as SingleProduct } from "./SingleProduct/SingleProduct";
 export { default as Chat } from "./Chat/Chat";
+export { default as Orders } from "./Orders/Orders";

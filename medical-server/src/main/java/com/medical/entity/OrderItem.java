@@ -36,7 +36,7 @@ public class OrderItem {
 
     @Column(name = "received_Date",columnDefinition = "null")
     @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy ")
     private Date receivedDate;
 
 

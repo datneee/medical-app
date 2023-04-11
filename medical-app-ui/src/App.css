@@ -74,6 +74,7 @@ html,body {
   scroll-behavior: smooth;
 }
 a {
+  color: #3b4149;
   text-decoration: none;
   display: inline-block;
 }

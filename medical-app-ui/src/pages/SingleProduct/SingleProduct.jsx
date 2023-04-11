@@ -61,8 +61,14 @@ const SingleProduct = () => {
   const product = service?.product;
 
   const comments = product?.productRatesList?.map((item, index) => {
-    return {id: item?.id,comment: item?.comment,createdAt: item?.createdAt,user: item?.user?.fullName,userAvatar: item?.user?.avatar}
-  })
+    return {
+      id: item?.id,
+      comment: item?.comment,
+      createdAt: item?.createdAt,
+      user: item?.user?.fullName,
+      userAvatar: item?.user?.avatar,
+    };
+  });
   const auth = useSelector((state) => state?.auth);
   const productInCategory = service?.products;
   const navigate = useNavigate();
@@ -114,19 +120,18 @@ const SingleProduct = () => {
   // }
   const handleComment = () => {
     if (!user) {
-      alert("Bạn phải đăng nhập trước khi thực hiện thao tác này ! ")
+      alert("Bạn phải đăng nhập trước khi thực hiện thao tác này ! ");
     } else {
       if (inputComment.trim()) {
         dispatch(fetchCommentProduct(user?.id, product?.id, inputComment));
-        setInputComment("")
+        dispatch(fetchOneProduct(id));
 
+        setInputComment("");
       } else {
-        alert("Vui lòng không để trống comment của bạn !")
+        alert("Vui lòng không để trống comment của bạn !");
       }
     }
-    
-      
-  }
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchOneProduct(id));
@@ -320,19 +325,33 @@ const SingleProduct = () => {
                             </div>
                             <input
                               value={inputComment}
-                              onChange={(event) => setInputComment(event.target.value)}
+                              onChange={(event) =>
+                                setInputComment(event.target.value)
+                              }
                               placeholder="Viết bình luận ..."
                               type="text"
                               className="form-control"
                             />
                           </div>
-                          <button onClick={handleComment} className="btn-comment" type="button">
+                          <button
+                            onClick={handleComment}
+                            className="btn-comment"
+                            type="button"
+                          >
                             Submit
                           </button>
                         </div>
                       </div>
-                      {comments?.map((item) => (<Comment key={item?.id} id={item?.id} comment={item?.comment} createdAt={item?.createdAt} user={item?.user} userAvatar={item?.userAvatar} />))}
-                      
+                      {comments?.map((item) => (
+                        <Comment
+                          key={item?.id}
+                          id={item?.id}
+                          comment={item?.comment}
+                          createdAt={item?.createdAt}
+                          user={item?.user}
+                          userAvatar={item?.userAvatar}
+                        />
+                      ))}
                     </div>
                   </div>
                 </div>

@@ -39,8 +39,8 @@ public class Rating implements Serializable {
     private String comment;
 
     @Column(name = "created_At")
-    @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "dd/MM/yyyy ")
     @CreationTimestamp
     private Date createdAt;
 

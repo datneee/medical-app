@@ -9,10 +9,10 @@ const initState = {
   cart: [],
   buyedTotal: null,
   checkout: null,
-  order: [],
+  orders: [],
   loading: false,
   message: "",
-  comment: null
+  comment: null,
 };
 
 const reducer = (state = initState, { type, payload }) => {
@@ -89,8 +89,13 @@ const reducer = (state = initState, { type, payload }) => {
     case UserAuth.COMMENT:
       return {
         ...state,
-        comment: payload
-      }
+        comment: payload,
+      };
+    case UserAuth.GET_ORDERS:
+      return {
+        ...state,
+        orders: payload,
+      };
     default:
       return { ...state };
   }

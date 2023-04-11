@@ -1,11 +1,25 @@
 import React from "react";
 import RatingChanged from "../RatingChanged/RatingChanged";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import styles from "./SpecialProduct.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../redux/actions/userActions";
 
 const SpecialProduct = (props) => {
   const { product } = props;
+  const auth = useSelector((state) => state?.auth);
+  const navigate = useNavigate();
+  const user = auth?.user;
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    if (user) {
+      dispatch(addToCart(user?.id, product?.id, 1));
+    } else {
+      alert("Bạn cần đăng nhập để sử dụng giỏ hàng !");
+    }
+  };
   return (
     <div className="col-4 mb-3">
       <Link to={"/product/" + product.id} className="special-product-card">
@@ -63,7 +77,9 @@ const SpecialProduct = (props) => {
                   ></div>
                 </div>
               </div>
-              <Link className="button">Add to cart</Link>
+              <Link onClick={handleAddToCart} className="button">
+                Add to cart
+              </Link>
             </div>
           </div>
         </div>

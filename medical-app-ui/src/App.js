@@ -18,6 +18,7 @@ import {
   SingleProduct,
   Checkout,
   Chat,
+  Orders,
 } from "./pages";
 import Verification from "./components/Verification/Verification";
 
@@ -39,7 +40,7 @@ function App() {
               path="ordered"
               element={
                 <Verification>
-                  <ProductCared />
+                  <Orders />
                 </Verification>
               }
             />

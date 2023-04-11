@@ -282,22 +282,44 @@ const buyAction = (payload) => {
 const commentProductAction = (payload) => {
   return {
     type: UserAuth.COMMENT,
-    payload: payload
-  }
-}
-export const fetchCommentProduct = (userId, productId, comment) => async (dispatch) => {
+    payload: payload,
+  };
+};
+export const fetchCommentProduct =
+  (userId, productId, comment) => async (dispatch) => {
+    dispatch(loadAction(true));
+    await AuthServices.createComment(userId, productId, comment)
+      .then((res) => {
+        if (res) {
+          console.log(res);
+          dispatch(commentProductAction(res?.result?.data));
+        }
+      })
+      .catch((rej) => {
+        dispatch(haveErrorAction(rej));
+      })
+      .finally(() => {
+        dispatch(loadAction(false));
+      });
+  };
+const getOrderItemAction = (payload) => {
+  return {
+    type: UserAuth.GET_ORDERS,
+    payload: payload,
+  };
+};
+export const fetchOrderItem = (userId) => async (dispatch) => {
   dispatch(loadAction(true));
-  await AuthServices.createComment(userId, productId, comment)
+  await AuthServices.getOrderItem(userId)
     .then((res) => {
       if (res) {
-        console.log(res);
-        dispatch(commentProductAction(res?.result?.data));
-      } 
+        dispatch(getOrderItemAction(res));
+      }
     })
     .catch((rej) => {
-      dispatch(haveErrorAction(rej))
+      dispatch(haveErrorAction(rej));
     })
     .finally(() => {
       dispatch(loadAction(false));
-    })
-}
+    });
+};

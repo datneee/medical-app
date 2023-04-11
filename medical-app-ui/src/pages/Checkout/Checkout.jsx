@@ -6,7 +6,7 @@ import { Meta, BreadCrum, Loading } from "../../components";
 
 import styles from "./Checkout.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   fetchBuyCart,
   fetchBuyProductOnly,
@@ -98,7 +98,9 @@ const Checkout = () => {
                           />
                         </div>
                         <div className="w-75">
-                          <h5 className="title">{item?.product?.title}</h5>
+                          <Link to={`/product/${item?.product?.id}`}>
+                            <h5 className="title">{item?.product?.title}</h5>
+                          </Link>
                           <p className="title">{item?.product?.descriptions}</p>
                         </div>
                       </div>

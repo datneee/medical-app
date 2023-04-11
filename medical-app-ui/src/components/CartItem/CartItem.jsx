@@ -9,6 +9,7 @@ import {
   getCartItem,
 } from "../../redux/actions/userActions";
 import { useDebounce } from "../../hooks";
+import { Link } from "react-router-dom";
 
 const CartItem = ({ className, CartItem }) => {
   const [quantity, setQuantity] = useState(CartItem?.amount);
@@ -65,7 +66,9 @@ const CartItem = ({ className, CartItem }) => {
           />
         </div>
         <div className="w-75">
-          <h5 className="title">{CartItem?.product?.title}</h5>
+          <Link to={`/product/${CartItem?.product?.id}`}>
+            <h5 className="title">{CartItem?.product?.title}</h5>
+          </Link>
           <p className="title">{CartItem?.product?.descriptions}</p>
         </div>
       </div>
