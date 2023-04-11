@@ -28,6 +28,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToCart,
+  fetchCommentProduct,
   setCheckout,
   setTotalPriceToCheckoutAction,
 } from "../../redux/actions/userActions";
@@ -53,10 +54,15 @@ const responsive = {
 const SingleProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const [openImage, setOpenImage] = useState(false);
+  const [inputComment, setInputComment] = useState("");
 
   const dispatch = useDispatch();
   const service = useSelector((state) => state?.service);
   const product = service?.product;
+
+  const comments = product?.productRatesList?.map((item, index) => {
+    return {id: item?.id,comment: item?.comment,createdAt: item?.createdAt,user: item?.user?.fullName,userAvatar: item?.user?.avatar}
+  })
   const auth = useSelector((state) => state?.auth);
   const productInCategory = service?.products;
   const navigate = useNavigate();
@@ -106,10 +112,25 @@ const SingleProduct = () => {
   // if (auth?.success) {
   //   alert("Thêm vào giỏ hàng thành công !");
   // }
+  const handleComment = () => {
+    if (!user) {
+      alert("Bạn phải đăng nhập trước khi thực hiện thao tác này ! ")
+    } else {
+      if (inputComment.trim()) {
+        dispatch(fetchCommentProduct(user?.id, product?.id, inputComment));
+        setInputComment("")
+
+      } else {
+        alert("Vui lòng không để trống comment của bạn !")
+      }
+    }
+    
+      
+  }
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchOneProduct(id));
-  }, []);
+  }, [id]);
   return (
     <div>
       {auth?.loading && <Loading />}
@@ -298,21 +319,20 @@ const SingleProduct = () => {
                               <FaRegUserCircle />
                             </div>
                             <input
+                              value={inputComment}
+                              onChange={(event) => setInputComment(event.target.value)}
                               placeholder="Viết bình luận ..."
                               type="text"
                               className="form-control"
                             />
                           </div>
-                          <button className="btn-comment" type="button">
+                          <button onClick={handleComment} className="btn-comment" type="button">
                             Submit
                           </button>
                         </div>
                       </div>
-                      <Comment />
-                      <Comment />
-                      <Comment />
-                      <Comment />
-                      <Comment />
+                      {comments?.map((item) => (<Comment key={item?.id} id={item?.id} comment={item?.comment} createdAt={item?.createdAt} user={item?.user} userAvatar={item?.userAvatar} />))}
+                      
                     </div>
                   </div>
                 </div>

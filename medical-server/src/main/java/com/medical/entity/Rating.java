@@ -1,5 +1,6 @@
 package com.medical.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
@@ -39,12 +40,19 @@ public class Rating implements Serializable {
 
     @Column(name = "created_At")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
     @CreationTimestamp
     private Date createdAt;
 
     @Column(name = "update_At")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateAt;
+
+    public Rating(User user, Product product, String comment) {
+        this.user = user;
+        this.product = product;
+        this.comment = comment;
+    }
 
     @Override
     public String toString() {

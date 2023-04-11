@@ -76,7 +76,6 @@ CREATE TABLE `cartItems` (
 	FOREIGN KEY(product_Id) REFERENCES products(id),
 	FOREIGN KEY(cart_Id) REFERENCES carts(id)
 );	
-<<<<<<< HEAD
 DROP TABLE IF EXISTS blogs;
 CREATE TABLE blogs (
 	id 		TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -101,15 +100,12 @@ CREATE TABLE `blogImage`(
     blog_id						TINYINT UNSIGNED,
     FOREIGN KEY(blog_id) REFERENCES blogs(id)
 );
-=======
 
->>>>>>> 0e2ecaad1e3e8d93b3db202156b862451f0c614f
 DROP TABLE IF EXISTS `rating`;
 CREATE TABLE `rating`(
 	id 								TINYINT unsigned PRIMARY KEY AUTO_INCREMENT,
     user_Id 						TINYINT unsigned not null,
     product_Id 						TINYINT unsigned not null,
-    blog_id							TINYINT unsigned,
     `comment` 						VARCHAR(1000) NOT NULL,
     created_At 						DATETIME DEFAULT NOW(),
     update_At 						DATETIME,
@@ -231,6 +227,9 @@ INSERT INTO `users` (`email`, `username`, `fullname`, `password`,`phone`, `role`
 ('pvd14092001@gmail.com', 'medical_admin', 'Phạm Văn Đạt', '$2a$12$34v8mMKqNaTTSgARBNE8leWz3.8dGIGQ6VKNUUeZjs3j2u4NedKL2','0978315545', 'ADMIN', 'Ha Noi', 1 ,'123'),
 ('test@gmail.com', 'test_employye', 'Le Chi Kiet', '$2a$12$16RqQAIKqbO8UrPEOzmZSu/dnsgN6y5XkzrF85vwL2hDOsoJS0krS','0123456789','CLIENT', 'Ha Tinh', 1 , '123');
 
+
+
+
 INSERT INTO categories (`name`) VALUES
 ('Chăm sóc sắc đẹp'),
 ('Chăm sóc cá nhân'),
@@ -299,6 +298,12 @@ INSERT INTO `products` (`title`, `descriptions`, `originalPrice`,  `categoryId`,
 ('Thuốc Paracetamol Stada 500mg hỗ trợ giảm đau và hạ sốt (10 vỉ x 10 viên)', 'Thuốc Paracetamol Stada 500mg là sản phẩm của Công ty TNHH Liên doanh Stada Việt Nam có thành phần dược chất chính Paracetamol được sử dụng để điều trị các cơn đau từ nhẹ đến trung bình bao gồm đau đầu, đau nửa đầu, đau thần kinh đau răng, đau họng, đau do hành kinh, đau nhức, giảm triệu chứng đau nhức do thấp khớp, cảm cúm, cảm sốt và cảm lạnh.', 50000, 5, 1, 99, 99, 1, 0 ),
 ('Thuốc Magnesium - B6 TV.Pharm làm giảm các triệu chứng thiếu hụt magnesi (100 viên)', 'Magnesium - B6 do Công ty Cổ phần Dược phẩm TV.PHARM sản xuất có chứa magnesi lactat dihydrat và vitamin B6 với công dụng làm giảm các triệu chứng thiếu hụt magnesi như: Nôn mửa, khó chịu, mệt mỏi, rối loạn giấc ngủ nhẹ, đánh trống ngực, chứng chuột rút.Viên bao phim màu trắng, hình oval, hai mặt trơn.', 52000, 5, 2, 99, 99, 1, 0 );
 
+
+INSERT INTO `rating`(user_Id, product_Id, `comment` ) VALUES 
+(1, 1, 'Rất tốt !'),
+(2, 1, 'Đẹp'),
+(2, 1, 'Good'),
+(2, 1, 'Mua lại lần 2 r nha, dùng tốt ạ <3');
 
 INSERT INTO `product-cared`(`userId`, `productId`) VALUES 
 (1, 1),

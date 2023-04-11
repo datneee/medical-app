@@ -9,6 +9,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -30,6 +31,19 @@ public class ProductDTO {
     private CategoryDTO category;
 
     private List<ProductImagesDTO> productImages;
+
+    private List<RatingDTO> productRatesList;
+
+
+    @Data
+    @NoArgsConstructor
+    public static class RatingDTO extends  RepresentationModel<RatingDTO> {
+        private Integer id;
+        private String comment;
+        private Date createdAt;
+        private Date updateAt;
+        private CustomerDTO user;
+    }
 
     @Data
     @NoArgsConstructor

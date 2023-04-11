@@ -12,6 +12,7 @@ const initState = {
   order: [],
   loading: false,
   message: "",
+  comment: null
 };
 
 const reducer = (state = initState, { type, payload }) => {
@@ -85,6 +86,11 @@ const reducer = (state = initState, { type, payload }) => {
         ...state,
         buyedTotal: payload,
       };
+    case UserAuth.COMMENT:
+      return {
+        ...state,
+        comment: payload
+      }
     default:
       return { ...state };
   }

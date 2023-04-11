@@ -279,3 +279,25 @@ const buyAction = (payload) => {
     payload: payload,
   };
 };
+const commentProductAction = (payload) => {
+  return {
+    type: UserAuth.COMMENT,
+    payload: payload
+  }
+}
+export const fetchCommentProduct = (userId, productId, comment) => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.createComment(userId, productId, comment)
+    .then((res) => {
+      if (res) {
+        console.log(res);
+        dispatch(commentProductAction(res?.result?.data));
+      } 
+    })
+    .catch((rej) => {
+      dispatch(haveErrorAction(rej))
+    })
+    .finally(() => {
+      dispatch(loadAction(false));
+    })
+}

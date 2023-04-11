@@ -65,6 +65,13 @@ const AuthServices = {
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
     }),
+  createComment: (userId, productId, comment) => 
+    new Promise((resolve, reject) => {
+      axiosClient
+        .post(`${paths.RATING}?userId=${userId}&productId=${productId}&comment=${comment}`)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej))
+    }),
   getOrderItem: (id) =>
     new Promise((resolve, reject) => {
       axiosClient
@@ -72,5 +79,6 @@ const AuthServices = {
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
     }),
+  
 };
 export default AuthServices;
