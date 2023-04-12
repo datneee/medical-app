@@ -54,6 +54,11 @@ public class ProductService extends BasePagination<Product, IProductRepository> 
     }
 
     @Override
+    public List<OrderItem> getListFeatureProduct() {
+        return repository.getListFeatureProduct();
+    }
+
+    @Override
     public Product getById(Integer id) {
         return repository.findProductById(id);
     }

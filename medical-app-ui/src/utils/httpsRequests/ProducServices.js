@@ -31,6 +31,13 @@ const ProductServices = {
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
     }),
+  getProductFeatured: () => 
+    new Promise((resolve, reject) => {
+      axiosClient
+        .get(paths.GET_PRODUCT_FEATURED)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej))
+    }),
   getCategories: () =>
     new Promise((resolve, reject) => {
       axiosClient

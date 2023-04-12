@@ -26,6 +26,7 @@ export const UserAuth = {
 export const Service = {
   LOADING: "LOADING ACTION",
   GET_PRODUCTS: "GET LIST PRODUCTS",
+  GET_PRODUCT_FEATURED: "GET LIST PRODUCT FEATURED",
   GET_PRODUCTS_BY_CATEGORY_ID: "GET LIST PRODUCTS BY CATEGORY ID",
   GET_PRODUCT: "GET 1 PRODUCT",
   GET_CATEGORIES: "GET LIST CATEGORIES",
@@ -36,6 +37,7 @@ export const paths = {
   PRODUCTS: "/products",
   GET_PRODUCTS_BY_CATEGORY_ID: "/products/inCategory",
   BUY_PRODUCT: "/products/buy",
+  GET_PRODUCT_FEATURED: "/products/feature",
   CATEGORIES: "/categories",
   BRANDS: "/brands",
   LOGIN: "/auth/login",

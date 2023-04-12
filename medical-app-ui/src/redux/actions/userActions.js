@@ -135,6 +135,7 @@ export const addToCart = (userId, productId, amount) => async (dispatch) => {
         dispatch(haveErrorAction("Có lỗi, vui lòng thử lại !"));
       } else {
         dispatch(addToCartAction(true));
+        dispatch(getCartItem(userId))
       }
     })
     .catch((rej) => {

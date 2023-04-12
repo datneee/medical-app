@@ -2,6 +2,7 @@ package com.medical.services.Impl;
 
 import com.medical.constants.StatusOrderItem;
 import com.medical.entity.OrderItem;
+import com.medical.entity.Product;
 import com.medical.repositories.IOrderItemRepository;
 import com.medical.services.IOrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,8 @@ public class OrderItemService implements IOrderItemService {
         }
         return revenue;
     }
+
+
 
     @Override
     public void createOrderItems(OrderItem orderItem) {

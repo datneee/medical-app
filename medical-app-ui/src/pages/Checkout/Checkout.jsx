@@ -10,6 +10,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   fetchBuyCart,
   fetchBuyProductOnly,
+  getCartItem,
 } from "../../redux/actions/userActions";
 
 const Checkout = () => {
@@ -32,10 +33,12 @@ const Checkout = () => {
     console.log(useQuery.get("actor"));
     switch (useQuery.get("actor")) {
       case "cart":
-        dispatch(fetchBuyCart(user?.id));
+        dispatch(fetchBuyCart(user?.id)); 
+        dispatch(getCartItem(user?.id))
         break;
       case "product":
-        dispatch(fetchBuyProductOnly(user?.id, cartItems[0]?.product?.id));
+        dispatch(fetchBuyProductOnly(user?.id, cartItems[0]?.product?.id, 1));
+        dispatch(getCartItem(user?.id))
         break;
       default:
         break;

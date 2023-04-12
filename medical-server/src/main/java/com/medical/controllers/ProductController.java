@@ -60,6 +60,10 @@ public class ProductController extends BaseController<Product> {
         return this.resPagination(paginateProducts);
     }
 
+    @GetMapping(value = "/feature")
+    public ResponseEntity<?> getListFeatureProduct() {
+        return new ResponseEntity<>(service.getListFeatureProduct(), HttpStatus.OK);
+    }
     @GetMapping(value = "/inCategory")
     @ResponseBody
     public ResponseEntity<?> getProductByCategoryIdId(@RequestParam(name = "id") Integer id, ProductFilter productFilter){

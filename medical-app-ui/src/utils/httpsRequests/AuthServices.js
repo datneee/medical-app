@@ -61,7 +61,7 @@ const AuthServices = {
   buyProductOnly: (userId, productId, amount) =>
     new Promise((resolve, reject) => {
       axiosClient
-        .post(paths.BUY_PRODUCT, { userId, productId, amount })
+        .post(`${paths.BUY_PRODUCT}?userId=${userId}&productId=${productId}&amount=${amount}`)
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
     }),

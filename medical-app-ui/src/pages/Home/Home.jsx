@@ -11,6 +11,7 @@ import {
   fetchAllProducts,
   fetchAllCategory,
   fetchAllBrand,
+  fetchListProductFeatured
 } from "../../redux/actions/serviceActions";
 import { useDispatch, useSelector } from "react-redux";
 import ListSpecialProducts from "../../components/ListSpecialProducts/ListSpecialProducts";
@@ -37,12 +38,14 @@ const Home = () => {
   const medicals = service?.products;
   const categories = service?.categories;
   const brands = service?.brands;
+  const featureds = service?.productFeatured;
   const mainCategory = categories[0];
   const listSubCategories = categories.slice(1, 6);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchAllProducts());
+    dispatch(fetchListProductFeatured())
     dispatch(fetchAllCategory());
     dispatch(fetchAllBrand());
   }, []);
@@ -183,8 +186,8 @@ const Home = () => {
               removeArrowOnDeviceType={["tablet", "mobile"]}
               dotListClass="custom-dot-list-style"
             >
-              {medicals.length > 0 &&
-                medicals.map((element, index) => (
+              {featureds.length > 0 &&
+                featureds.map((element, index) => (
                   <ProductCard key={index} product={element} grid={3} />
                 ))}
             </Carousel>

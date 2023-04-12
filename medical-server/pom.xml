@@ -12,6 +12,7 @@
     <artifactId>medical-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>medical-server</name>
+    
     <description>medical-server</description>
     <properties>
         <java.version>11</java.version>

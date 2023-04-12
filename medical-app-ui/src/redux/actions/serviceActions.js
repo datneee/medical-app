@@ -120,3 +120,22 @@ export const fetchProductsInCategory = (id) => async (dispatch) => {
       dispatch(loadAction(false));
     });
 };
+const getListProductFeatured = (payload) => {
+  return {
+    type: Service.GET_PRODUCT_FEATURED,
+    payload: payload
+  }
+}
+export const fetchListProductFeatured = () => async (dispatch) => {
+  dispatch(loadAction(true));
+  await ProductServices.getProductFeatured()
+    .then((res) => {
+      dispatch(getListProductFeatured(res?.map((item) => item?.product)))
+    })
+    .catch((rej)=> {
+      console.log(rej);
+    })
+    .finally(() => {
+        dispatch(loadAction(false));
+    })
+}

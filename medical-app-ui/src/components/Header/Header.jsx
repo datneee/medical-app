@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 
 import { BsSearch, BsChatLeftDots } from "react-icons/bs";
@@ -8,17 +8,20 @@ import styles from "./Header.scss";
 import Dropdown from "../Dropdown/Dropdown";
 import InputGroup from "../InputGroup/InputGroup";
 import { useDispatch, useSelector } from "react-redux";
-import { authLogoutAction } from "../../redux/actions/userActions";
+import { authLogoutAction, getCartItem } from "../../redux/actions/userActions";
 
 const Header = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state?.service?.categories);
   const auth = useSelector((state) => state?.auth);
   const user = auth?.user;
+  const cart = auth?.cart;
   const handleLogout = () => {
     dispatch(authLogoutAction());
   };
-
+  useEffect(() => {
+    dispatch(getCartItem(user?.id))
+  }, [cart?.length])
   return (
     <header className="header-wrapper">
       <div className="header header-upper py-3">
@@ -93,7 +96,7 @@ const Header = () => {
                     <img src="/images/cart.svg" alt="" />
                     <div className="">
                       <span className="badge cart-quantity badge-warning bg-white text-dark">
-                        {user?.cart?.amount || 0}
+                        {cart?.length || 0}
                       </span>
                       {/* <p>
                         {total?.toLocaleString("it-IT", {

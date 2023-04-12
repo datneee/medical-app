@@ -147,7 +147,7 @@ CREATE TABLE `orderItems` (
 	order_Id 						TINYINT UNSIGNED NOT NULL,
 	product_Id						TINYINT UNSIGNED NOT NULL,
 	created_Date 					DATETIME DEFAULT NOW(),
-    `status` 						ENUM('Processing', 'Delivering' , 'Complete')  DEFAULT 'Processing',
+    `status` 						ENUM('Processing', 'Processed', 'Delivering' , 'Complete')  DEFAULT 'Processing',
 	received_Date 					DATE ,
     amount							INT UNSIGNED NOT NULL,
 	FOREIGN KEY(product_Id) REFERENCES products(id),
