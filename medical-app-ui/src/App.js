@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+
 import { BrowserRouter, RoutesProps, Route, Routes } from "react-router-dom";
 import Layout from "./Layouts/DefaultLayout/Layout";
 import {
@@ -56,7 +57,6 @@ function App() {
               path="checkout"
               element={
                 <Verification>
-                  {" "}
                   <Checkout />
                 </Verification>
               }

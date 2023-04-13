@@ -1,6 +1,5 @@
 import React from "react";
-import CustomerReview from "../CustomerReview/CustomerReview";
-import Updates from "../Updates/Updates";
+import { Updates, CustomerReview } from "../../components";
 import "./RightSide.css";
 
 const RightSide = () => {

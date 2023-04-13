@@ -4,9 +4,24 @@ import { BsCartPlus } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
 import RatingChanged from "../RatingChanged/RatingChanged";
 import styles from "./ProductCard.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../redux/actions/userActions";
 
 const ProductCard = (props) => {
   const { grid, wishlist, product } = props;
+  const auth = useSelector((state) => state?.auth);
+
+  const user = auth?.user;
+  const dispatch = useDispatch();
+
+  const handleAddToCart = async () => {
+    if (user) {
+      await dispatch(addToCart(user?.id, product?.id, 1));
+      alert("Thêm vào giỏ hàng thành công !");
+    } else {
+      alert("Bạn cần đăng nhập để sử dụng giỏ hàng !");
+    }
+  };
   return (
     <div
       style={{ width: "100%!important" }}
@@ -62,10 +77,10 @@ const ProductCard = (props) => {
         </div>
         <div className="action-bar position-absolute">
           <div className="d-flex flex-column gap-10">
-            <Link className="addCart-item-icon">
+            <Link onClick={handleAddToCart} className="addCart-item-icon">
               <BsCartPlus size={32} />
             </Link>
-            <Link className="seeItem-icon">
+            <Link to={"/product/" + product?.id} className="seeItem-icon">
               <img width={32} src="/images/view.svg" alt="" />
             </Link>
           </div>

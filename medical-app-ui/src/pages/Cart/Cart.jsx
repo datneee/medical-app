@@ -20,7 +20,7 @@ const Cart = () => {
   const cartId = user?.cart?.id;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const priceCheckout = cartItems.reduce((total, item) => {
+  const priceCheckout = cartItems?.reduce((total, item) => {
     return total + item?.amount * item?.product?.originalPrice;
   }, 0);
 

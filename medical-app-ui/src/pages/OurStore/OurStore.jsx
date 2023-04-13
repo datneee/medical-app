@@ -17,21 +17,11 @@ import {
 import {
   fetchAllProducts,
   fetchAllCategory,
+  fetchAllBrand,
 } from "../../redux/actions/serviceActions";
 
 import styles from "./OurStore.scss";
 import { useSelector, useDispatch } from "react-redux";
-
-const brands = [
-  {
-    id: 1,
-    name: "Apple",
-  },
-  {
-    id: 2,
-    name: "Samsung",
-  },
-];
 
 const OurStore = () => {
   let [checkedCategory, setCheckCategory] = useState();
@@ -44,8 +34,12 @@ const OurStore = () => {
   const dispatch = useDispatch();
   const service = useSelector((state) => state?.service);
   let medicals = service?.products;
+  let productHots = medicals.filter((item) => item.isHot == "HOT");
+  const brands = service?.brands;
   const categories = service?.categories;
-
+  if (checkedBrand) {
+    medicals = medicals?.filter((item) => item?.brand?.id == checkedBrand);
+  }
   const useQuery = new URLSearchParams(useLocation().search);
   const searchValue = useQuery.get("search");
   const category = useQuery.get("category");
@@ -95,6 +89,7 @@ const OurStore = () => {
         debouncedMaxValue
       )
     );
+
     switch (selectFilter) {
       case "best-selling":
         break;
@@ -112,6 +107,7 @@ const OurStore = () => {
   }, [
     grid,
     checkedCategory,
+    checkedBrand,
     debouncedMinValue,
     debouncedMaxValue,
     selectFilter,
@@ -120,6 +116,7 @@ const OurStore = () => {
     setCheckCategory(category);
     window.scrollTo(0, 0);
     dispatch(fetchAllCategory());
+    dispatch(fetchAllBrand());
     dispatch(
       fetchAllProducts(
         page + 1,
@@ -141,50 +138,38 @@ const OurStore = () => {
           <div className="row">
             <div className="col-3">
               <div className="filter-card mb-3">
-                <h3 className="filter-title">Product Hot</h3>
+                <h3 className="filter-title">Products Hot</h3>
                 <Carousel className="product-hot-list">
-                  <Carousel.Item interval={2000}>
-                    <Link
-                      to="/product/1"
-                      className="text-dark product-hot d-flex align-items-center mb-3"
-                    >
-                      <div className="w-50">
-                        <img
-                          src="images/watch.jpg"
-                          alt=""
-                          className="img-fluid"
-                        />
-                      </div>
-                      <div className="w-50">
-                        <h5>
-                          Kids headphone bulk 10 pack multi colored for students
-                        </h5>
-                        <RatingChanged />
-                        <p>$1000</p>
-                      </div>
-                    </Link>
-                  </Carousel.Item>
-                  <Carousel.Item interval={2000}>
-                    <Link
-                      to={"#"}
-                      className="text-dark product-hot d-flex align-items-center mb-3"
-                    >
-                      <div className="w-50">
-                        <img
-                          src="images/watch.jpg"
-                          alt=""
-                          className="img-fluid"
-                        />
-                      </div>
-                      <div className="w-50">
-                        <h5>
-                          Kids headphone bulk 10 pack multi colored for students
-                        </h5>
-                        <RatingChanged />
-                        <p>$1000</p>
-                      </div>
-                    </Link>
-                  </Carousel.Item>
+                  {productHots?.map((item) => (
+                    <Carousel.Item key={item?.id} interval={2000}>
+                      <Link
+                        to={"/product/" + item?.id}
+                        className="text-dark product-hot d-flex align-items-center mb-3 gap-10"
+                      >
+                        <div className="w-50">
+                          <img
+                            src={
+                              "http://127.0.0.1:8887" +
+                              "/products/" +
+                              item?.productImages[0]?.imageUrl
+                            }
+                            alt=""
+                            className="img-fluid"
+                          />
+                        </div>
+                        <div className="w-50">
+                          <h5>{item?.title}</h5>
+                          <RatingChanged />
+                          <p>
+                            {item?.originalPrice.toLocaleString("it-IT", {
+                              style: "currency",
+                              currency: "VND",
+                            })}
+                          </p>
+                        </div>
+                      </Link>
+                    </Carousel.Item>
+                  ))}
                 </Carousel>
               </div>
               <div className="filter-card mb-3">

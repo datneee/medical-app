@@ -11,7 +11,7 @@ import {
   fetchAllProducts,
   fetchAllCategory,
   fetchAllBrand,
-  fetchListProductFeatured
+  fetchListProductFeatured,
 } from "../../redux/actions/serviceActions";
 import { useDispatch, useSelector } from "react-redux";
 import ListSpecialProducts from "../../components/ListSpecialProducts/ListSpecialProducts";
@@ -45,7 +45,7 @@ const Home = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchAllProducts());
-    dispatch(fetchListProductFeatured())
+    dispatch(fetchListProductFeatured());
     dispatch(fetchAllCategory());
     dispatch(fetchAllBrand());
   }, []);

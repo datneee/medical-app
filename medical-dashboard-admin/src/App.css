@@ -10,16 +10,52 @@
   --smboxShadow: -79px 51px 60px rgba(0, 0, 0, 0.08);
   --activeItem: #f799a354;
 }
-
+.gap-10 {
+  gap: 10px;
+}
+.gap-15 {
+  gap: 15px;
+}
+.gap-30 {
+  gap: 30px;
+}
+.gap-45 {
+  gap: 45px;
+}
+p {
+  margin: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+  padding: 0;
+  margin: 0;
+}
+.btn {
+  padding: .375rem .75rem;
+  background-color: #4599ff;
+  border: none;
+  color: white;
+  font-size: 16px;
+}
+.button {
+  background-color: var(--color-232f3e);
+  color: white;
+  height: 100%;
+  font-size: 14px;
+  padding: 13px 33px;
+  border-radius: 15px;
+}
+a {
+  color: #3b4149;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn , button:hover, a:hover {
+  opacity: .8;
+}
 .App {
   /* padding: 0.5rem 3.5rem; */
   color: var(--black);
-  background: linear-gradient(
-    106.37deg,
-    #ffe1bc 29.63%,
-    #ffcfd1 51.55%,
-    #f3c6f1 90.85%
-  );
+  background: #2374e1b0;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -31,11 +67,11 @@
   display: grid;
   height: 97%;
   width: 97%;
-  background: var(--glass);
+  background-color: white;
   border-radius: 2rem;
   gap: 16px;
-  grid-template-columns: 11rem auto 20rem;
-  overflow: hidden;
+  grid-template-columns: 11rem auto;
+  overflow: auto;
 }
 
 @media screen and (max-width: 1200px) {

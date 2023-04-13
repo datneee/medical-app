@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { ImLocation2 } from "react-icons/im";
 import { BsTicketPerforated } from "react-icons/bs";
+import { Modal, Typography, Button, Box } from "@mui/material";
 
 import { Meta, BreadCrum, Loading } from "../../components";
 
 import styles from "./Checkout.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   fetchBuyCart,
   fetchBuyProductOnly,
   getCartItem,
 } from "../../redux/actions/userActions";
-
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 const Checkout = () => {
   const auth = useSelector((state) => state?.auth);
   const user = auth?.user;
@@ -25,20 +36,20 @@ const Checkout = () => {
   }
   const useQuery = new URLSearchParams(useLocation().search);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [address, setAddress] = useState(() => user?.address);
   const [voucher, setVoucher] = useState("");
   const handleClickBanking = () => {};
   const handleClickShipOff = () => {};
   const orderHanlder = () => {
-    console.log(useQuery.get("actor"));
     switch (useQuery.get("actor")) {
       case "cart":
-        dispatch(fetchBuyCart(user?.id)); 
-        dispatch(getCartItem(user?.id))
+        dispatch(fetchBuyCart(user?.id));
+        dispatch(getCartItem(user?.id));
         break;
       case "product":
         dispatch(fetchBuyProductOnly(user?.id, cartItems[0]?.product?.id, 1));
-        dispatch(getCartItem(user?.id))
+        dispatch(getCartItem(user?.id));
         break;
       default:
         break;
@@ -52,6 +63,52 @@ const Checkout = () => {
       {auth?.loading && <Loading />}
       <Meta title="Checkout here" />
       <BreadCrum title="Checkout here" />
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">
+                Đặt hàng thành công
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              Bạn đã thực hiện đặt hàng thành công, tiếp tục đơn mới nhé !
+            </div>
+            <div class="modal-footer">
+              <button
+                onClick={() => navigate("/ordered")}
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Đơn hàng
+              </button>
+              <button
+                onClick={() => navigate("/store")}
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
+                Cửa hàng
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="checkout-wrapper home-wrapper-2 py-5">
         <div className="container-xxl">
           <div className="row d-flex flex-column gap-15">
@@ -225,7 +282,13 @@ const Checkout = () => {
                       Điều khoản Medical Shop
                     </span>
                   </div>
-                  <button onClick={orderHanlder} className="btn-3">
+                  <button
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"
+                    onClick={orderHanlder}
+                    className="btn-3"
+                  >
                     Đặt hàng
                   </button>
                 </div>
