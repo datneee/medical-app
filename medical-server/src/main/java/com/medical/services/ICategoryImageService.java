@@ -10,7 +10,7 @@ import java.util.List;
 public interface ICategoryImageService {
     List<CategoryImage> createCategoryImages(List<CreateCategoryImageForm> images , Category category);
 
-    void deleteByProductId(Integer categoryId);
+    void deleteByCategoryId(Integer categoryId);
 
     List<CategoryImage> createOrUpdateMany(Category category, MultipartFile[] files);
 }

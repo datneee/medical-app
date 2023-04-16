@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS categories;
 CREATE TABLE categories (
 	id						TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
 	`name` 					VARCHAR(255) NOT NULL,
+    descriptions			VARCHAR(500),
 	`status`				TINYINT DEFAULT 1
 );
 DROP TABLE IF EXISTS brands;
@@ -230,12 +231,12 @@ INSERT INTO `users` (`email`, `username`, `fullname`, `password`,`phone`, `role`
 
 
 
-INSERT INTO categories (`name`) VALUES
-('Chăm sóc sắc đẹp'),
-('Chăm sóc cá nhân'),
-('Thiết bị y tế'),
-('Thực phẩm chức năng'),	
-('Thuốc');
+INSERT INTO categories (`name`, descriptions) VALUES
+('Chăm sóc sắc đẹp', 'Lorem ipsum dolor sit amet consectetur adipisicing elit.Dignissimos, voluptatum nam.'),
+('Chăm sóc cá nhân', 'Lorem ipsum dolor sit amet consectetur adipisicing elit.Dignissimos, voluptatum nam.'),
+('Thiết bị y tế', 'Lorem ipsum dolor sit amet consectetur adipisicing elit.Dignissimos, voluptatum nam.'),
+('Thực phẩm chức năng', 'Lorem ipsum dolor sit amet consectetur adipisicing elit.Dignissimos, voluptatum nam.'),	
+('Thuốc', 'Lorem ipsum dolor sit amet consectetur adipisicing elit.Dignissimos, voluptatum nam.');
 INSERT INTO brands (`name`, webPage, logo) VALUES 
 ('Bioderma', 'https://www.bioderma.us/', 'https://logos-world.net/wp-content/uploads/2020/11/Bioderma-Logo.png'),
 ('Farmasi', 'https://www.farmasius.com/farmasi', 'https://farmasi.com/images/landing/logo.png'),

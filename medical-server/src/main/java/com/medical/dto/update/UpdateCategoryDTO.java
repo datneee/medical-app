@@ -7,4 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateCategoryDTO {
     private String name;
+    private String descriptions;
+    private String status;
 }

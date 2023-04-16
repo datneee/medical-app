@@ -7,4 +7,6 @@ import java.util.List;
 public interface IBrandService {
 
     List<Brand> getListBrand();
+
+    Brand getBrandById(Integer id);
 }

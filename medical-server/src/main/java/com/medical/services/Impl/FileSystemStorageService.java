@@ -53,9 +53,12 @@ public class FileSystemStorageService implements IStorageService {
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
                 if (dir.equals(Common.PRODUCT_IMAGE_UPLOAD_PATH)) {
-                    return Common.PRODUCT_IMAGE_PATTERN_PATH + "/" + fileName;
+                    return fileName;
                 }
-                return Common.PRODUCT_IMAGE_PATTERN_PATH + "/" + fileName;
+                if (dir.equals(Common.CATEGORY_IMAGE_UPLOAD_PATH)) {
+                    return fileName;
+                }
+                return Common.CATEGORY_IMAGE_PATTERN_PATH + "/" + fileName;
             }
         } catch (IOException e) {
             throw new AppException("Failed to store file");

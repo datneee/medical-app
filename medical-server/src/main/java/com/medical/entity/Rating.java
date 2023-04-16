@@ -40,7 +40,7 @@ public class Rating implements Serializable {
 
     @Column(name = "created_At")
     @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern = "dd/MM/yyyy ")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @CreationTimestamp
     private Date createdAt;
 

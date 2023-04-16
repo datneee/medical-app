@@ -8,6 +8,7 @@ export const UserAuth = {
   LOADING: "LOADING ACTION",
   LOG_OUT: "SIGN OUT",
   CHECKOUT: "CHECKOUT",
+  CREATE_CATEGORY: "CREATE CATEGORY",
   REGISTER: "REGISTER",
   FORGOT_PASSWORD: "FORGOT PASSWORD",
   INCORRECT: "INCORRECT INFO",
@@ -21,7 +22,7 @@ export const UserAuth = {
   BUY_PRODUCT: "BUY PRODUCT",
   GET_ORDERS: "GET ORDERS",
   SET_PRICE_CHECKOUT: "SET PRICE CHECKOUT",
-  COMMENT: "COMMENT"
+  COMMENT: "COMMENT",
 };
 export const Service = {
   LOADING: "LOADING ACTION",
@@ -39,6 +40,7 @@ export const paths = {
   BUY_PRODUCT: "/products/buy",
   GET_PRODUCT_FEATURED: "/products/feature",
   CATEGORIES: "/categories",
+  CATEGORIES_IMAGES: "category-images",
   BRANDS: "/brands",
   LOGIN: "/auth/login",
   REGISTRATION: "/auth/signup",
@@ -48,5 +50,5 @@ export const paths = {
   ADD_TO_CART: "/carts/addCartItem",
   BUY_CART: "/carts/buyListCartItems",
   GET_ORDER: "/orders",
-  RATING: "/rates"
+  RATING: "/rates",
 };

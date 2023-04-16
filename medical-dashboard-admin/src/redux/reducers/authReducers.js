@@ -13,6 +13,7 @@ const initState = {
   loading: false,
   message: "",
   comment: null,
+  categoryIsCreated: false,
 };
 
 const reducer = (state = initState, { type, payload }) => {
@@ -95,6 +96,11 @@ const reducer = (state = initState, { type, payload }) => {
       return {
         ...state,
         orders: payload,
+      };
+    case UserAuth.CREATE_CATEGORY:
+      return {
+        ...state,
+        categoryIsCreated: payload,
       };
     default:
       return { ...state };

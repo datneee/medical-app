@@ -61,7 +61,9 @@ const AuthServices = {
   buyProductOnly: (userId, productId, amount) =>
     new Promise((resolve, reject) => {
       axiosClient
-        .post(`${paths.BUY_PRODUCT}?userId=${userId}&productId=${productId}&amount=${amount}`)
+        .post(
+          `${paths.BUY_PRODUCT}?userId=${userId}&productId=${productId}&amount=${amount}`
+        )
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
     }),
@@ -78,6 +80,27 @@ const AuthServices = {
     new Promise((resolve, reject) => {
       axiosClient
         .get(`${paths.GET_ORDER}/${id}`)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej));
+    }),
+  createCategory: (name, descriptions) =>
+    new Promise((resolve, reject) => {
+      axiosClient
+        .post(paths.CATEGORIES, { name, descriptions })
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej));
+    }),
+  createOrEditCategoryImage: (formData) =>
+    new Promise((resolve, reject) => {
+      axiosClient
+        .post(paths.CATEGORIES_IMAGES, formData)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej));
+    }),
+  editCategory: (id, name, descriptions, status) =>
+    new Promise((resolve, reject) => {
+      axiosClient
+        .patch(`${paths.CATEGORIES}/${id}`, { name, descriptions, status })
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
     }),

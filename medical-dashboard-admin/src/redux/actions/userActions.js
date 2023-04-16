@@ -1,5 +1,6 @@
 import { UserAuth, paths } from "../../utils/constants/common";
 import AuthServices from "../../utils/httpsRequests/AuthServices";
+import { fetchAllCategory } from "./serviceActions";
 
 const authLoginAction = (payload) => {
   return {
@@ -325,3 +326,53 @@ export const fetchOrderItem = (userId) => async (dispatch) => {
       dispatch(loadAction(false));
     });
 };
+const createCategoryAction = (payload) => {
+  return {
+    type: UserAuth.CREATE_CATEGORY,
+    payload: payload,
+  };
+};
+export const fetchCreateCategory =
+  (name, descriptions, selectedFile) => async (dispatch) => {
+    dispatch(loadAction(true));
+    await AuthServices.createCategory(name, descriptions)
+      .then(async (res) => {
+        if (res) {
+          if (selectedFile) {
+            const formData = new FormData();
+            formData.append("categoryId", res?.id);
+            formData.append("files", selectedFile);
+            const res2 = await AuthServices.createOrEditCategoryImage(formData);
+          }
+
+          dispatch(createCategoryAction(true));
+          dispatch(fetchAllCategory());
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        dispatch(loadAction(false));
+      });
+  };
+export const fetchEditCategory =
+  (id, name, descriptions, status, selectedFile) => async (dispatch) => {
+    dispatch(loadAction(true));
+    await AuthServices.editCategory(id, name, descriptions, status)
+      .then(async (res) => {
+        if (selectedFile) {
+          const formData = new FormData();
+          formData.append("categoryId", id);
+          formData.append("files", selectedFile);
+          const res2 = await AuthServices.createOrEditCategoryImage(formData);
+        }
+        dispatch(fetchAllCategory());
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        dispatch(loadAction(false));
+      });
+  };

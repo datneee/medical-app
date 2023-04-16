@@ -34,6 +34,9 @@ public class ProductService extends BasePagination<Product, IProductRepository> 
     private IOrderItemService orderItemService;
     @Autowired
     private ICategoryService categoryService;
+
+    @Autowired
+    private IBrandService brandService;
     @Autowired
     private IUserService userService;
 
@@ -93,6 +96,7 @@ public class ProductService extends BasePagination<Product, IProductRepository> 
     public Product createProduct(CreateProductForm form) {
         Product product = form.toEntity();
         product.setCategory(categoryService.getCategoryById(form.getCategoryId()));
+        product.setBrand(brandService.getBrandById(form.getBrandId()));
         return repository.save(product);
     }
 

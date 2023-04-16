@@ -59,8 +59,8 @@ public class CategoryController extends BaseController<Category> {
     @PostMapping
 //    @PreAuthorize("@userAuthorizer.isAdmin(authentication)")
     public ResponseEntity<?> create(@RequestBody @Valid CreateCategoryDTO categoryDTO) throws Exception {
-        categoryService.create(categoryDTO);
-        return new ResponseEntity<>(Common.MSG_CREATED_SUCCESSFUL_201, HttpStatus.CREATED);
+        Category category = categoryService.create(categoryDTO);
+        return new ResponseEntity<>(category, HttpStatus.CREATED);
     }
 
 

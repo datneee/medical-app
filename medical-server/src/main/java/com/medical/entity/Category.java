@@ -25,6 +25,9 @@ public class Category implements Serializable {
     @Column(name = "`name`",length = 255,nullable = false)
     private String name;
 
+    @Column(name = "descriptions",length = 500)
+    private String descriptions;
+
     @Column(name = "`status`")
     private StatusCodeEnum status;
 

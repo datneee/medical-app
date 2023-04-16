@@ -42,13 +42,13 @@ public class CategoryImageService implements ICategoryImageService {
     }
 
     @Override
-    public void deleteByProductId(Integer productId) {
-        repository.deleteById(productId);
+    public void deleteByCategoryId(Integer categoryId) {
+        repository.deleteByCategoryId(categoryId);
     }
 
     @Override
     public List<CategoryImage> createOrUpdateMany(Category category, MultipartFile[] files) {
-        this.deleteByProductId(category.getId());
+        this.deleteByCategoryId(category.getId());
         storageService.deleteFilesByPrefix(String.valueOf(category.getId()), Common.CATEGORY_IMAGE_UPLOAD_PATH);
         List<CategoryImage> categoryImages = new ArrayList<>();
         for (MultipartFile file : files) {

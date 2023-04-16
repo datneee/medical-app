@@ -51,9 +51,14 @@ public class CategoryService extends BasePagination<Category, ICategoryRepositor
 
     @Override
     public Category update(UpdateCategoryDTO categoryDTO, Category currentCategory) throws Exception {
+        if (categoryDTO.getStatus() == "NOT_ACTIVE") {
+            this.lockCategory(currentCategory.getId());
+        } else if (categoryDTO.getStatus() == "ACTIVE") {
+            this.unLockCategory(currentCategory.getId());
+        }
         Category updated = modelMapper.map(categoryDTO, Category.class);
-        if(repository.findByName(categoryDTO.getName()) != null)
-            throw new Exception("Category has already exists !");
+//        if(repository.findByName(updated.getName()) != null)
+//            throw new Exception("Category has already exists !");
         modelMapper.map(updated, currentCategory);
         return repository.save(currentCategory);
     }

@@ -10,8 +10,10 @@ const axiosClient = (() => {
   instance.interceptors.request.use((config) => {
     const { token } = store.getState().auth;
     if (token) {
+      config.headers.Accept = "*/*";
       config.headers.Authorization = `Bearer ${token}`;
-      config.headers.ContentType = "application/json; charset=UTF-8";
+      config.headers.ContentType =
+        "application/json; charset=UTF-8; multipart/form-data";
     }
     return config;
   });

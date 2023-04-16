@@ -5,6 +5,7 @@ public class Common {
     public static final String PRODUCT_IMAGE_UPLOAD_PATH = "/products";
     public static final String CATEGORY_IMAGE_UPLOAD_PATH = "/categories";
     public static final String PRODUCT_IMAGE_PATTERN_PATH = "/upload-dir/products";
+    public static final String CATEGORY_IMAGE_PATTERN_PATH = "/upload-dir/categories";
     public static final String MSG_SUCCESS = "Thành công";
     public static final String MSG_DELETE_SUCCESS = "Xóa thành công";
     public static final String MSG_CREATED_SUCCESSFUL_201 = "Tạo mới thành công";

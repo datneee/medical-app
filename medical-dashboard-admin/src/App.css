@@ -29,6 +29,32 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0;
   margin: 0;
 }
+.btn-normal {
+  padding: .375rem .75rem;
+  background-color: #6c757d;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+}
+.edit-btn {
+  padding: 6px 12px;
+  background: #ffc107;
+  border-radius: 6px;
+  color: white;
+}
+.delete-btn {
+  border-radius: 6px;
+  color: white;
+  padding: 6px 12px;
+  background-color: #ff4355cf;
+}
+.edit-btn:hover, .delete-btn:hover {
+  opacity: .8;
+}
+.modal-dialog {
+  max-width: 800px !important;
+}
 .btn {
   padding: .375rem .75rem;
   background-color: #4599ff;

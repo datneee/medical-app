@@ -10,4 +10,5 @@ import javax.validation.constraints.NotBlank;
 public class CreateCategoryDTO {
     @NotBlank
     private String name;
+    private String descriptions;
 }

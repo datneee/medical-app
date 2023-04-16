@@ -46,7 +46,7 @@ public class CategoryImageController extends BaseController<CategoryImage> {
         Category category = categoryService.getCategoryById(categoryId);
 
         if (category == null) {
-            throw new NotFoundException("Not found product");
+            throw new NotFoundException("Not found category");
         }
 
         List<CategoryImage> categoryImages = categoryImageService.createOrUpdateMany(category, files);
