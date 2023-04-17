@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -31,6 +32,14 @@ public class UpdateProductForm {
     private Integer currentAmount;
     @Min(value = 1 , message = "Số lượng tối thiểu  1")
     private Integer amount;
+    private String isHot;
+
+
+    @NotNull
+    private Integer categoryId;
+
+    @NotNull
+    private Integer brandId;
 
 //    private List<CreateProductImageForm> productImages;
 

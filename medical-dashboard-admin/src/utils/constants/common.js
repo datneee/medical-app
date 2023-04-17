@@ -36,6 +36,7 @@ export const Service = {
 };
 export const paths = {
   PRODUCTS: "/products",
+  PRODUCT_IMAGES: "/product-images",
   GET_PRODUCTS_BY_CATEGORY_ID: "/products/inCategory",
   BUY_PRODUCT: "/products/buy",
   GET_PRODUCT_FEATURED: "/products/feature",

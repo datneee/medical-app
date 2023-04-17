@@ -31,6 +31,7 @@ public class CreateProductForm {
     private Integer currentAmount;
     @Min(value = 1 , message = "Số lượng tối thiểu  1")
     private Integer amount;
+    private String isHot;
 
     @NotNull
     private Integer categoryId;

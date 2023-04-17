@@ -128,6 +128,11 @@ public class ProductController extends BaseController<Product> {
         return new ResponseEntity<>("Lock Product Successfull",HttpStatus.OK);
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable("id") Integer id) {
+        service.deleteProduct(id);
+        return new ResponseEntity<>("Delete Product Successfull",HttpStatus.OK);
+    }
 
     @GetMapping(value = "/count")
     public ResponseEntity<?> getProductCount(){

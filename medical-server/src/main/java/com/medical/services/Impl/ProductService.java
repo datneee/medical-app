@@ -1,6 +1,7 @@
 package com.medical.services.Impl;
 
 import com.medical.base.BasePagination;
+import com.medical.constants.IsHotProductEnum;
 import com.medical.constants.StatusCodeEnum;
 import com.medical.constants.StatusCodeProductEnum;
 import com.medical.dto.ProductDTO;
@@ -16,6 +17,7 @@ import com.medical.specifications.GenericSpecification;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -95,6 +97,12 @@ public class ProductService extends BasePagination<Product, IProductRepository> 
     @Override
     public Product createProduct(CreateProductForm form) {
         Product product = form.toEntity();
+        if (form.getIsHot() == "HOT") {
+            product.setIsHot(IsHotProductEnum.HOT);
+        }
+        if (form.getIsHot() == "NORMAL") {
+            product.setIsHot(IsHotProductEnum.NORMAL);
+        }
         product.setCategory(categoryService.getCategoryById(form.getCategoryId()));
         product.setBrand(brandService.getBrandById(form.getBrandId()));
         return repository.save(product);
@@ -154,6 +162,12 @@ public class ProductService extends BasePagination<Product, IProductRepository> 
     @Override
     public long getProductCount() {
         return repository.count();
+    }
+
+    @Override
+    @Transactional
+    public void deleteProduct(Integer id) {
+        repository.deleteById(id);
     }
 
 

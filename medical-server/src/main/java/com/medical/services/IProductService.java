@@ -39,4 +39,6 @@ public interface IProductService{
     boolean existsProductByTitle(String title);
 
     long getProductCount();
+
+    void deleteProduct(Integer id);
 }

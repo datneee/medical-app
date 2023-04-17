@@ -1,6 +1,7 @@
+import { async } from "q";
 import { UserAuth, paths } from "../../utils/constants/common";
 import AuthServices from "../../utils/httpsRequests/AuthServices";
-import { fetchAllCategory } from "./serviceActions";
+import { fetchAllCategory, fetchAllProducts } from "./serviceActions";
 
 const authLoginAction = (payload) => {
   return {
@@ -376,3 +377,62 @@ export const fetchEditCategory =
         dispatch(loadAction(false));
       });
   };
+  export const fetchCreateProduct =
+  (form ,selectedFiles) => async (dispatch) => {
+    dispatch(loadAction(true));
+    await AuthServices.createProduct(form)
+      .then(async (res) => {
+        if (res) {
+          if (selectedFiles) {
+            const formData = new FormData();
+            for(const file of selectedFiles) {
+            formData.append("files", file, file.name);
+            }
+            formData.append("productId", res?.id);
+            const res2 = await AuthServices.createOrEditProductImages(formData);
+          }
+
+          dispatch(fetchAllProducts(1, 5));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        dispatch(loadAction(false));
+      });
+  };
+export const fetchEditProduct =
+  (id, form, selectedFile) => async (dispatch) => {
+    dispatch(loadAction(true));
+    await AuthServices.editCategory(form)
+      .then(async (res) => {
+        console.log(res);
+        // if (selectedFile) {
+        //   const formData = new FormData();
+        //   formData.append("categoryId", id);
+        //   formData.append("files", selectedFile);
+        //   const res2 = await AuthServices.createOrEditCategoryImage(formData);
+        // }
+        // dispatch(fetchAllCategory());
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        dispatch(loadAction(false));
+      });
+  };
+export const fetchDeleteProduct = (id) => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.deleteProduct(id)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((rej) => {
+      console.log(rej);
+    })
+    .finally(() => {
+      dispatch(loadAction(false));
+    })
+}
