@@ -1,5 +1,7 @@
 package com.medical.dto;
 
+import com.medical.constants.IsHotProductEnum;
+import com.medical.constants.StatusCodeProductEnum;
 import com.medical.entity.Brand;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +29,9 @@ public class ProductDTO {
     private Integer promotionPrice;
 
     private Integer amount;
+    private Integer currentAmount;
+    private IsHotProductEnum isHot;
+    private StatusCodeProductEnum status;
     private Brand brand;
     private CategoryDTO category;
 

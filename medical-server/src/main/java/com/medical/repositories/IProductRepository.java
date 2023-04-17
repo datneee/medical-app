@@ -4,7 +4,9 @@ import com.medical.entity.OrderItem;
 import com.medical.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,7 +16,11 @@ public interface IProductRepository extends JpaRepository<Product , Integer> , J
 
     Product findProductById(Integer id);
 
-    void deleteById(Integer id);
+    void deleteProductById(Integer id);
+
+    @Modifying
+    @Query(value = "DELETE FROM Product p WHERE p.id = :id")
+    void deleteById(@Param("id") Integer id);
 
     List<Product> findByCategoryId(Integer id);
     Product findProductByTitle(String title);

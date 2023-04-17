@@ -33,13 +33,14 @@ public class UpdateProductForm {
     @Min(value = 1 , message = "Số lượng tối thiểu  1")
     private Integer amount;
     private String isHot;
+    private String status;
 
 
-    @NotNull
-    private Integer categoryId;
-
-    @NotNull
-    private Integer brandId;
+//    @NotNull
+//    private Integer categoryId;
+//
+//    @NotNull
+//    private Integer brandId;
 
 //    private List<CreateProductImageForm> productImages;
 

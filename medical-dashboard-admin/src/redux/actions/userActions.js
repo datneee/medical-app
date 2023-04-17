@@ -377,44 +377,44 @@ export const fetchEditCategory =
         dispatch(loadAction(false));
       });
   };
-  export const fetchCreateProduct =
-  (form ,selectedFiles) => async (dispatch) => {
-    dispatch(loadAction(true));
-    await AuthServices.createProduct(form)
-      .then(async (res) => {
-        if (res) {
-          if (selectedFiles) {
-            const formData = new FormData();
-            for(const file of selectedFiles) {
+export const fetchCreateProduct = (form, selectedFiles) => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.createProduct(form)
+    .then(async (res) => {
+      if (res) {
+        if (selectedFiles) {
+          const formData = new FormData();
+          for (const file of selectedFiles) {
             formData.append("files", file, file.name);
-            }
-            formData.append("productId", res?.id);
-            const res2 = await AuthServices.createOrEditProductImages(formData);
           }
-
-          dispatch(fetchAllProducts(1, 5));
+          formData.append("productId", res?.id);
+          const res2 = await AuthServices.createOrEditProductImages(formData);
         }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        dispatch(loadAction(false));
-      });
-  };
+
+        dispatch(fetchAllProducts(1, 5));
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .finally(() => {
+      dispatch(loadAction(false));
+    });
+};
 export const fetchEditProduct =
-  (id, form, selectedFile) => async (dispatch) => {
+  (id, form, selectedFiles) => async (dispatch) => {
     dispatch(loadAction(true));
-    await AuthServices.editCategory(form)
+    await AuthServices.editProduct(id, form)
       .then(async (res) => {
-        console.log(res);
-        // if (selectedFile) {
-        //   const formData = new FormData();
-        //   formData.append("categoryId", id);
-        //   formData.append("files", selectedFile);
-        //   const res2 = await AuthServices.createOrEditCategoryImage(formData);
-        // }
-        // dispatch(fetchAllCategory());
+        if (selectedFiles) {
+          const formData = new FormData();
+          formData.append("productId", id);
+          for (const file of selectedFiles) {
+            formData.append("files", file, file.name);
+          }
+          const res2 = await AuthServices.createOrEditProductImages(formData);
+        }
+        dispatch(fetchAllProducts(1, 5));
       })
       .catch((err) => {
         console.log(err);
@@ -427,12 +427,12 @@ export const fetchDeleteProduct = (id) => async (dispatch) => {
   dispatch(loadAction(true));
   await AuthServices.deleteProduct(id)
     .then((res) => {
-      console.log(res);
+      dispatch(fetchAllProducts(1, 5));
     })
     .catch((rej) => {
       console.log(rej);
     })
     .finally(() => {
       dispatch(loadAction(false));
-    })
-}
+    });
+};

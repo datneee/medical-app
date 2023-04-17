@@ -121,8 +121,7 @@ CREATE TABLE ProductImages(
     created_At 						DATETIME DEFAULT NOW(),
     imagePublicId					VARCHAR(500),
     updated_At						DATETIME,
-    product_Id 						TINYINT UNSIGNED,
-    FOREIGN KEY(product_Id) REFERENCES Products(id)
+    product_Id 						TINYINT UNSIGNED
 );
 DROP TABLE IF EXISTS CategoryImages;
 CREATE TABLE CategoryImages(
@@ -171,6 +170,16 @@ CREATE TABLE ResetPasswordUserToken(
     FOREIGN KEY(userId) REFERENCES users(id)
 );
 -- -- ====================================  TRIGGER  ============================================
+DROP TRIGGER IF EXISTS auto_deleteProductImages_before_deleteProduct;
+DELIMITER $$
+CREATE TRIGGER auto_deleteProductImages_before_deleteProduct
+BEFORE DELETE ON products
+FOR EACH ROW
+BEGIN 
+	DELETE FROM ProductImages p WHERE p.id = OLD.id;
+END $$
+DELIMITER ;
+
 DROP TRIGGER IF EXISTS auto_rendCart_withUSer;
 DELIMITER $$
 CREATE TRIGGER auto_rendCart_withUSer

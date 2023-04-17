@@ -9,6 +9,7 @@ import com.medical.dto.pagination.PaginateDTO;
 import com.medical.entity.Order;
 import com.medical.entity.OrderItem;
 import com.medical.entity.Product;
+import com.medical.entity.ProductImages;
 import com.medical.forms.CreateProductForm;
 import com.medical.forms.UpdateProductForm;
 import com.medical.repositories.IProductRepository;
@@ -97,26 +98,27 @@ public class ProductService extends BasePagination<Product, IProductRepository> 
     @Override
     public Product createProduct(CreateProductForm form) {
         Product product = form.toEntity();
-        if (form.getIsHot() == "HOT") {
-            product.setIsHot(IsHotProductEnum.HOT);
-        }
-        if (form.getIsHot() == "NORMAL") {
-            product.setIsHot(IsHotProductEnum.NORMAL);
-        }
+        product.setIsHot(IsHotProductEnum.valueOf(form.getIsHot()));
+        product.setStatus(StatusCodeProductEnum.OPENING);
         product.setCategory(categoryService.getCategoryById(form.getCategoryId()));
         product.setBrand(brandService.getBrandById(form.getBrandId()));
+
         return repository.save(product);
     }
 
     @Override
     public void updateProduct(Integer id , UpdateProductForm form) {
-            Product product = form.toEntity();
-            product.setId(id);
-            product.setCategory(categoryService.getCategoryById(repository.findProductById(id).getCategory().getId()));
-            product.setCreatedDate(repository.findProductById(id).getCreatedDate());
-            repository.save(product);
-//            product.setProductImages(productImageService.createProductImages(form.getProductImages(), product));
+        Product p = this.getById(id);
+        Product product = form.toEntity();
+        product.setId(id);
+        product.setBrand(p.getBrand());
+        product.setCategory(p.getCategory());
+        product.setIsHot(IsHotProductEnum.valueOf(form.getIsHot()));
+        product.setStatus(StatusCodeProductEnum.valueOf(form.getStatus()));
 
+        //product.setCategory(categoryService.getCategoryById(repository.findProductById(id).getCategory().getId()));
+        product.setCreatedDate(p.getCreatedDate());
+        repository.save(product);
     }
 
     @Override
@@ -167,6 +169,7 @@ public class ProductService extends BasePagination<Product, IProductRepository> 
     @Override
     @Transactional
     public void deleteProduct(Integer id) {
+        productImageService.deleteByProductId(id);
         repository.deleteById(id);
     }
 

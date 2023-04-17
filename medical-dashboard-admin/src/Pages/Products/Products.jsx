@@ -14,7 +14,11 @@ import { Link } from "react-router-dom";
 import { Pagination } from "react-headless-pagination";
 import ProductServices from "../../utils/httpsRequests/ProducServices";
 import { async } from "q";
-import { fetchCreateProduct, fetchDeleteProduct } from "../../redux/actions/userActions";
+import {
+  fetchCreateProduct,
+  fetchDeleteProduct,
+  fetchEditProduct,
+} from "../../redux/actions/userActions";
 
 const Products = () => {
   const [show, setShow] = useState(false);
@@ -66,59 +70,85 @@ const Products = () => {
         e.target.files[2]
       );
     }
-    
   };
   const debouncedSearchValue = useDebounce(searchValue, 720);
   const handleOpenModalCreate = () => {
     setProduct(null);
-    resetForm()
+    resetForm();
     handleShow();
   };
   const resetForm = () => {
-    setTitle('');
-    setDescriptions('');
+    setTitle("");
+    setDescriptions("");
     setOriginalPrice(0);
-    setPromotionPrice(0)
+    setPromotionPrice(0);
     setAmount(0);
     setCurrentAmount(0);
-    setBrand(1)
-    setCategory(1)
-    setStatus()
-    setIsHot()
-    setProduct()
-  }
+    setBrand(1);
+    setCategory(1);
+    setStatus();
+    setIsHot();
+    setProduct();
+  };
   const setForm = (product) => {
     setTitle(product?.title);
     setDescriptions(product?.descriptions);
     setOriginalPrice(product?.originalPrice);
-    setPromotionPrice(product?.promotionPrice)
+    setPromotionPrice(product?.promotionPrice);
     setAmount(product?.amount);
     setCurrentAmount(product?.currentAmount);
-    setBrand(product?.brand?.id)
-    setCategory(product?.category?.id)
-    setStatus(product?.status)
-    setIsHot(product?.isHot)
-  }
+    setBrand(product?.brand?.id);
+    setCategory(product?.category?.id);
+    setStatus(product?.status);
+    setIsHot(product?.isHot);
+  };
   const handleOpenEditProduct = async (id) => {
-    const productSelected= await ProductServices.getProductById(id);
-    setForm(productSelected)
-    setProduct(productSelected)
+    const productSelected = await ProductServices.getProductById(id);
+    setForm(productSelected);
+    console.log(productSelected);
+    setProduct(productSelected);
     setShow(true);
   };
 
   const handleCreateProduct = () => {
-    const form = {title, descriptions,originalPrice: JSON.parse(originalPrice), promotionPrice: JSON.parse(promotionPrice) , amount: JSON.parse(amount), currentAmount, categoryId: JSON.parse(category), brandId: JSON.parse(brand), isHot};
-    dispatch(fetchCreateProduct(form, selectedFile))
-    setShow(false)
-  }
-  const handleEditProduct = () => {
-
-  }
+    const form = {
+      title,
+      descriptions,
+      originalPrice: JSON.parse(originalPrice),
+      promotionPrice: JSON.parse(promotionPrice),
+      amount: JSON.parse(amount),
+      currentAmount: currentAmount
+        ? JSON.parse(currentAmount)
+        : JSON.parse(amount),
+      categoryId: JSON.parse(category),
+      brandId: JSON.parse(brand),
+      isHot: isHot ? isHot : "NORMAL",
+    };
+    dispatch(fetchCreateProduct(form, selectedFile));
+    setShow(false);
+  };
+  const handleEditProduct = (id) => {
+    const form = {
+      title,
+      descriptions,
+      originalPrice: JSON.parse(originalPrice),
+      promotionPrice: JSON.parse(promotionPrice),
+      amount: JSON.parse(amount),
+      currentAmount: currentAmount
+        ? JSON.parse(currentAmount)
+        : JSON.parse(amount),
+      status: status ? status : product?.status,
+      isHot: isHot ? isHot : product?.isHot,
+    };
+    dispatch(fetchEditProduct(id, form, selectedFile));
+    setShow(false);
+  };
   const handleDeleteProduct = (id) => {
     if (window.confirm("Bạn có chắc chắn xóa sản phẩm này ? ")) {
-      dispatch(fetchDeleteProduct(id))
+      dispatch(fetchDeleteProduct(id));
+      setPage(1);
     }
-  }
+  };
   useEffect(() => {
     dispatch(fetchAllProducts(1, 5, null, searchValue));
     dispatch(fetchAllBrand());
@@ -162,8 +192,8 @@ const Products = () => {
             </label>
 
             <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               className="form-control"
               type="text"
               id="ctname"
@@ -179,8 +209,8 @@ const Products = () => {
               Product descriptions
             </label>
             <textarea
-            value={descriptions}
-            onChange={(e) => setDescriptions(e.target.value)}
+              value={descriptions}
+              onChange={(e) => setDescriptions(e.target.value)}
               row="3"
               className="form-control"
               type="text"
@@ -189,70 +219,120 @@ const Products = () => {
             />
           </div>
           <div className="d-flex align-items-center gap-10 mb-2">
-              <div className="form-group w-50">
-                <label className="text-bold p-2"
-                      style={{ fontWeight: "500" }}
-                      htmlFor="ctOrPrice">
-                    Original Prices
-                 </label>
-                <input value={originalPrice}
-            onChange={(e) => setOriginalPrice(e.target.value)} type="number" className="form-control" placeholder="Enter original Price ..." id="ctOrPrice" />
-              </div>
-              <div className="form-group w-50">
-                <label className="text-bold p-2"
-                      style={{ fontWeight: "500" }}
-                      htmlFor="ctProPrice">
-                    Promotion Prices
-                 </label>
-                <input value={promotionPrice}
-            onChange={(e) => setPromotionPrice(e.target.value)} type="number" className="form-control" placeholder="Enter promotion Price ..." id="ctProPrice" />
-              </div>
+            <div className="form-group w-50">
+              <label
+                className="text-bold p-2"
+                style={{ fontWeight: "500" }}
+                htmlFor="ctOrPrice"
+              >
+                Original Prices
+              </label>
+              <input
+                value={originalPrice}
+                onChange={(e) => setOriginalPrice(e.target.value)}
+                type="number"
+                className="form-control"
+                placeholder="Enter original Price ..."
+                id="ctOrPrice"
+              />
+            </div>
+            <div className="form-group w-50">
+              <label
+                className="text-bold p-2"
+                style={{ fontWeight: "500" }}
+                htmlFor="ctProPrice"
+              >
+                Promotion Prices
+              </label>
+              <input
+                value={promotionPrice}
+                onChange={(e) => setPromotionPrice(e.target.value)}
+                type="number"
+                className="form-control"
+                placeholder="Enter promotion Price ..."
+                id="ctProPrice"
+              />
+            </div>
           </div>
           <div className="d-flex align-items-center gap-10 mb-2">
-              <div className="form-group w-50">
-                <label className="text-bold p-2"
-                      style={{ fontWeight: "500" }}
-                      htmlFor="ctAmount">
-                    Amounts
-                 </label>
-                <input value={amount}
-            onChange={(e) => setAmount(e.target.value)} type="number" className="form-control" placeholder="Enter amount ..." id="ctAmount" />
-              </div>
-              <div className="form-group w-50">
-                <label className="text-bold p-2"
-                      style={{ fontWeight: "500" }}
-                      htmlFor="ctCurAmount">
-                    Current Amounts
-                 </label>
-                <input value={amount}
-            onChange={(e) => setAmount(e.target.value)} type="number" className="form-control" placeholder="Enter current amount..." id="ctCurAmount" />
-              </div>
+            <div className="form-group w-50">
+              <label
+                className="text-bold p-2"
+                style={{ fontWeight: "500" }}
+                htmlFor="ctAmount"
+              >
+                Amounts
+              </label>
+              <input
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                type="number"
+                className="form-control"
+                placeholder="Enter amount ..."
+                id="ctAmount"
+              />
+            </div>
+            <div className="form-group w-50">
+              <label
+                className="text-bold p-2"
+                style={{ fontWeight: "500" }}
+                htmlFor="ctCurAmount"
+              >
+                Current Amounts
+              </label>
+              <input
+                value={currentAmount}
+                onChange={(e) => setCurrentAmount(e.target.value)}
+                type="number"
+                className="form-control"
+                placeholder="Enter current amount..."
+                id="ctCurAmount"
+              />
+            </div>
           </div>
           <div className="form-group mb-2">
-              <label
-                    className="text-bold p-2"
-                    style={{ fontWeight: "500" }}
-                    htmlFor="ctCatg"
-              >
-                  Category
-              </label>
-              <select defaultValue={category} value={category}
-            onChange={(e) => setCategory(e.target.value)} className="form-control" name="category" id="ctCatg">
-                {categories?.map((item) => (<option value={item?.id}>{item?.name}</option>))}
-              </select>
+            <label
+              className="text-bold p-2"
+              style={{ fontWeight: "500" }}
+              htmlFor="ctCatg"
+            >
+              Category
+            </label>
+            <select
+              disabled={product != null}
+              defaultValue={category}
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="form-control"
+              name="category"
+              id="ctCatg"
+            >
+              {categories?.map((item) => (
+                <option value={item?.id}>{item?.name}</option>
+              ))}
+            </select>
           </div>
           <div className="form-group mb-2">
-              <label
-                    className="text-bold p-2"
-                    style={{ fontWeight: "500" }}
-                    htmlFor="ctBrand"
-              >
-                  Brand
-              </label>
-              <select defaultValue={brand} value={brand}
-            onChange={(e) => setBrand(e.target.value)} className="form-control" name="brand" id="ctBrand">
-                {brands?.map((item) => (<option value={item?.id}>{item?.name}</option>))}
-              </select>
+            <label
+              className="text-bold p-2"
+              style={{ fontWeight: "500" }}
+              htmlFor="ctBrand"
+            >
+              Brand
+            </label>
+            <select
+              disabled={product != null}
+              defaultValue={brand}
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+              className="form-control"
+              name="brand"
+              id="ctBrand"
+            >
+              {brands?.map((item) => (
+                <option value={item?.id}>{item?.name}</option>
+              ))}
+            </select>
           </div>
           {product && (
             <div className="form-group mb-2">
@@ -264,28 +344,38 @@ const Products = () => {
                 Product Status
               </label>
 
-              <select defaultValue={status}
-            onChange={(e) => setStatus(e.target.value)} id="ctStatus" className="form-control">
+              <select
+                defaultValue={status ? status : "OPENING"}
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                id="ctStatus"
+                className="form-control"
+              >
                 <option value="OPENING">OPENING</option>
                 <option value="CLOSED">CLOSED</option>
               </select>
             </div>
           )}
           <div className="form-group mb-2">
-              <label
-                className="text-bold p-2"
-                style={{ fontWeight: "500" }}
-                htmlFor="ctHot"
-              >
-                Product Hot
-              </label>
+            <label
+              className="text-bold p-2"
+              style={{ fontWeight: "500" }}
+              htmlFor="ctHot"
+            >
+              Product Hot
+            </label>
 
-              <select defaultValue={isHot}
-            onChange={(e) => setIsHot(e.target.value)} id="ctHot" className="form-control">
-                <option value="HOT">HOT</option>
-                <option value="NORMAL">NORMAL</option>
-              </select>
-            </div>
+            <select
+              value={isHot}
+              defaultValue={isHot ? isHot : "NORMAL"}
+              onChange={(e) => setIsHot(e.target.value)}
+              id="ctHot"
+              className="form-control"
+            >
+              <option value="HOT">HOT</option>
+              <option value="NORMAL">NORMAL</option>
+            </select>
+          </div>
           <div className="form-group mb-2 d-flex gap-10 flex-column">
             <input
               onChange={handleChooseImage}
@@ -294,29 +384,28 @@ const Products = () => {
               multiple
             />
             <div className="d-flex gap-10">
-            <img
-              id="image-1"
-              style={{width: "30%", objectFit: "contain"}}
-              src={`http://127.0.0.1:8887/products/${product?.productImages[0]?.imageUrl}`}
-              alt="img"
-              className="img-fluid img-thumbnail"
-            />
-            <img
-              id="image-2"
-              style={{width: "30%", objectFit: "contain"}}
-              src={`http://127.0.0.1:8887/products/${product?.productImages[1]?.imageUrl}`}
-              alt="img"
-              className="img-fluid img-thumbnail"
-            />
-            <img
-              id="image-3"
-              style={{width: "30%", objectFit: "contain"}}
-              src={`http://127.0.0.1:8887/products/${product?.productImages[2]?.imageUrl}`}
-              alt="img"
-              className="img-fluid img-thumbnail"
-            />
+              <img
+                id="image-1"
+                style={{ width: "30%", objectFit: "contain" }}
+                src={`http://127.0.0.1:8887/products/${product?.productImages[0]?.imageUrl}`}
+                alt="img"
+                className="img-fluid img-thumbnail"
+              />
+              <img
+                id="image-2"
+                style={{ width: "30%", objectFit: "contain" }}
+                src={`http://127.0.0.1:8887/products/${product?.productImages[1]?.imageUrl}`}
+                alt="img"
+                className="img-fluid img-thumbnail"
+              />
+              <img
+                id="image-3"
+                style={{ width: "30%", objectFit: "contain" }}
+                src={`http://127.0.0.1:8887/products/${product?.productImages[2]?.imageUrl}`}
+                alt="img"
+                className="img-fluid img-thumbnail"
+              />
             </div>
-            
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -328,7 +417,11 @@ const Products = () => {
             Cancel
           </button>
           {product ? (
-            <button onClick={handleEditProduct}  className="btn" variant="btn">
+            <button
+              onClick={() => handleEditProduct(product?.id)}
+              className="btn"
+              variant="btn"
+            >
               Edit
             </button>
           ) : (
@@ -342,10 +435,10 @@ const Products = () => {
         <div class="row gap-15">
           <div class="col-lg-12">
             <h1 class="page-header">
-              
               <span>
-              <small>Danh sách</small>
-                </span> sản phẩm
+                <small>Danh sách</small>
+              </span>{" "}
+              sản phẩm
             </h1>
           </div>
           <div className="col-12">
@@ -412,10 +505,18 @@ const Products = () => {
                   </td>
                   <td className="center">
                     <div className="d-flex align-items-center gap-10 justify-content-center">
-                      <Link onClick={() => handleDeleteProduct(item?.id)} className="delete-btn" to={"#"}>
+                      <Link
+                        onClick={() => handleDeleteProduct(item?.id)}
+                        className="delete-btn"
+                        to={"#"}
+                      >
                         Delete
                       </Link>
-                      <Link onClick={() => handleOpenEditProduct(item?.id)} className="edit-btn" to={"#"}>
+                      <Link
+                        onClick={() => handleOpenEditProduct(item?.id)}
+                        className="edit-btn"
+                        to={"#"}
+                      >
                         Edit
                       </Link>
                     </div>
