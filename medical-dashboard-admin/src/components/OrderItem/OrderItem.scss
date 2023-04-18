@@ -1,0 +1,98 @@
+.orderItem-wrapper {
+
+
+    .info-shipping {
+        background-color: white;
+        padding: 20px;
+
+        .info-shipping-title {
+            
+
+            h4 {
+                font-weight: 400;
+            }
+            span {
+                color: #ee4d2d;
+            }
+        }
+        .info-shipping-address {
+            padding: 0 10px;
+            h4 {
+                white-space: nowrap;
+                font-size: 20px;
+                font-weight: 300;
+            }
+            span {
+                padding: 4px 10px;
+                font-size: 16px;
+                background-color: white;
+                border: 1px solid #ee4d2d ;
+            }
+        }
+    }
+    .order-products {
+        background-color: white;
+        padding: 20px;
+
+        .order-wrapper-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eaeaea;
+    
+    
+            h4 {
+                font-size: 14px;
+                color: var(--color-7777777);
+            }
+        }
+        .orderItem-wrapper-data {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .orderItem-wrapper-data__image {
+                img {
+    
+                    border-radius: 10px;
+                }
+            }
+            .delete-btn-itemwrapper {
+                color: red;
+                font-size: 24px;
+                cursor: pointer;
+            }
+            .title {
+                word-wrap: break-word;
+                white-space: normal;
+                overflow: hidden;
+                display: -webkit-box;
+                text-overflow: ellipsis;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+            }
+            .price {
+                font-size: 16px;
+                color: var(--color-3b4149);
+            }
+        }
+        .orderItem-col-1 {
+            width: 40%;
+            
+        }
+        .orderItem-col-2 {
+            width: 10%;
+        }
+        .orderItem-col-3 {
+            width: 10%;
+        }
+        .orderItem-col-4 {
+            width: 10%;
+        }
+        .orderItem-col-5 {
+            width: 10%;
+        }
+    }
+    
+   
+}

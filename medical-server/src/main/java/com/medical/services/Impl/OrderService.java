@@ -17,6 +17,11 @@ public class OrderService implements IOrderService {
 
 
     @Override
+    public List<Order> getListOrders() {
+        return repository.findAll();
+    }
+
+    @Override
     public Order createOrder(Order order) {
         return repository.save(order);
     }

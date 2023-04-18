@@ -10,3 +10,4 @@ export { default as Loading } from "./More/Loading/Loading";
 export { default as BreadCrum } from "./BreadCrum/BreadCrum";
 export { default as Meta } from "./Meta/Meta";
 export { default as Verification } from "./Verification/Verification";
+export { default as OrderItem } from "./OrderItem/OrderItem";

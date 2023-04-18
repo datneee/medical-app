@@ -11,7 +11,7 @@ import {
 } from "../../components";
 import { fetchOrderItem } from "../../redux/actions/userActions";
 const Orders = () => {
-  const [selectFilter, setSelectFilter] = useState("best-selling");
+  const [selectFilter, setSelectFilter] = useState("all");
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
   const user = auth?.user;

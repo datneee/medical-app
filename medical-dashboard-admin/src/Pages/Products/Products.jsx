@@ -105,7 +105,6 @@ const Products = () => {
   const handleOpenEditProduct = async (id) => {
     const productSelected = await ProductServices.getProductById(id);
     setForm(productSelected);
-    console.log(productSelected);
     setProduct(productSelected);
     setShow(true);
   };
@@ -113,30 +112,35 @@ const Products = () => {
   const originalPriceRef = useRef();
   const promotePricePriceRef = useRef();
   const amountPriceRef = useRef();
-  let  validate = true;
+  let validate = true;
   const handleCreateProduct = () => {
-    
-    if (amountPriceRef.current.value == 0 || !amountPriceRef.current.value) { 
+    if (amountPriceRef.current.value == 0 || !amountPriceRef.current.value) {
       amountPriceRef.current.focus();
       amountPriceRef.current.style.border = "1px solid red";
       validate = false;
     }
-    if (promotePricePriceRef.current.value == 0 || !promotePricePriceRef.current.value) {
+    if (
+      promotePricePriceRef.current.value == 0 ||
+      !promotePricePriceRef.current.value
+    ) {
       promotePricePriceRef.current.focus();
       promotePricePriceRef.current.style.border = "1px solid red";
       validate = false;
     }
-    if (originalPriceRef.current.value == 0 || !originalPriceRef.current.value) {
+    if (
+      originalPriceRef.current.value == 0 ||
+      !originalPriceRef.current.value
+    ) {
       originalPriceRef.current.focus();
       originalPriceRef.current.style.border = "1px solid red";
       validate = false;
     }
-    if (titleRef.current.value == '' || !titleRef.current.value) {
+    if (titleRef.current.value == "" || !titleRef.current.value) {
       titleRef.current.focus();
       titleRef.current.style.border = "1px solid red";
       validate = false;
-    } 
-    if (validate)  {
+    }
+    if (validate) {
       const form = {
         title,
         descriptions,
@@ -153,30 +157,35 @@ const Products = () => {
       dispatch(fetchCreateProduct(form, selectedFile));
       setShow(false);
     }
-    
   };
   const handleEditProduct = (id) => {
-    if (amountPriceRef.current.value == 0 || !amountPriceRef.current.value) { 
+    if (amountPriceRef.current.value == 0 || !amountPriceRef.current.value) {
       amountPriceRef.current.focus();
       amountPriceRef.current.style.border = "1px solid red";
       validate = false;
     }
-    if (promotePricePriceRef.current.value == 0 || !promotePricePriceRef.current.value) {
+    if (
+      promotePricePriceRef.current.value == 0 ||
+      !promotePricePriceRef.current.value
+    ) {
       promotePricePriceRef.current.focus();
       promotePricePriceRef.current.style.border = "1px solid red";
       validate = false;
     }
-    if (originalPriceRef.current.value == 0 || !originalPriceRef.current.value) {
+    if (
+      originalPriceRef.current.value == 0 ||
+      !originalPriceRef.current.value
+    ) {
       originalPriceRef.current.focus();
       originalPriceRef.current.style.border = "1px solid red";
       validate = false;
     }
-    if (titleRef.current.value == '' || !titleRef.current.value) {
+    if (titleRef.current.value == "" || !titleRef.current.value) {
       titleRef.current.focus();
       titleRef.current.style.border = "1px solid red";
       validate = false;
-    } 
-    if (validate)  {
+    }
+    if (validate) {
       const form = {
         title,
         descriptions,

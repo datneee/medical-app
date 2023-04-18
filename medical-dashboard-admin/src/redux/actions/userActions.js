@@ -436,3 +436,41 @@ export const fetchDeleteProduct = (id) => async (dispatch) => {
       dispatch(loadAction(false));
     });
 };
+const getAllUsersAction = (payload) => {
+  return {
+    type: UserAuth.GET_USERS,
+    payload: payload,
+  };
+};
+export const fetchAllUsers = () => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.getAllUsers()
+    .then((res) => {
+      dispatch(getAllUsersAction(res?.result.data));
+    })
+    .catch((rej) => {
+      console.log(rej);
+    })
+    .finally(() => {
+      dispatch(loadAction(false));
+    });
+};
+const getAllOrdersAction = (payload) => {
+  return {
+    type: UserAuth.GET_ORDERS,
+    payload: payload,
+  };
+};
+export const fetchAllOrders = () => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.getOrders()
+    .then((res) => {
+      dispatch(getAllOrdersAction(res));
+    })
+    .catch((rej) => {
+      console.log(rej);
+    })
+    .finally(() => {
+      dispatch(loadAction(false));
+    });
+};

@@ -234,7 +234,8 @@ DELIMITER ;
 -- -- ====================================  INSERT DATA ============================================
 -- password : 123456
 INSERT INTO `users` (`email`, `username`, `fullname`, `password`,`phone`, `role`, `address`, `status` , avatar) VALUES
-('pvd14092001@gmail.com', 'medical_admin', 'Phạm Văn Đạt', '$2a$12$34v8mMKqNaTTSgARBNE8leWz3.8dGIGQ6VKNUUeZjs3j2u4NedKL2','0978315545', 'ADMIN', 'Ha Noi', 1 ,'123'),
+('pvd14092001@gmail.com', 'medical_admin', 'Phạm Văn Đạt', '$2a$12$skHTLh1OlkAsFIicjYxMG.KTRbcxrNR10rypn9Nn24c6LL.cAm7Ku','0978315545', 'ADMIN', 'Ha Noi', 1 ,'123'),
+('testadmin@gmail.com', 'medical_admin 1' , 'Nguyen Quoc Anh', '$2a$12$skHTLh1OlkAsFIicjYxMG.KTRbcxrNR10rypn9Nn24c6LL.cAm7Ku','090248232', 'ADMIN', 'Ha Noi', 1 ,'123'),
 ('test@gmail.com', 'test_employye', 'Le Chi Kiet', '$2a$12$16RqQAIKqbO8UrPEOzmZSu/dnsgN6y5XkzrF85vwL2hDOsoJS0krS','0123456789','CLIENT', 'Ha Tinh', 1 , '123');
 
 

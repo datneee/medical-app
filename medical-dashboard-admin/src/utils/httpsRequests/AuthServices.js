@@ -104,33 +104,47 @@ const AuthServices = {
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
     }),
-    createProduct: (body) =>
-      new Promise((resolve, reject) => {
-        axiosClient
-          .post(paths.PRODUCTS, body)
-          .then((res) => resolve(res))
-          .catch((rej) => reject(rej))
-      }),
-    createOrEditProductImages: (formData) => 
-      new Promise((resolve, reject) => {
-        axiosClient
-          .post(paths.PRODUCT_IMAGES, formData)
-          .then((res) => resolve(res))
-          .catch((rej) => reject(rej))
-      }),
-    editProduct: (id, form) => 
-      new Promise((resolve, reject) => {
-        axiosClient
-          .put(`${paths.PRODUCTS}/${id}`, form)
-          .then((res) => resolve(res))
-          .catch((rej) => reject(rej))
-      }),
-      deleteProduct: (id) => 
-        new Promise((resolve, reject) => {
-          axiosClient
-            .delete(`${paths.PRODUCTS}/${id}`)
-            .then((res) => resolve(res))
-            .catch((rej) => reject(rej))
-        })
+  createProduct: (body) =>
+    new Promise((resolve, reject) => {
+      axiosClient
+        .post(paths.PRODUCTS, body)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej));
+    }),
+  createOrEditProductImages: (formData) =>
+    new Promise((resolve, reject) => {
+      axiosClient
+        .post(paths.PRODUCT_IMAGES, formData)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej));
+    }),
+  editProduct: (id, form) =>
+    new Promise((resolve, reject) => {
+      axiosClient
+        .put(`${paths.PRODUCTS}/${id}`, form)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej));
+    }),
+  deleteProduct: (id) =>
+    new Promise((resolve, reject) => {
+      axiosClient
+        .delete(`${paths.PRODUCTS}/${id}`)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej));
+    }),
+  getAllUsers: () =>
+    new Promise((resolve, reject) => {
+      axiosClient
+        .get(paths.USERS)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej));
+    }),
+  getOrders: () =>
+    new Promise((resolve, reject) => {
+      axiosClient
+        .get(paths.GET_ORDER)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej));
+    }),
 };
 export default AuthServices;

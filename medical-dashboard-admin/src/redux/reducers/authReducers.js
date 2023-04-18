@@ -5,6 +5,7 @@ const initState = {
   success: false,
   token: "",
   user: null,
+  users: [],
   id: "",
   cart: [],
   buyedTotal: null,
@@ -101,6 +102,11 @@ const reducer = (state = initState, { type, payload }) => {
       return {
         ...state,
         categoryIsCreated: payload,
+      };
+    case UserAuth.GET_USERS:
+      return {
+        ...state,
+        users: payload,
       };
     default:
       return { ...state };

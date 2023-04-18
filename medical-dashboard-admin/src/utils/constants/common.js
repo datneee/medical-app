@@ -23,6 +23,7 @@ export const UserAuth = {
   GET_ORDERS: "GET ORDERS",
   SET_PRICE_CHECKOUT: "SET PRICE CHECKOUT",
   COMMENT: "COMMENT",
+  GET_USERS: "GET USERS",
 };
 export const Service = {
   LOADING: "LOADING ACTION",
@@ -44,6 +45,7 @@ export const paths = {
   CATEGORIES_IMAGES: "category-images",
   BRANDS: "/brands",
   LOGIN: "/auth/login",
+  USERS: "/users",
   REGISTRATION: "/auth/signup",
   RESET_PASSWORD: "/auth/reset-password",
   GET_CART: "/carts",
