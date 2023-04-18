@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Products.scss";
 import { Loading, Meta } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
@@ -109,39 +109,89 @@ const Products = () => {
     setProduct(productSelected);
     setShow(true);
   };
-
+  const titleRef = useRef();
+  const originalPriceRef = useRef();
+  const promotePricePriceRef = useRef();
+  const amountPriceRef = useRef();
+  let  validate = true;
   const handleCreateProduct = () => {
-    const form = {
-      title,
-      descriptions,
-      originalPrice: JSON.parse(originalPrice),
-      promotionPrice: JSON.parse(promotionPrice),
-      amount: JSON.parse(amount),
-      currentAmount: currentAmount
-        ? JSON.parse(currentAmount)
-        : JSON.parse(amount),
-      categoryId: JSON.parse(category),
-      brandId: JSON.parse(brand),
-      isHot: isHot ? isHot : "NORMAL",
-    };
-    dispatch(fetchCreateProduct(form, selectedFile));
-    setShow(false);
+    
+    if (amountPriceRef.current.value == 0 || !amountPriceRef.current.value) { 
+      amountPriceRef.current.focus();
+      amountPriceRef.current.style.border = "1px solid red";
+      validate = false;
+    }
+    if (promotePricePriceRef.current.value == 0 || !promotePricePriceRef.current.value) {
+      promotePricePriceRef.current.focus();
+      promotePricePriceRef.current.style.border = "1px solid red";
+      validate = false;
+    }
+    if (originalPriceRef.current.value == 0 || !originalPriceRef.current.value) {
+      originalPriceRef.current.focus();
+      originalPriceRef.current.style.border = "1px solid red";
+      validate = false;
+    }
+    if (titleRef.current.value == '' || !titleRef.current.value) {
+      titleRef.current.focus();
+      titleRef.current.style.border = "1px solid red";
+      validate = false;
+    } 
+    if (validate)  {
+      const form = {
+        title,
+        descriptions,
+        originalPrice: JSON.parse(originalPrice),
+        promotionPrice: JSON.parse(promotionPrice),
+        amount: JSON.parse(amount),
+        currentAmount: currentAmount
+          ? JSON.parse(currentAmount)
+          : JSON.parse(amount),
+        categoryId: JSON.parse(category),
+        brandId: JSON.parse(brand),
+        isHot: isHot ? isHot : "NORMAL",
+      };
+      dispatch(fetchCreateProduct(form, selectedFile));
+      setShow(false);
+    }
+    
   };
   const handleEditProduct = (id) => {
-    const form = {
-      title,
-      descriptions,
-      originalPrice: JSON.parse(originalPrice),
-      promotionPrice: JSON.parse(promotionPrice),
-      amount: JSON.parse(amount),
-      currentAmount: currentAmount
-        ? JSON.parse(currentAmount)
-        : JSON.parse(amount),
-      status: status ? status : product?.status,
-      isHot: isHot ? isHot : product?.isHot,
-    };
-    dispatch(fetchEditProduct(id, form, selectedFile));
-    setShow(false);
+    if (amountPriceRef.current.value == 0 || !amountPriceRef.current.value) { 
+      amountPriceRef.current.focus();
+      amountPriceRef.current.style.border = "1px solid red";
+      validate = false;
+    }
+    if (promotePricePriceRef.current.value == 0 || !promotePricePriceRef.current.value) {
+      promotePricePriceRef.current.focus();
+      promotePricePriceRef.current.style.border = "1px solid red";
+      validate = false;
+    }
+    if (originalPriceRef.current.value == 0 || !originalPriceRef.current.value) {
+      originalPriceRef.current.focus();
+      originalPriceRef.current.style.border = "1px solid red";
+      validate = false;
+    }
+    if (titleRef.current.value == '' || !titleRef.current.value) {
+      titleRef.current.focus();
+      titleRef.current.style.border = "1px solid red";
+      validate = false;
+    } 
+    if (validate)  {
+      const form = {
+        title,
+        descriptions,
+        originalPrice: JSON.parse(originalPrice),
+        promotionPrice: JSON.parse(promotionPrice),
+        amount: JSON.parse(amount),
+        currentAmount: currentAmount
+          ? JSON.parse(currentAmount)
+          : JSON.parse(amount),
+        status: status ? status : product?.status,
+        isHot: isHot ? isHot : product?.isHot,
+      };
+      dispatch(fetchEditProduct(id, form, selectedFile));
+      setShow(false);
+    }
   };
   const handleDeleteProduct = (id) => {
     if (window.confirm("Bạn có chắc chắn xóa sản phẩm này ? ")) {
@@ -192,6 +242,7 @@ const Products = () => {
             </label>
 
             <input
+              ref={titleRef}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="form-control"
@@ -199,6 +250,7 @@ const Products = () => {
               id="ctname"
               placeholder="Enter category name ..."
             />
+            {/* {<span className="red-warning p-2">Required </span>} */}
           </div>
           <div className="form-group mb-2">
             <label
@@ -228,6 +280,7 @@ const Products = () => {
                 Original Prices
               </label>
               <input
+                ref={originalPriceRef}
                 value={originalPrice}
                 onChange={(e) => setOriginalPrice(e.target.value)}
                 type="number"
@@ -235,6 +288,7 @@ const Products = () => {
                 placeholder="Enter original Price ..."
                 id="ctOrPrice"
               />
+              {/* {<span className="red-warning p-2">Required, Greater than 0 </span>} */}
             </div>
             <div className="form-group w-50">
               <label
@@ -245,6 +299,7 @@ const Products = () => {
                 Promotion Prices
               </label>
               <input
+                ref={promotePricePriceRef}
                 value={promotionPrice}
                 onChange={(e) => setPromotionPrice(e.target.value)}
                 type="number"
@@ -252,6 +307,7 @@ const Products = () => {
                 placeholder="Enter promotion Price ..."
                 id="ctProPrice"
               />
+              {/* {<span className="red-warning p-2">Required, Greater than 0 </span>} */}
             </div>
           </div>
           <div className="d-flex align-items-center gap-10 mb-2">
@@ -264,6 +320,7 @@ const Products = () => {
                 Amounts
               </label>
               <input
+                ref={amountPriceRef}
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 type="number"
@@ -271,6 +328,7 @@ const Products = () => {
                 placeholder="Enter amount ..."
                 id="ctAmount"
               />
+              {/* {<span className="red-warning p-2">Required, Greater than 0 </span>} */}
             </div>
             <div className="form-group w-50">
               <label
@@ -431,7 +489,7 @@ const Products = () => {
           )}
         </Modal.Footer>
       </Modal>
-      <div className="container-xxl mt-5">
+      <div className="wrapper-container">
         <div class="row gap-15">
           <div class="col-lg-12">
             <h1 class="page-header">

@@ -19,9 +19,9 @@ function App() {
           <Route
             path="/"
             element={
-              // <Verification>
-              <Layout />
-              // </Verification>
+              <Verification>
+                <Layout />
+              </Verification>
             }
           >
             <Route index element={<MainDash />} />

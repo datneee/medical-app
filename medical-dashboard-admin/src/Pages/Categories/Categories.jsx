@@ -200,7 +200,7 @@ const Categories = () => {
           )}
         </Modal.Footer>
       </Modal>
-      <div className="container-xxl mt-5">
+      <div className="wrapper-container">
         <div class="row gap-15">
           <div class="col-lg-12">
             <h1 class="page-header">
