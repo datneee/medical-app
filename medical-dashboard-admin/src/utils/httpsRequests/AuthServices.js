@@ -16,6 +16,13 @@ const AuthServices = {
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
     }),
+  updateAccount: (id, body) =>
+    new Promise((resolve, reject) => {
+      axiosClient
+        .patch(`${paths.USERS}/${id}`, body)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej));
+    }),
   resetPassword: (email) =>
     new Promise((resolve, reject) => {
       axiosClient
@@ -146,19 +153,26 @@ const AuthServices = {
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
     }),
-  changeStatusOrderItem: (id, status) => 
+  changeStatusOrderItem: (id, status) =>
     new Promise((resolve, reject) => {
       axiosClient
         .put(`${paths.ORDERS_ITEM}?id=${id}&status=${status}`)
         .then((res) => resolve(res))
-        .catch((rej) => reject(rej))
+        .catch((rej) => reject(rej));
     }),
-  deleteOrderItemById: (id) => 
+  deleteOrderItemById: (id) =>
     new Promise((resolve, reject) => {
       axiosClient
         .delete(`${paths.ORDERS_ITEM}/${id}`)
         .then((res) => resolve(res))
-        .catch((rej) => reject(rej))
-    })
+        .catch((rej) => reject(rej));
+    }),
+  deleteAccountById: (id) =>
+    new Promise((resolve, reject) => {
+      axiosClient
+        .delete(`${paths.USERS}/${id}`)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej));
+    }),
 };
 export default AuthServices;

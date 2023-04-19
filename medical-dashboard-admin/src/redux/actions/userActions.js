@@ -77,12 +77,26 @@ export const registration = (body) => async (dispatch) => {
     const res = await AuthServices.signUp(body);
     if (res) {
       dispatch(authSignUpAction(res));
+      dispatch(fetchAllUsers());
     }
   } catch (error) {
     console.log(error);
   } finally {
     dispatch(loadAction(false));
     dispatch(isSuccessAction(false));
+  }
+};
+export const fetchUpdateAccount = (id, body) => async (dispatch) => {
+  dispatch(loadAction(true));
+  try {
+    const res = await AuthServices.updateAccount(id, body);
+    if (res) {
+      dispatch(fetchAllUsers());
+    }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    dispatch(loadAction(false));
   }
 };
 export const authLogoutAction = () => {
@@ -118,6 +132,19 @@ export const resetPassword = (email, navigate) => async (dispatch) => {
       dispatch(loadAction(false));
       dispatch(haveErrorAction(null));
       dispatch(isSuccessAction(false));
+    });
+};
+export const fetchDeleteAccount = (id) => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.deleteAccountById(id)
+    .then((res) => {
+      dispatch(fetchAllUsers());
+    })
+    .catch((rej) => {
+      dispatch(haveErrorAction("Có lỗi, vui lòng thử lại !"));
+    })
+    .finally(() => {
+      dispatch(loadAction(false));
     });
 };
 /**Cart */
@@ -478,25 +505,25 @@ export const fetchChangeStatusOrder = (id, status) => async (dispatch) => {
   dispatch(loadAction(true));
   await AuthServices.changeStatusOrderItem(id, status)
     .then((res) => {
-      dispatch(fetchAllOrders())
+      dispatch(fetchAllOrders());
     })
     .catch((rej) => {
       console.error(rej);
     })
     .finally(() => {
       dispatch(loadAction(false));
-    })
-}
+    });
+};
 export const fetchDeleteOrderItem = (id) => async (dispatch) => {
   dispatch(loadAction(true));
   await AuthServices.deleteOrderItemById(id)
     .then((res) => {
-      dispatch(fetchAllOrders())
+      dispatch(fetchAllOrders());
     })
     .catch((rej) => {
       console.error(rej);
     })
     .finally(() => {
       dispatch(loadAction(false));
-    })
-}
+    });
+};

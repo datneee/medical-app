@@ -98,6 +98,8 @@ public class UserService extends BasePagination<User, IUserRepository> implement
         modelMapper.map(updated, currentUser);
         if(userUpdateDTO.getPassword() != null)
             currentUser.setPassword(passwordEncoder.encode(userUpdateDTO.getPassword()));
+        currentUser.setStatus(StatusCodeEnum.valueOf(userUpdateDTO.getStatus()));
+        currentUser.setRole(userUpdateDTO.getRole());
         return userRepository.save(currentUser);
     }
 

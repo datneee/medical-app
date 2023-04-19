@@ -4,7 +4,12 @@ import { Loading, Meta } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { fetchAllUsers } from "../../redux/actions/userActions";
+import {
+  fetchAllUsers,
+  fetchDeleteAccount,
+  fetchUpdateAccount,
+  registration,
+} from "../../redux/actions/userActions";
 
 const Customers = () => {
   const [show, setShow] = useState(false);
@@ -14,10 +19,11 @@ const Customers = () => {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phoneNumber, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [status, setStatus] = useState("");
   const [role, setRole] = useState("");
+  const [errors, setErrors] = useState(true);
 
   const [newPassword, setNewPassword] = useState("");
   const [isChangePassword, setChangePassword] = useState(false);
@@ -27,6 +33,7 @@ const Customers = () => {
   const auth = useSelector((state) => state?.auth);
   const user = auth?.user;
   const users = auth?.users;
+  const message = auth?.message;
   const handleShow = () => setShow(true);
   const handleClose = () => {
     setShow(false);
@@ -68,12 +75,70 @@ const Customers = () => {
     setForm(acc);
     setShow(true);
   };
+  const validate = () => {
+    const error = null;
+    if (!username) {
+      error.username = "Required !";
+    }
+    if (!fullName) {
+      error.fullName = "Required !";
+    }
+    if (!phoneNumber) {
+      error.fullName = "Required !";
+    }
+    if (!address) {
+      error.address = "Required !";
+    }
+    if (!email) {
+      error.email = "Required !";
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      error.email = "Invalid email address !";
+    }
+    if (!password) {
+      error.password = "Required !";
+    }
+    setErrors(error);
+  };
+  const handleDeleteAccount = (id) => {
+    if (window.confirm("Xác nhận xóa tài khoản #" + id)) {
+      dispatch(fetchDeleteAccount(id));
+    }
+  };
   const handleCreateAccount = () => {
-
-  }
-  const handleEditAccount = () => {
-    
-  }
+    validate();
+    if (!errors) {
+      dispatch(
+        registration({
+          username,
+          email,
+          fullName,
+          password,
+          phoneNumber,
+          address,
+        })
+      );
+      setShow(false);
+    }
+  };
+  const handleEditAccount = (id) => {
+    validate();
+    if (!errors) {
+      const form = {
+        username,
+        email,
+        fullName,
+        phoneNumber,
+        address,
+        status,
+        role,
+      };
+      if (newPassword) {
+        form.password = newPassword;
+      }
+      dispatch(fetchUpdateAccount(id, form));
+      setShow(false);
+    }
+  };
   useEffect(() => {
     dispatch(fetchAllUsers());
   }, []);
@@ -122,7 +187,9 @@ const Customers = () => {
               id="ctname"
               placeholder="Enter username ..."
             />
-            {/* {<span className="red-warning p-2">Required </span>} */}
+            {errors?.username && (
+              <span className="red-warning p-2">{errors?.username} </span>
+            )}
           </div>
           <div className="form-group mb-2">
             <label
@@ -140,6 +207,9 @@ const Customers = () => {
               id="ctFullName"
               placeholder="Enter fullName ..."
             />
+            {errors?.fullName && (
+              <span className="red-warning p-2">{errors?.fullName} </span>
+            )}
           </div>
           <div className="form-group mb-2">
             <label
@@ -157,6 +227,9 @@ const Customers = () => {
               id="ctEmail"
               placeholder="Enter email ..."
             />
+            {errors?.email && (
+              <span className="red-warning p-2">{errors?.email} </span>
+            )}
           </div>
           <div className="form-group mb-2">
             <label
@@ -167,13 +240,16 @@ const Customers = () => {
               Phone Number
             </label>
             <input
-              value={phone}
+              value={phoneNumber}
               onChange={(e) => setPhone(e.target.value)}
               className="form-control"
               type="text"
               id="ctPhone"
               placeholder="Enter Phone Number ..."
             />
+            {errors?.phone && (
+              <span className="red-warning p-2">{errors?.phone} </span>
+            )}
           </div>
           <div className="form-group mb-2">
             <label
@@ -192,6 +268,9 @@ const Customers = () => {
               id="ctAddress"
               placeholder="Enter address ..."
             />
+            {errors?.address && (
+              <span className="red-warning p-2">{errors?.address} </span>
+            )}
           </div>
           <div className="form-group mb-2">
             <label
@@ -220,6 +299,10 @@ const Customers = () => {
               id="ctPassword"
               placeholder="Enter password ..."
             />
+            {errors?.password && (
+              <span className="red-warning p-2">{errors?.password} </span>
+            )}
+
             {isChangePassword && (
               <input
                 value={newPassword}
@@ -230,67 +313,82 @@ const Customers = () => {
               />
             )}
           </div>
-          <div className="form-group mb-2">
-            <label
-              className="text-bold p-2"
-              style={{ fontWeight: "500" }}
-              htmlFor="ctStatus"
-            >
-              Status
-            </label>
+          {account && (
+            <div className="form-group mb-2">
+              <label
+                className="text-bold p-2"
+                style={{ fontWeight: "500" }}
+                htmlFor="ctStatus"
+              >
+                Status
+              </label>
 
-            <select
-              value={status}
-              defaultValue={account?.status}
-              onChange={(e) => setStatus(e.target.value)}
-              id="ctStatus"
-              className="form-control"
-            >
-              <option value="ACTIVE">ACTIVE</option>
-              <option value="NOT_ACTIVE">NOT_ACTIVE</option>
-            </select>
-          </div>
-          <div className="form-group mb-2">
-            <label
-              className="text-bold p-2"
-              style={{ fontWeight: "500" }}
-              htmlFor="ctRole"
-            >
-              Role
-            </label>
-            <span className="text-warning">
-              Lưu ý kiểm tra kỹ thông tin chính xác khi đăng ký tài khoản admin
-            </span>
-            <select
-              value={role}
-              defaultValue={account?.role}
-              onChange={(e) => setRole(e.target.value)}
-              id="ctRole"
-              className="form-control"
-            >
-              <option value="ADMIN">ADMIN</option>
-              <option value="CLIENT">CLIENT</option>
-            </select>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <button
-            className="btn-normal"
-            variant="secondary"
-            onClick={handleClose}
-          >
-            Cancel
-          </button>
-          {account ? (
-            <button onClick={handleEditAccount} className="btn" variant="btn">
-              Edit
-            </button>
-          ) : (
-            <button onClick={handleCreateAccount} className="btn" variant="btn">
-              Create
-            </button>
+              <select
+                value={status}
+                defaultValue={account?.status}
+                onChange={(e) => setStatus(e.target.value)}
+                id="ctStatus"
+                className="form-control"
+              >
+                <option value="ACTIVE">ACTIVE</option>
+                <option value="NOT_ACTIVE">NOT_ACTIVE</option>
+              </select>
+            </div>
           )}
-        </Modal.Footer>
+          {account && (
+            <div className="form-group mb-2">
+              <label
+                className="text-bold p-2"
+                style={{ fontWeight: "500" }}
+                htmlFor="ctRole"
+              >
+                Role
+              </label>
+              <span className="text-warning">
+                Lưu ý kiểm tra kỹ thông tin chính xác khi đăng ký tài khoản
+                admin
+              </span>
+              <select
+                value={role}
+                defaultValue={account?.role}
+                onChange={(e) => setRole(e.target.value)}
+                id="ctRole"
+                className="form-control"
+              >
+                <option value="ADMIN">ADMIN</option>
+                <option value="CLIENT">CLIENT</option>
+              </select>
+            </div>
+          )}
+        </Modal.Body>
+        {(account?.role == "CLIENT" || account?.id == user?.id || !account) && (
+          <Modal.Footer>
+            <button
+              className="btn-normal"
+              variant="secondary"
+              onClick={handleClose}
+            >
+              Cancel
+            </button>
+            {account ? (
+              <button
+                onClick={() => handleEditAccount(account?.id)}
+                className="btn"
+                variant="btn"
+              >
+                Edit
+              </button>
+            ) : (
+              <button
+                onClick={handleCreateAccount}
+                className="btn"
+                variant="btn"
+              >
+                Create
+              </button>
+            )}
+          </Modal.Footer>
+        )}
       </Modal>
       <div className="wrapper-container">
         <div className="row gap-15">
@@ -365,7 +463,11 @@ const Customers = () => {
                     {item?.role == "CLIENT" || item?.id == user?.id ? (
                       <div className="d-flex align-items-center gap-10 justify-content-center">
                         {item?.id != user?.id && (
-                          <Link className="delete-btn" to={"#"}>
+                          <Link
+                            onClick={() => handleDeleteAccount(item?.id)}
+                            className="delete-btn"
+                            to={"#"}
+                          >
                             Delete
                           </Link>
                         )}

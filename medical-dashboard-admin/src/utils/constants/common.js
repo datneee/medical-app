@@ -45,6 +45,7 @@ export const paths = {
   CATEGORIES_IMAGES: "category-images",
   BRANDS: "/brands",
   LOGIN: "/auth/login",
+  AUTH: "auth",
   USERS: "/users",
   REGISTRATION: "/auth/signup",
   RESET_PASSWORD: "/auth/reset-password",

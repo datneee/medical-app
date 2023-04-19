@@ -36,7 +36,9 @@ public class UpdateUserDTO {
     @Length(min = 10)
     private String fullName;
 
-    @NullOrNotEmpty(message = "is invalid")
-    @Length(min = 10)
-    private String avatar;
+    private String role;
+
+    private String status;
+
+
 }

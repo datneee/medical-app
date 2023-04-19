@@ -52,7 +52,7 @@ public class UserController extends BaseController<User> {
 
     @PatchMapping("/{userId}")
     @PreAuthorize("@userAuthorizer.isAdmin(authentication) || @userAuthorizer.isYourself(authentication, #userId)")
-    public ResponseEntity<?> updateUser(@RequestBody @Valid UpdateUserDTO userDTO,
+    public ResponseEntity<?> updateUser(@RequestBody UpdateUserDTO userDTO,
                                         @PathVariable("userId") Integer userId){
         User user = userService.findById(userId);
         if(user == null)

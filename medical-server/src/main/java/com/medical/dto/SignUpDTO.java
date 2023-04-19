@@ -30,6 +30,4 @@ public class SignUpDTO {
     @NotBlank
     private String address;
 
-    @NotBlank
-    private String avatar;
 }
