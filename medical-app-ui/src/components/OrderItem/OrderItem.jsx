@@ -2,7 +2,29 @@ import styles from "./OrderItem.scss";
 import React, { useEffect, useState } from "react";
 import { VscServerProcess } from "react-icons/vsc";
 import { Link } from "react-router-dom";
-
+const makeStyle = (status) => {
+  if (status === "Processing") {
+    return {
+      background: "rgb(145 254 159 / 47%)",
+      color: "black",
+    };
+  } else if (status === "Processed") {
+    return {
+      background: "rgba(255, 173, 173, 0.56)",
+      color: "white",
+    };
+  } else if (status === "Delivering") {
+    return {
+      background: "#ffe084",
+      color: "white",
+    };
+  } else if (status === "Complete") {
+    return {
+      background: "rgb(89, 191, 255)",
+      color: "white",
+    };
+  }
+}
 const OrderItem = ({ id, amount, orderItems, option = "all" }) => {
   if (option != "all") {
     switch (option) {
@@ -94,7 +116,7 @@ const OrderItem = ({ id, amount, orderItems, option = "all" }) => {
                     })}
                   </div>
                   <div className="orderItem-col-5">
-                    <span>{item?.status}</span>
+                    <span style={makeStyle(item?.status)} className="status" >{item?.status}</span>
                   </div>
                 </div>
               );

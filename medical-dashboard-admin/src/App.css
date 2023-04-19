@@ -80,6 +80,9 @@ h1, h2, h3, h4, h5, h6 {
 .modal-dialog {
   max-width: 800px !important;
 }
+.main-order-wrapper {
+  border-left: 1px solid #ccc;
+}
 .btn {
   padding: .375rem .75rem;
   background-color: #4599ff;

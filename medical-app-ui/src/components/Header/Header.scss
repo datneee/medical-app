@@ -14,7 +14,7 @@
         background-color: var(--color-131921);
       }
     .header-upper {
-        background-color: var(--color-131921);
+        background-color: #1da1f2b5;
         
         .input-group-text {
             background-color: var(--color-febd69);
@@ -28,7 +28,7 @@
         } 
     }
     .header-bottom {
-        background-color: var(--color-232f3e);
+        background-color: #e9ecefc2;
         .dropdown-list {
             margin-right: 15px;
     
@@ -67,7 +67,7 @@
                     margin: 0;
                 }
                 margin-right: 15px;
-                color: #ffff;
+                color: #000;
                 font-style: 14px;
                 line-height: 18px;
                 font-weight: 400;
@@ -90,5 +90,9 @@
         position: absolute;
         top: -8px;
         right: -16px;
+        color: #d95562 !important;
     }
+}
+ul {
+    list-style-type: none;
 }

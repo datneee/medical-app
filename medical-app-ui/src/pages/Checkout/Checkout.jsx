@@ -39,8 +39,7 @@ const Checkout = () => {
   const navigate = useNavigate();
   const [address, setAddress] = useState(() => user?.address);
   const [voucher, setVoucher] = useState("");
-  const handleClickBanking = () => {};
-  const handleClickShipOff = () => {};
+  const [method, setMethod] = useState("banking")
   const orderHanlder = () => {
     switch (useQuery.get("actor")) {
       case "cart":
@@ -139,7 +138,7 @@ const Checkout = () => {
                   <h4 className="checkout-col-3">Quantity</h4>
                   <h4 className="checkout-col-4">Total Price</h4>
                 </div>
-                {cartItems.map((item) => {
+                {cartItems?.map((item) => {
                   const totalPrice =
                     item?.amount * item?.product?.originalPrice;
 
@@ -212,31 +211,37 @@ const Checkout = () => {
                     <div className="d-flex align-items-center gap-10 checkout-method-title">
                       <h4>Checkout Method</h4>
                     </div>
-                    <button
+                    <input
+                      checked={method == "banking"}
+                      type="checkbox"
                       id="banking-btn"
                       className="btn-3"
-                      onClick={handleClickBanking}
-                    >
-                      Banking QR
-                    </button>
-                    <button
+                      onClick={() => setMethod("banking")}
+                    />
+                      <label htmlFor="banking-btn">Banking QR</label>
+                    <input
+                      checked={method == "Off"}
+                      type="checkbox"
                       id="shipOff-btn"
                       className="btn-3"
-                      onClick={handleClickShipOff}
-                    >
-                      Thanh toán khi nhận hàng
-                    </button>
+                      onClick={() => setMethod("Off")}
+                    />
+                      <label htmlFor="shipOff-btn">Thanh toán khi nhận hàng</label>
                   </div>
                   <div>
-                    <div id="banking">
-                      <img src="/images/QR.jfif" alt="" />
-                    </div>
-                    <div id="ship-off" style={{ display: "none" }}>
-                      <h4 className="w-25">Thanh toán khi nhận hàng</h4>
-                      <h4 className="22-50">
-                        Phí thu hộ: 0Đ. Áp dụng ưu đãi về phí vận chuyển
-                      </h4>
-                    </div>
+                    {method == "banking" && <div id="banking">
+                      <div style={{width: "48%"}}>
+                        <h5><b>Thực hiện thanh toán qua mã QR,</b> quý khách xác nhận mua hàng cần thực hiện thanh toán qua mã QR của hệ thống và chờ xác nhận ! </h5>
+                      </div>
+                      <img  src="/images/QR.jfif" alt="" />
+                    </div>}
+                    {method == "Off" && <div id="ship-off" >
+                      <h6 className="w-25 mt-5">Thanh toán khi nhận hàng</h6>
+                      <h7 className="22-50">
+                        Phí thu hộ: 0Đ. || <span style={{marginLeft: "10px"}}>Áp dụng ưu đãi về phí vận chuyển để nhận ưu đãi nhé !</span>
+                      </h7>
+                    </div>}
+                    
                   </div>
                 </div>
               </div>

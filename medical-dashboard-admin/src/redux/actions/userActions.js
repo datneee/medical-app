@@ -468,9 +468,35 @@ export const fetchAllOrders = () => async (dispatch) => {
       dispatch(getAllOrdersAction(res));
     })
     .catch((rej) => {
-      console.log(rej);
+      console.error(rej);
     })
     .finally(() => {
       dispatch(loadAction(false));
     });
 };
+export const fetchChangeStatusOrder = (id, status) => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.changeStatusOrderItem(id, status)
+    .then((res) => {
+      dispatch(fetchAllOrders())
+    })
+    .catch((rej) => {
+      console.error(rej);
+    })
+    .finally(() => {
+      dispatch(loadAction(false));
+    })
+}
+export const fetchDeleteOrderItem = (id) => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.deleteOrderItemById(id)
+    .then((res) => {
+      dispatch(fetchAllOrders())
+    })
+    .catch((rej) => {
+      console.error(rej);
+    })
+    .finally(() => {
+      dispatch(loadAction(false));
+    })
+}

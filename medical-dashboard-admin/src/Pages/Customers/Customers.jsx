@@ -56,7 +56,7 @@ const Customers = () => {
     resetForm();
     handleShow();
   };
-  const handleEditAccount = (id) => {
+  const handleOpenEditAccount = (id) => {
     const acc = users?.find((item) => item?.id == id);
     setAccount(acc);
     setForm(acc);
@@ -68,6 +68,12 @@ const Customers = () => {
     setForm(acc);
     setShow(true);
   };
+  const handleCreateAccount = () => {
+
+  }
+  const handleEditAccount = () => {
+    
+  }
   useEffect(() => {
     dispatch(fetchAllUsers());
   }, []);
@@ -276,11 +282,11 @@ const Customers = () => {
             Cancel
           </button>
           {account ? (
-            <button className="btn" variant="btn">
+            <button onClick={handleEditAccount} className="btn" variant="btn">
               Edit
             </button>
           ) : (
-            <button className="btn" variant="btn">
+            <button onClick={handleCreateAccount} className="btn" variant="btn">
               Create
             </button>
           )}
@@ -364,7 +370,7 @@ const Customers = () => {
                           </Link>
                         )}
                         <Link
-                          onClick={() => handleEditAccount(item?.id)}
+                          onClick={() => handleOpenEditAccount(item?.id)}
                           className="edit-btn"
                           to={"#"}
                         >

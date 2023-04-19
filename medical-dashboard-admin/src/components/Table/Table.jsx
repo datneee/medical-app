@@ -10,19 +10,24 @@ import "./Table.css";
 import { Link } from "react-router-dom";
 
 const makeStyle = (status) => {
-  if (status === "Approved") {
+  if (status === "Processing") {
     return {
       background: "rgb(145 254 159 / 47%)",
-      color: "green",
+      color: "black",
     };
-  } else if (status === "Pending") {
+  } else if (status === "Processed") {
     return {
-      background: "#ffadad8f",
-      color: "red",
+      background: "rgba(255, 173, 173, 0.56)",
+      color: "white",
     };
-  } else {
+  } else if (status === "Delivering") {
     return {
-      background: "#59bfff",
+      background: "#ffe084",
+      color: "white",
+    };
+  } else if (status === "Complete") {
+    return {
+      background: "rgb(89, 191, 255)",
       color: "white",
     };
   }

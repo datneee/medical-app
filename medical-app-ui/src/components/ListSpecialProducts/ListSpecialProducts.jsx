@@ -16,7 +16,8 @@ const ListSpecialProducts = ({ products }) => {
     setSeeMore(false);
   };
   useEffect(() => {
-    setSeeMore(true);
+    setSpecialProducts(products.slice(0, 6));
+    setSeeMore(false);
   }, []);
   return (
     <section className="special-product py-5 home-wrapper-2">

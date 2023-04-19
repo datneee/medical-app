@@ -9,6 +9,7 @@ import { fetchAllOrders } from "../../redux/actions/userActions";
 const Orders = () => {
   const [selectFilter, setSelectFilter] = useState("all");
   const auth = useSelector((state) => state?.auth);
+  const user = auth?.user;
   const dispatch = useDispatch();
   const orders = auth?.orders;
   const handleChangeSelectFilter = (e) => {
@@ -22,8 +23,8 @@ const Orders = () => {
     <div>
       <Meta title={"Management orders"} />
       {auth?.loading && <Loading />}
-      <div className="main-order-wrapper home-wrapper-2 py-5">
-        <div className="container-xxl">
+      <div className="main-order-wrapper py-5">
+        <div className="wrapper-container">
           <div className="row bg-white">
             <div className="col-12 order-heading mb-4">
               <div className="d-flex align-items-center gap-10">
@@ -49,6 +50,7 @@ const Orders = () => {
                   option={selectFilter}
                   id={item?.id}
                   amount={item?.amount}
+                  user={item?.user}
                   orderItems={item?.orderItems}
                   handleSelectStatus={handleSelectStatus}
                 />

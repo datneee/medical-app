@@ -53,5 +53,6 @@ export const paths = {
   ADD_TO_CART: "/carts/addCartItem",
   BUY_CART: "/carts/buyListCartItems",
   GET_ORDER: "/orders",
+  ORDERS_ITEM: "/orderitems",
   RATING: "/rates",
 };

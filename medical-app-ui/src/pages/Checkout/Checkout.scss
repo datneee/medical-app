@@ -138,3 +138,16 @@
 
     }
 }
+#banking {
+
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    h5 {
+        color: #0000008c;
+        font-size: 18px;
+    }
+    img {
+        width: 182px;
+    }
+}

@@ -1,10 +1,39 @@
 import styles from "./OrderItem.scss";
 import React, { useEffect, useState } from "react";
 import { VscServerProcess } from "react-icons/vsc";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { fetchChangeStatusOrder, fetchDeleteOrderItem } from "../../redux/actions/userActions";
 
-const OrderItem = ({ id, amount, orderItems, option = "all" }) => {
-  const [change, setChange] = useState([]);
+const makeStyle = (status) => {
+  if (status === "Processing") {
+    return {
+      background: "rgb(145 254 159 / 47%)",
+      color: "black",
+    };
+  } else if (status === "Processed") {
+    return {
+      background: "rgba(255, 173, 173, 0.56)",
+      color: "white",
+    };
+  } else if (status === "Delivering") {
+    return {
+      background: "#ffe084",
+      color: "white",
+    };
+  } else if (status === "Complete") {
+    return {
+      background: "rgb(89, 191, 255)",
+      color: "white",
+    };
+  }
+}
+
+const OrderItem = ({ id, amount, orderItems, user, option = "all" }) => {
+  
+  const [change, setChange] = useState();
+  const [status, setStatus] = useState([]);
+  const dispatch = useDispatch();
   if (option != "all") {
     switch (option) {
       case "Processing":
@@ -23,12 +52,29 @@ const OrderItem = ({ id, amount, orderItems, option = "all" }) => {
         break;
     }
   }
-  console.log(change);
-  const handleSubmit = () => {};
+  const handleChangeStatus = (e, item) => {
+    let statusNew = status;
+    if (statusNew?.find((a) => a?.id == item?.id)) {
+      setStatus(statusNew?.filter((a) => a?.id != item?.id))
+    }
+    setStatus(prev => [...prev, {id: item?.id, status: e.target.value}]);
+    
+  }
+  const handleSubmit = (id) => {
+    const currentStatus = status?.find((a) => a?.id == id)
+    console.log(currentStatus);
+    dispatch(fetchChangeStatusOrder(currentStatus?.id, currentStatus?.status));
+    setChange({})
+  };
+  const handleDeleteOrederItem = (id) => {
+    if (window.confirm("Bạn có chắc chắn muốn xóa đơn hàng này ?")) {
+      dispatch(fetchDeleteOrderItem(id))
+    }
+  }
   useEffect(() => {}, []);
   return (
     <div className="orderItem-wrapper home-wrapper-2 py-3">
-      <div className="container-xxl">
+      <div className="">
         <div className="col-12">
           <div className="info-shipping d-flex align-items-center justify-content-between gap-15">
             <div className="d-flex align-items-center gap-10 info-shipping-title">
@@ -41,6 +87,10 @@ const OrderItem = ({ id, amount, orderItems, option = "all" }) => {
               >
                 <h5 style={{ color: "#6a6a6a" }}>Số lượng:</h5>
                 <span>{amount}</span>
+              </div>
+              <div className="d-flex align-items-center gap-10">
+                <h5  style={{ color: "#6a6a6a" }}>By:</h5>
+                <span>{user?.fullName}</span>
               </div>
             </div>
           </div>
@@ -98,7 +148,8 @@ const OrderItem = ({ id, amount, orderItems, option = "all" }) => {
                   </div>
                   <div className="orderItem-col-5">
                     {change?.id == item?.id ? (
-                      <select className="form-control">
+                      <select value={status?.find((it) => it?.id == item?.id)?.status || item?.status} 
+                              onChange={(e) => handleChangeStatus(e, item)} className="form-control">
                         <option value="Processing" name="processing" id="">
                           Processing
                         </option>
@@ -113,20 +164,19 @@ const OrderItem = ({ id, amount, orderItems, option = "all" }) => {
                         </option>
                       </select>
                     ) : (
-                      <span>{item?.status}</span>
+                      <span className="status" style={makeStyle(item?.status)}>{item?.status}</span>
                     )}
                   </div>
                   <div className="orderItem-col-4 d-flex align-items-center gap-10 justify-content-center">
-                    {change == [] && (
+                    {change?.id == item?.id ? (
                       <Link
-                        onClick={handleSubmit}
+                        onClick={() => handleSubmit(item?.id)}
                         className="btn-normal"
                         to={"#"}
                       >
                         Submit
                       </Link>
-                    )}{" "}
-                    {change?.id && (
+                    ) : (
                       <Link
                         onClick={() => setChange({ id: item?.id })}
                         className="delete-btn"
@@ -135,7 +185,7 @@ const OrderItem = ({ id, amount, orderItems, option = "all" }) => {
                         Change
                       </Link>
                     )}
-                    <Link className="edit-btn" to={"#"}>
+                    <Link onClick={() => handleDeleteOrederItem(item?.id)} className="edit-btn" to={"#"}>
                       Delete
                     </Link>
                   </div>
