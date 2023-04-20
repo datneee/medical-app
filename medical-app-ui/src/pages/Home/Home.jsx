@@ -39,7 +39,7 @@ const blogs = [
     date: new Date(),
     header: "",
     body: "",
-    foooter: ""
+    foooter: "",
   },
   {
     id: 2,
@@ -47,7 +47,7 @@ const blogs = [
     date: new Date(),
     header: "",
     body: "",
-    foooter: ""
+    foooter: "",
   },
   {
     id: 3,
@@ -55,7 +55,7 @@ const blogs = [
     date: new Date(),
     header: "",
     body: "",
-    foooter: ""
+    foooter: "",
   },
   {
     id: 4,
@@ -63,14 +63,12 @@ const blogs = [
     date: new Date(),
     header: "",
     body: "",
-    foooter: ""
-  }
-
-]
+    foooter: "",
+  },
+];
 const Home = () => {
   const dispatch = useDispatch();
   const service = useSelector((state) => state?.service);
-  const medicals = service?.products;
   const categories = service?.categories;
   const brands = service?.brands;
   const featureds = service?.productFeatured;
@@ -276,7 +274,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      {medicals && <ListSpecialProducts products={medicals} />}
+      <ListSpecialProducts />
       <section className="brand-wrapper py-3">
         <div className="container-xxl">
           <div className="row">

@@ -24,6 +24,13 @@ const ProductServices = {
         })
         .catch((rej) => reject(rej));
     }),
+  getListSpecialProduct: () =>
+    new Promise((resolve, reject) => {
+      axiosClient
+        .get(`${paths.PRODUCTS}/special`)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej));
+    }),
   getProductById: (id) =>
     new Promise((resolve, reject) => {
       axiosClient
@@ -31,12 +38,12 @@ const ProductServices = {
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
     }),
-  getProductFeatured: () => 
+  getProductFeatured: () =>
     new Promise((resolve, reject) => {
       axiosClient
         .get(paths.GET_PRODUCT_FEATURED)
         .then((res) => resolve(res))
-        .catch((rej) => reject(rej))
+        .catch((rej) => reject(rej));
     }),
   getCategories: () =>
     new Promise((resolve, reject) => {

@@ -43,14 +43,14 @@ const SpecialProduct = (props) => {
               <RatingChanged />
               <p className="price">
                 <span className="red-p">
-                  {product?.originalPrice.toLocaleString("it-IT", {
+                  {product?.promotionPrice?.toLocaleString("it-IT", {
                     style: "currency",
                     currency: "VND",
                   })}
                 </span>{" "}
                 &nbsp;
                 <strike>
-                  {product?.originalPrice.toLocaleString("it-IT", {
+                  {product?.originalPrice?.toLocaleString("it-IT", {
                     style: "currency",
                     currency: "VND",
                   })}
@@ -58,7 +58,7 @@ const SpecialProduct = (props) => {
               </p>
               <div className="discount-till d-flex align-items-center">
                 <p className="mb-0">
-                  <b>5 days</b>
+                  <b>10 days</b>
                 </p>
               </div>
               <div className="product-count">

@@ -30,7 +30,9 @@ const CartItem = ({ className, CartItem }) => {
     dispatch(isSuccessAction(false));
     dispatch(getCartItem(cartId));
   }
-  const totalPrice = quantity * CartItem?.product?.originalPrice;
+  const totalPrice = CartItem?.product?.promotionPrice
+    ? quantity * CartItem?.product?.promotionPrice
+    : quantity * CartItem?.product?.originalPrice;
   const increasingQuantity = () => {
     if (quantity < 100) {
       setQuantity((prev) => prev + 1);
@@ -75,10 +77,15 @@ const CartItem = ({ className, CartItem }) => {
       <div className="cart-col-2">
         <h5 className="price">
           {" "}
-          {CartItem?.product?.originalPrice.toLocaleString("it-IT", {
-            style: "currency",
-            currency: "VND",
-          })}
+          {CartItem?.product?.promotionPrice
+            ? CartItem?.product?.promotionPrice.toLocaleString("it-IT", {
+                style: "currency",
+                currency: "VND",
+              })
+            : CartItem?.product?.originalPrice.toLocaleString("it-IT", {
+                style: "currency",
+                currency: "VND",
+              })}
         </h5>
       </div>
       <div className="cart-col-3 d-flex align-items-center gap-10">

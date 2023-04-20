@@ -6,6 +6,7 @@ const initState = {
   loading: false,
   products: [],
   productFeatured: [],
+  specialProduct: [],
   product: null,
   categories: [],
   brands: [],
@@ -19,11 +20,16 @@ const reducer = (state = initState, { type, payload }) => {
         products: payload.data,
         pagination: payload.pagination,
       };
+    case Service.GET_LIST_SPECIAL_PRODUCT:
+      return {
+        ...state,
+        specialProduct: payload,
+      };
     case Service.GET_PRODUCT_FEATURED:
       return {
         ...state,
-        productFeatured: payload
-      };  
+        productFeatured: payload,
+      };
     case Service.LOADING:
       return {
         ...state,

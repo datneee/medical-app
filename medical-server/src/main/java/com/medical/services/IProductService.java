@@ -21,6 +21,7 @@ public interface IProductService{
     public Product getById(Integer id);
     public ProductDTO getProductById(Integer id);
 
+    List<Product> getListSpecialProduct();
 
     List<Product> getProductByCategoryId(Integer id);
 

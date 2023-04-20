@@ -1,24 +1,33 @@
 import React from "react";
 import SpecialProduct from "../SpecialProduct/SpecialProduct";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchAllSpecialProduct,
+  getListSpecialProductAction,
+} from "../../redux/actions/serviceActions";
 
-const ListSpecialProducts = ({ products }) => {
-  const [specialProducts, setSpecialProducts] = useState();
-
-  const [seeMore, setSeeMore] = useState(true);
-
+const ListSpecialProducts = () => {
+  const dispatch = useDispatch();
+  const [seeMore, setSeeMore] = useState(false);
+  const service = useSelector((state) => state?.service);
+  const specialProducts = service?.specialProduct;
   const handleSeeMore = () => {
-    setSpecialProducts(products);
     setSeeMore(true);
   };
   const handleSeeLess = () => {
-    setSpecialProducts(products.slice(0, 6));
     setSeeMore(false);
   };
   useEffect(() => {
-    setSpecialProducts(products.slice(0, 6));
-    setSeeMore(false);
+    if (seeMore) {
+      dispatch(fetchAllSpecialProduct());
+    } else {
+      dispatch(getListSpecialProductAction(specialProducts.slice(0, 6)));
+    }
   }, [seeMore]);
+  useEffect(() => {
+    dispatch(fetchAllSpecialProduct());
+  }, []);
   return (
     <section className="special-product py-5 home-wrapper-2">
       <div className="container-xxl">
@@ -28,13 +37,10 @@ const ListSpecialProducts = ({ products }) => {
           </div>
         </div>
         <div className="row">
-          {specialProducts
-            ? specialProducts.map((product, index) => (
-                <SpecialProduct key={product?.id} product={product} />
-              ))
-            : products.map((product, index) => (
-                <SpecialProduct key={product?.id} product={product} />
-              ))}
+          {specialProducts.length > 0 &&
+            specialProducts?.map((product, index) => (
+              <SpecialProduct key={product?.id} product={product} />
+            ))}
         </div>
         <div className="row">
           <div

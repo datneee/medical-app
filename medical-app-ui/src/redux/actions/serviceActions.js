@@ -61,6 +61,26 @@ export const fetchAllProducts =
         dispatch(loadAction(false));
       });
   };
+export const getListSpecialProductAction = (payload) => {
+  return {
+    type: Service.GET_LIST_SPECIAL_PRODUCT,
+    payload: payload,
+  };
+};
+export const fetchAllSpecialProduct = () => async (dispatch) => {
+  dispatch(loadAction(true));
+  await ProductServices.getListSpecialProduct()
+    .then((res) => {
+      dispatch(getListSpecialProductAction(res));
+    })
+    .catch((rej) => {
+      console.log(rej);
+    })
+    .finally(() => {
+      dispatch(loadAction(false));
+    });
+};
+
 export const fetchAllCategory = () => async (dispatch) => {
   dispatch(loadAction(true));
 
@@ -123,19 +143,19 @@ export const fetchProductsInCategory = (id) => async (dispatch) => {
 const getListProductFeatured = (payload) => {
   return {
     type: Service.GET_PRODUCT_FEATURED,
-    payload: payload
-  }
-}
+    payload: payload,
+  };
+};
 export const fetchListProductFeatured = () => async (dispatch) => {
   dispatch(loadAction(true));
   await ProductServices.getProductFeatured()
     .then((res) => {
-      dispatch(getListProductFeatured(res?.map((item) => item?.product)))
+      dispatch(getListProductFeatured(res?.map((item) => item?.product)));
     })
-    .catch((rej)=> {
+    .catch((rej) => {
       console.log(rej);
     })
     .finally(() => {
-        dispatch(loadAction(false));
-    })
-}
+      dispatch(loadAction(false));
+    });
+};

@@ -69,10 +69,19 @@ const ProductCard = (props) => {
           <RatingChanged />
           <p className="description">{product?.descriptions}</p>
           <p className="price">
-            {product?.originalPrice.toLocaleString("it-IT", {
-              style: "currency",
-              currency: "VND",
-            })}
+            <span className="red-p">
+              {product?.promotionPrice?.toLocaleString("it-IT", {
+                style: "currency",
+                currency: "VND",
+              })}
+            </span>{" "}
+            &nbsp;
+            <strike>
+              {product?.originalPrice?.toLocaleString("it-IT", {
+                style: "currency",
+                currency: "VND",
+              })}
+            </strike>
           </p>
         </div>
         <div className="action-bar position-absolute">

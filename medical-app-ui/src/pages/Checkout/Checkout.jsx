@@ -31,34 +31,39 @@ const Checkout = () => {
   const user = auth?.user;
   const shipFees = auth?.shipFees;
   const cartItems = auth?.checkout;
-  
+
   const useQuery = new URLSearchParams(useLocation().search);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [address, setAddress] = useState(() => user?.address);
   const [voucher, setVoucher] = useState("");
-  const [method, setMethod] = useState("banking")
+  const [method, setMethod] = useState("banking");
   let shipFee = 25000;
   if (voucher) {
-    if (shipFees.find(item => item.voucher == voucher)) {
-      shipFee = shipFees.find(item => item.voucher == voucher)?.fee
+    if (shipFees.find((item) => item.voucher == voucher)) {
+      shipFee = shipFees.find((item) => item.voucher == voucher)?.fee;
     }
   }
   let total = auth?.buyedTotal + shipFee;
   if (total == 0) {
     total = cartItems.reduce((total, item) => {
-      return  total + item?.amount * item?.product?.originalPrice + shipFee;
+      return item?.product?.promotionPrice
+        ? total + item?.amount * item?.product?.promotionPrice + shipFee
+        : total + item?.amount * item?.product?.originalPrice + shipFee;
     }, 0);
   }
   const orderHanlder = () => {
-    const payment = method == "banking" ? "Banking QR" : "Thanh toán khi nhận hàng";
+    const payment =
+      method == "banking" ? "Banking QR" : "Thanh toán khi nhận hàng";
     switch (useQuery.get("actor")) {
       case "cart":
         dispatch(fetchBuyCart(user?.id, payment));
         dispatch(getCartItem(user?.id));
         break;
       case "product":
-        dispatch(fetchBuyProductOnly(user?.id, cartItems[0]?.product?.id, 1, payment));
+        dispatch(
+          fetchBuyProductOnly(user?.id, cartItems[0]?.product?.id, 1, payment)
+        );
         dispatch(getCartItem(user?.id));
         break;
       default:
@@ -151,8 +156,9 @@ const Checkout = () => {
                   <h4 className="checkout-col-4">Total Price</h4>
                 </div>
                 {cartItems?.map((item) => {
-                  const totalPrice =
-                    item?.amount * item?.product?.originalPrice;
+                  const totalPrice = item?.product?.promotionPrice
+                    ? item?.amount * item?.product?.promotionPrice
+                    : item?.amount * item?.product?.originalPrice;
 
                   return (
                     <div key={item?.id} className="checkout-wrapper-data py-3">
@@ -177,13 +183,21 @@ const Checkout = () => {
                       </div>
                       <div className="checkout-col-2">
                         <h5 className="price">
-                          {item?.product?.originalPrice.toLocaleString(
-                            "it-IT",
-                            {
-                              style: "currency",
-                              currency: "VND",
-                            }
-                          )}
+                          {item?.product?.promotionPrice
+                            ? item?.product?.promotionPrice.toLocaleString(
+                                "it-IT",
+                                {
+                                  style: "currency",
+                                  currency: "VND",
+                                }
+                              )
+                            : item?.product?.originalPrice.toLocaleString(
+                                "it-IT",
+                                {
+                                  style: "currency",
+                                  currency: "VND",
+                                }
+                              )}
                         </h5>
                       </div>
                       <div className="checkout-col-3 d-flex align-items-center gap-10">
@@ -230,7 +244,7 @@ const Checkout = () => {
                       className="btn-3"
                       onClick={() => setMethod("banking")}
                     />
-                      <label htmlFor="banking-btn">Banking QR</label>
+                    <label htmlFor="banking-btn">Banking QR</label>
                     <input
                       checked={method == "Off"}
                       type="checkbox"
@@ -238,22 +252,35 @@ const Checkout = () => {
                       className="btn-3"
                       onClick={() => setMethod("Off")}
                     />
-                      <label htmlFor="shipOff-btn">Thanh toán khi nhận hàng</label>
+                    <label htmlFor="shipOff-btn">
+                      Thanh toán khi nhận hàng
+                    </label>
                   </div>
                   <div>
-                    {method == "banking" && <div id="banking">
-                      <div style={{width: "48%"}}>
-                        <h5><b>Thực hiện thanh toán qua mã QR,</b> quý khách xác nhận mua hàng cần thực hiện thanh toán qua mã QR của hệ thống và chờ xác nhận ! </h5>
+                    {method == "banking" && (
+                      <div id="banking">
+                        <div style={{ width: "48%" }}>
+                          <h5>
+                            <b>Thực hiện thanh toán qua mã QR,</b> quý khách xác
+                            nhận mua hàng cần thực hiện thanh toán qua mã QR của
+                            hệ thống và chờ xác nhận !{" "}
+                          </h5>
+                        </div>
+                        <img src="/images/QR.jfif" alt="" />
                       </div>
-                      <img  src="/images/QR.jfif" alt="" />
-                    </div>}
-                    {method == "Off" && <div id="ship-off" >
-                      <h6 className="w-25 mt-5">Thanh toán khi nhận hàng</h6>
-                      <h7 className="22-50">
-                        Phí thu hộ: 0Đ. || <span style={{marginLeft: "10px"}}>Áp dụng ưu đãi về phí vận chuyển để nhận ưu đãi nhé !</span>
-                      </h7>
-                    </div>}
-                    
+                    )}
+                    {method == "Off" && (
+                      <div id="ship-off">
+                        <h6 className="w-25 mt-5">Thanh toán khi nhận hàng</h6>
+                        <h6 className="22-50">
+                          Phí thu hộ: 0Đ. ||{" "}
+                          <span style={{ marginLeft: "10px" }}>
+                            Áp dụng ưu đãi về phí vận chuyển để nhận ưu đãi nhé
+                            !
+                          </span>
+                        </h6>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -279,10 +306,12 @@ const Checkout = () => {
                   >
                     Phí vận chuyển
                   </h5>
-                  <span>{shipFee.toLocaleString("it-IT", {
+                  <span>
+                    {shipFee.toLocaleString("it-IT", {
                       style: "currency",
                       currency: "VND",
-                    })}</span>
+                    })}
+                  </span>
                 </div>
                 <div className="d-flex align-items-center justify-content-between gap-45">
                   <h5>Tổng thanh toán</h5>

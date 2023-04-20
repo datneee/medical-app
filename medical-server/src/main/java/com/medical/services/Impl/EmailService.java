@@ -59,12 +59,10 @@ public class EmailService implements IEmailService {
                 MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                 StandardCharsets.UTF_8.name());
 
-        helper.addAttachment("template-cover.png", new ClassPathResource("javabydeveloper-email.PNG"));
-
         Context context = new Context();
         context.setVariables(mail.getProps());
 
-        final String template = mail.getProps().get("type").equals("NEWSLETTER") ? "newsletter-template" : "inlined-css-template";
+        final String template = "inlined-css-template";
         String html = templateEngine.process(template, context);
 
         helper.setTo(mail.getMailTo());

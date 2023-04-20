@@ -21,7 +21,9 @@ const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const priceCheckout = cartItems?.reduce((total, item) => {
-    return total + item?.amount * item?.product?.originalPrice;
+    return item?.product?.promotionPrice
+      ? total + item?.amount * item?.product?.promotionPrice
+      : total + item?.amount * item?.product?.originalPrice;
   }, 0);
 
   const handleCheckoutCart = () => {

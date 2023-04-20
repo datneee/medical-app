@@ -18,6 +18,9 @@ public interface IProductRepository extends JpaRepository<Product , Integer> , J
 
     void deleteProductById(Integer id);
 
+    @Query(value = "SELECT * FROM products WHERE ticketId IS NOT NULL;", nativeQuery = true)
+    List<Product> getListSpecialProduct();
+
     @Modifying
     @Query(value = "DELETE FROM Product p WHERE p.id = :id")
     void deleteById(@Param("id") Integer id);

@@ -97,7 +97,11 @@ const SingleProduct = () => {
     if (user) {
       dispatch(setCheckout([{ amount: quantity, product }]));
       dispatch(
-        setTotalPriceToCheckoutAction(quantity * product?.originalPrice)
+        setTotalPriceToCheckoutAction(
+          product?.promotionPrice
+            ? quantity * product?.promotionPrice
+            : quantity * product?.originalPrice
+        )
       );
       dispatch(loadAction(true));
       setTimeout(() => {
@@ -202,12 +206,19 @@ const SingleProduct = () => {
                     <span>{"( by reviewers )"}</span>
                   </div>
                   <div className="border-bottom product-rate">
-                    <span>
-                      {product?.originalPrice.toLocaleString("it-IT", {
+                    <span className="red-p">
+                      {product?.promotionPrice?.toLocaleString("it-IT", {
                         style: "currency",
                         currency: "VND",
                       })}
-                    </span>
+                    </span>{" "}
+                    &nbsp;
+                    <strike>
+                      {product?.originalPrice?.toLocaleString("it-IT", {
+                        style: "currency",
+                        currency: "VND",
+                      })}
+                    </strike>
                     <div className="d-flex align-items-center gap-15">
                       <FaShippingFast className="color-red" />
                       <div className="d-flex flex-column">

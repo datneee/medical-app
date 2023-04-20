@@ -92,6 +92,10 @@ public class ProductController extends BaseController<Product> {
     public ResponseEntity<?> addTicketToProduct(@PathVariable("id") Integer id, @RequestParam(name = "ticket") Integer ticket) throws Exception {
         return new ResponseEntity<>(service.addTicket(id, ticket), HttpStatus.OK);
     }
+    @GetMapping(value = "/special")
+    public ResponseEntity<?> getListSpecialProduct() {
+        return new ResponseEntity<>(service.getListSpecialProduct(), HttpStatus.OK);
+    }
     @GetMapping(value = "/existsTitle/{title}")
     public ResponseEntity<?> existedByProductTitle(@PathVariable("title") String title){
         return new ResponseEntity<>(service.existsProductByTitle(title) , HttpStatus.OK);

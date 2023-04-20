@@ -198,6 +198,42 @@ BEGIN
 END $$
 DELIMITER ;
 
+DROP TRIGGER IF EXISTS auto_setPromotionPrice_inProduct_when_update;
+DELIMITER $$
+CREATE TRIGGER auto_setPromotionPrice_inProduct_when_update
+BEFORE UPDATE ON products
+FOR EACH ROW
+BEGIN 
+	DECLARE v_discount tinyint;
+	IF NEW.ticketId IS NOT NULL THEN
+		SELECT discount INTO v_discount
+		FROM tickets t
+		WHERE t.id = NEW.ticketId;
+		SET NEW.promotionPrice = NEW.originalPrice * v_discount / 100;
+    ELSE 
+		SET NEW.promotionPrice = NEW.originalPrice;
+    END IF;
+END $$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS auto_setPromotionPrice_inProduct_when_create;
+DELIMITER $$
+CREATE TRIGGER auto_setPromotionPrice_inProduct_when_create
+BEFORE UPDATE ON products
+FOR EACH ROW
+BEGIN 
+	DECLARE v_discount tinyint;
+	IF NEW.ticketId IS NOT NULL THEN
+		SELECT discount INTO v_discount
+		FROM tickets t
+		WHERE t.id = NEW.ticketId;
+		SET NEW.promotionPrice = NEW.originalPrice * v_discount / 100;
+	ELSE 
+		SET NEW.promotionPrice = NEW.originalPrice;
+    END IF;
+END $$
+DELIMITER ;
+
 DROP TRIGGER IF EXISTS auto_deleteProductImages_before_deleteProduct;
 DELIMITER $$
 CREATE TRIGGER auto_deleteProductImages_before_deleteProduct
@@ -348,6 +384,22 @@ INSERT INTO `products` (`title`, `descriptions`, `originalPrice`,  `categoryId`,
 ('Thuốc Paracetamol Stada 500mg hỗ trợ giảm đau và hạ sốt (10 vỉ x 10 viên)', 'Thuốc Paracetamol Stada 500mg là sản phẩm của Công ty TNHH Liên doanh Stada Việt Nam có thành phần dược chất chính Paracetamol được sử dụng để điều trị các cơn đau từ nhẹ đến trung bình bao gồm đau đầu, đau nửa đầu, đau thần kinh đau răng, đau họng, đau do hành kinh, đau nhức, giảm triệu chứng đau nhức do thấp khớp, cảm cúm, cảm sốt và cảm lạnh.', 50000, 5, 1, 99, 99, 1, 0 ),
 ('Thuốc Magnesium - B6 TV.Pharm làm giảm các triệu chứng thiếu hụt magnesi (100 viên)', 'Magnesium - B6 do Công ty Cổ phần Dược phẩm TV.PHARM sản xuất có chứa magnesi lactat dihydrat và vitamin B6 với công dụng làm giảm các triệu chứng thiếu hụt magnesi như: Nôn mửa, khó chịu, mệt mỏi, rối loạn giấc ngủ nhẹ, đánh trống ngực, chứng chuột rút.Viên bao phim màu trắng, hình oval, hai mặt trơn.', 52000, 5, 2, 99, 99, 1, 0 );
 
+UPDATE `products` p SET p.ticketId = 1 WHERE p.id = 10; 
+UPDATE `products` p SET p.ticketId = 2 WHERE p.id = 20; 
+UPDATE `products` p SET p.ticketId = 5 WHERE p.id = 21; 
+UPDATE `products` p SET p.ticketId = 4 WHERE p.id = 22; 
+UPDATE `products` p SET p.ticketId = 4 WHERE p.id = 23; 
+UPDATE `products` p SET p.ticketId = 3 WHERE p.id = 24; 
+UPDATE `products` p SET p.ticketId = 6 WHERE p.id = 29; 
+UPDATE `products` p SET p.ticketId = 8 WHERE p.id = 30; 
+UPDATE `products` p SET p.ticketId = 7 WHERE p.id = 31; 
+UPDATE `products` p SET p.ticketId = 7 WHERE p.id = 32; 
+UPDATE `products` p SET p.ticketId = 5 WHERE p.id = 33; 
+UPDATE `products` p SET p.ticketId = 1 WHERE p.id = 41; 
+UPDATE `products` p SET p.ticketId = 2 WHERE p.id = 44; 
+UPDATE `products` p SET p.ticketId = 4 WHERE p.id = 45; 
+UPDATE `products` p SET p.ticketId = 7 WHERE p.id = 47; 
+UPDATE `products` p SET p.ticketId = 6 WHERE p.id = 49; 
 
 INSERT INTO `rating`(user_Id, product_Id, `comment` ) VALUES 
 (1, 1, 'Rất tốt !'),

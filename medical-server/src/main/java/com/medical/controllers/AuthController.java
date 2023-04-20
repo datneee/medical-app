@@ -116,7 +116,8 @@ public class AuthController {
         mail.setFrom("pvd14092001@gmail.com");
         mail.setMailTo(user.getEmail());
         mail.setSubject("Email to confirm active account !");
-        mailService.sendEmail(mail, user, jwt);
+//        mailService.sendEmail(mail, user, jwt);
+        sendInlinedCssEmail(mail, user, jwt);
         return new ResponseEntity<>(Common.MSG_SIGNUP_SUCCESS, HttpStatus.CREATED);
     }
 
@@ -136,8 +137,8 @@ public class AuthController {
     }
 
 
-    @GetMapping("/active/{token}")
-    public ResponseEntity<?> activeUser(@PathVariable(value = "token") String token){
+    @GetMapping("/active")
+    public ResponseEntity<?> activeUser(@RequestParam(value = "token") String token){
         userService.activeUser(token);
         return new ResponseEntity<>(Common.MSG_ACTIVE_SUCCESS, HttpStatus.OK);
     }

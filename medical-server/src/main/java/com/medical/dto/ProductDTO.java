@@ -3,6 +3,7 @@ package com.medical.dto;
 import com.medical.constants.IsHotProductEnum;
 import com.medical.constants.StatusCodeProductEnum;
 import com.medical.entity.Brand;
+import com.medical.entity.Ticket;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,7 @@ public class ProductDTO {
     private StatusCodeProductEnum status;
     private Brand brand;
     private CategoryDTO category;
+    private Ticket ticket;
 
     private List<ProductImagesDTO> productImages;
 
