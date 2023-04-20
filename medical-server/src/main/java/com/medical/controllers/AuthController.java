@@ -10,12 +10,14 @@ import com.medical.entity.User;
 import com.medical.exceptions.AppException;
 import com.medical.models.AuthenticationRequest;
 import com.medical.models.AuthenticationResponse;
+import com.medical.models.Mail;
 import com.medical.services.IEmailService;
 import com.medical.services.IRegistrationUserTokenService;
 import com.medical.services.IResetPasswordUserTokenService;
 import com.medical.services.IUserService;
 import com.medical.services.Impl.MyUserDetailsService;
 import com.medical.utils.JwtUtil;
+import freemarker.template.TemplateException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +32,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -62,9 +67,39 @@ public class AuthController {
     @Autowired
     private IEmailService mailService;
 
+
+    private void sendFakeNewsLetter(Mail mail) throws MessagingException, IOException {
+
+
+        mail.setSubject("Email with Spring boot and thymeleaf template!");
+
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("name", "Developer!");
+        model.put("location", "VN");
+        model.put("sign", "Java Developer");
+        model.put("type", "NEWSLETTER");
+        mail.setProps(model);
+
+        mailService.sendEmail(mail);
+    }
+    private void sendInlinedCssEmail(Mail mail, User user, String token) throws MessagingException, IOException {
+
+
+        mail.setSubject("Email to confirm active account !");
+
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("name", user.getFullName());
+        model.put("address", "Medical supporter, 38 Nguyen Xa ");
+        model.put("sign", "PVD - Developer");
+        model.put("type", "TRANSACTIONAL");
+        model.put("tokenActive", token );
+        mail.setProps(model);
+
+        mailService.sendEmail(mail);
+    }
     @Transactional
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestBody @Valid SignUpDTO signUpDTO) throws MessagingException, UnsupportedEncodingException {
+    public ResponseEntity<?> signUp(@RequestBody @Valid SignUpDTO signUpDTO) throws MessagingException, IOException, TemplateException {
 
         User oldUser = userService.getUserByUsername(signUpDTO.getUsername());
         oldUser = oldUser != null ? oldUser : userService.getUserByEmail(signUpDTO.getEmail());
@@ -77,8 +112,11 @@ public class AuthController {
         final String jwt = jwtUtil.generateToken(userDetails);
 
         registrationUserTokenService.createNewRegistrationUserToken(user, jwt);
-        String linkActive = "<br /><a href ='localhost:8080/api/v1/auth/active/'>localhost:8080/api/v1/auth/active/" +jwt+" </a>";
-        mailService.send(Common.MSG_SUBJECT_MAIL, Common.MSG_CONTENT + linkActive, user.getEmail(), true);
+        Mail mail = new Mail();
+        mail.setFrom("pvd14092001@gmail.com");
+        mail.setMailTo(user.getEmail());
+        mail.setSubject("Email to confirm active account !");
+        mailService.sendEmail(mail, user, jwt);
         return new ResponseEntity<>(Common.MSG_SIGNUP_SUCCESS, HttpStatus.CREATED);
     }
 
