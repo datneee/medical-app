@@ -211,7 +211,7 @@ BEGIN
 		WHERE t.id = NEW.ticketId;
 		SET NEW.promotionPrice = NEW.originalPrice * v_discount / 100;
     ELSE 
-		SET NEW.promotionPrice = NEW.originalPrice;
+		SET NEW.promotionPrice = OLD.originalPrice;
     END IF;
 END $$
 DELIMITER ;
@@ -219,7 +219,7 @@ DELIMITER ;
 DROP TRIGGER IF EXISTS auto_setPromotionPrice_inProduct_when_create;
 DELIMITER $$
 CREATE TRIGGER auto_setPromotionPrice_inProduct_when_create
-BEFORE UPDATE ON products
+BEFORE INSERT ON products
 FOR EACH ROW
 BEGIN 
 	DECLARE v_discount tinyint;
