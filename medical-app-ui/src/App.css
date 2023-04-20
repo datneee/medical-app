@@ -90,3 +90,29 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0;
   margin: 0;
 }
+/* PC */
+@media (min-width: 1024px) {
+    
+}
+/* Tablet && Mobie */
+@media (max-width: 1200px) {
+    p {
+      display: none;
+    }
+}
+/* Tablet */
+@media (min-width: 740px ) and (max-width: 1023px) {
+  .header-upper-links-item {
+    font-size: 32px !important;
+  } 
+  .header-upper-links p {
+    display: none;
+  }
+   
+  
+}
+
+/* Mobie */
+@media (max-width: 740px) {
+    
+}

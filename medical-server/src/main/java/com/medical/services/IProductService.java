@@ -12,11 +12,11 @@ import java.util.List;
 
 public interface IProductService{
 
-
+    Product addTicket(Integer productId, Integer ticketId) throws Exception;
     public PaginateDTO<Product> getAllProducts(Integer page, Integer perPage, GenericSpecification<Product> specification);
 
     public List<OrderItem> getListFeatureProduct() ;
-    void buyOneItem(Integer userId, Integer productId, Integer amount);
+    void buyOneItem(Integer userId, Integer productId, Integer amount, String payment);
 
     public Product getById(Integer id);
     public ProductDTO getProductById(Integer id);

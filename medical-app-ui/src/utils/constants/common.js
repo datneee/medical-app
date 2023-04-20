@@ -21,7 +21,8 @@ export const UserAuth = {
   BUY_PRODUCT: "BUY PRODUCT",
   GET_ORDERS: "GET ORDERS",
   SET_PRICE_CHECKOUT: "SET PRICE CHECKOUT",
-  COMMENT: "COMMENT"
+  COMMENT: "COMMENT",
+  GET_SHIPFEES: "GET ALL SHIP FEES"
 };
 export const Service = {
   LOADING: "LOADING ACTION",
@@ -34,6 +35,8 @@ export const Service = {
   ERROR: "HAVE AN ERROR",
 };
 export const paths = {
+  TICKETS: "/tickets",
+  SHIP_FEES: "/shipFees",
   PRODUCTS: "/products",
   GET_PRODUCTS_BY_CATEGORY_ID: "/products/inCategory",
   BUY_PRODUCT: "/products/buy",

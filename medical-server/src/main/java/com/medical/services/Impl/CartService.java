@@ -69,9 +69,10 @@ public class CartService implements ICartService {
 
 
     @Override
-    public void buyListCartItems(Integer userId) {
+    public void buyListCartItems(Integer userId, String shipment) {
         Cart cart = this.getCartByUserId(userId);
         Order order = new Order(userService.findById(userId), 0);
+        order.setShipment(shipment);
         orderService.createOrder(order);
         List<Integer> listId = new ArrayList<>();
         for (CartItem item: cart.getCartItemList()) {

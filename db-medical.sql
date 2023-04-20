@@ -32,6 +32,22 @@ CREATE TABLE brands (
     webPage					VARCHAR(255),
     logo					VARCHAR(500)
 );
+DROP TABLE IF EXISTS tickets;
+CREATE TABLE tickets (
+	id						TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `name`					VARCHAR(255) NOT NULL,
+    discount				TINYINT UNSIGNED NOT NULL,
+    `created_Date` 			DATETIME DEFAULT now(),
+    `end_Date`				DATETIME 
+);
+
+DROP TABLE IF EXISTS shipFees;
+CREATE TABLE shipFees (
+	id						TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `voucher`				VARCHAR(255) NOT NULL,
+    fee						INT UNSIGNED NOT NULL
+);
+
 DROP TABLE IF EXISTS products;
 CREATE TABLE products (
 	id 						TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -42,6 +58,7 @@ CREATE TABLE products (
 	`created_Date` 			DATETIME DEFAULT now(),
 	categoryId 				TINYINT UNSIGNED NOT NULL,
     brandId 				TINYINT UNSIGNED NOT NULL,
+    ticketId				TINYINT UNSIGNED,
     currentAmount			INT NOT NULL,
 	amount					INT NOT NULL,
 	`status` 				TINYINT DEFAULT 1,
@@ -137,6 +154,7 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
 	id 								TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
 	user_Id 						TINYINT UNSIGNED NOT NULL,
+    shipment						VARCHAR(255),
     amount							TINYINT UNSIGNED DEFAULT 0,
 	FOREIGN KEY(user_Id) REFERENCES `users`(id)
 );
@@ -170,6 +188,16 @@ CREATE TABLE ResetPasswordUserToken(
     FOREIGN KEY(userId) REFERENCES users(id)
 );
 -- -- ====================================  TRIGGER  ============================================
+DROP TRIGGER IF EXISTS auto_setEndDateOfTicket;
+DELIMITER $$
+CREATE TRIGGER auto_setEndDateOfTicket
+BEFORE INSERT ON tickets
+FOR EACH ROW
+BEGIN 
+	SET NEW.`end_Date` = now() + INTERVAL 10 DAY;
+END $$
+DELIMITER ;
+
 DROP TRIGGER IF EXISTS auto_deleteProductImages_before_deleteProduct;
 DELIMITER $$
 CREATE TRIGGER auto_deleteProductImages_before_deleteProduct
@@ -239,7 +267,18 @@ INSERT INTO `users` (`email`, `username`, `fullname`, `password`,`phone`, `role`
 ('test@gmail.com', 'test_employye', 'Le Chi Kiet', '$2a$12$16RqQAIKqbO8UrPEOzmZSu/dnsgN6y5XkzrF85vwL2hDOsoJS0krS','0123456789','CLIENT', 'Ha Tinh', 1 , '123');
 
 
-
+INSERT INTO shipFees	(`voucher`, fee) VALUES
+						('baovesuckhoe', 5000),
+                        ('mck', 0);
+INSERT INTO tickets	(`name`, discount) VALUES
+					('ticket 101',5),
+                    ('ticket 202',10),
+                    ('ticket 303',20),
+                    ('ticket 404',25),
+                    ('ticket 505',50),
+                    ('ticket 607',75),
+                    ('ticket 707',80),
+                    ('ticket 808',100);
 
 INSERT INTO categories (`name`, descriptions) VALUES
 ('Chăm sóc sắc đẹp', 'Lorem ipsum dolor sit amet consectetur adipisicing elit.Dignissimos, voluptatum nam.'),

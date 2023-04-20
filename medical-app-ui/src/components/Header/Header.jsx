@@ -39,7 +39,7 @@ const Header = () => {
             </div>
             <div className="col-5">
               <ul className="mb-0 header-upper-links d-flex align-items-center justify-content-between">
-                <li style={{ fontSize: 18 }}>
+                <li className="header-upper-links-item">
                   <Link
                     to="/chat"
                     className="d-flex align-items-center gap-10 text-white"
@@ -48,7 +48,7 @@ const Header = () => {
                     <p>ChatAI</p>
                   </Link>
                 </li>
-                <li style={{ fontSize: 18 }}>
+                <li className="header-upper-links-item">
                   <Link
                     to="ordered"
                     className="d-flex align-items-center gap-10 text-white"
@@ -78,7 +78,7 @@ const Header = () => {
                     </Link>
                   </li>
                 ) : (
-                  <li style={{ fontSize: 18 }}>
+                  <li className="header-upper-links-item">
                     <Link
                       to="auth/login"
                       className="d-flex align-items-center gap-10 text-white"
@@ -91,7 +91,7 @@ const Header = () => {
                   </li>
                 )}
 
-                <li style={{ fontSize: 18 }}>
+                <li className="header-upper-links-item">
                   <Link to="cart" className="cart text-white">
                     <img src="/images/cart.svg" alt="" />
                     <div className="">

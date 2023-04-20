@@ -9,9 +9,11 @@ import styles from "./Checkout.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
+  fetchAllShipFees,
   fetchBuyCart,
   fetchBuyProductOnly,
   getCartItem,
+  setTotalPriceToCheckoutAction,
 } from "../../redux/actions/userActions";
 const style = {
   position: "absolute",
@@ -27,27 +29,36 @@ const style = {
 const Checkout = () => {
   const auth = useSelector((state) => state?.auth);
   const user = auth?.user;
+  const shipFees = auth?.shipFees;
   const cartItems = auth?.checkout;
-  let total = auth?.buyedTotal;
-  if (total == 0) {
-    total = cartItems.reduce((total, item) => {
-      return total + item?.amount * item?.product?.originalPrice;
-    }, 0);
-  }
+  
   const useQuery = new URLSearchParams(useLocation().search);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [address, setAddress] = useState(() => user?.address);
   const [voucher, setVoucher] = useState("");
   const [method, setMethod] = useState("banking")
+  let shipFee = 25000;
+  if (voucher) {
+    if (shipFees.find(item => item.voucher == voucher)) {
+      shipFee = shipFees.find(item => item.voucher == voucher)?.fee
+    }
+  }
+  let total = auth?.buyedTotal + shipFee;
+  if (total == 0) {
+    total = cartItems.reduce((total, item) => {
+      return  total + item?.amount * item?.product?.originalPrice + shipFee;
+    }, 0);
+  }
   const orderHanlder = () => {
+    const payment = method == "banking" ? "Banking QR" : "Thanh toán khi nhận hàng";
     switch (useQuery.get("actor")) {
       case "cart":
-        dispatch(fetchBuyCart(user?.id));
+        dispatch(fetchBuyCart(user?.id, payment));
         dispatch(getCartItem(user?.id));
         break;
       case "product":
-        dispatch(fetchBuyProductOnly(user?.id, cartItems[0]?.product?.id, 1));
+        dispatch(fetchBuyProductOnly(user?.id, cartItems[0]?.product?.id, 1, payment));
         dispatch(getCartItem(user?.id));
         break;
       default:
@@ -55,8 +66,9 @@ const Checkout = () => {
     }
   };
   useEffect(() => {
+    dispatch(fetchAllShipFees());
     window.scroll(0, 0);
-  });
+  }, []);
   return (
     <div>
       {auth?.loading && <Loading />}
@@ -67,7 +79,7 @@ const Checkout = () => {
         id="staticBackdrop"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >
@@ -267,7 +279,10 @@ const Checkout = () => {
                   >
                     Phí vận chuyển
                   </h5>
-                  <span>0đ</span>
+                  <span>{shipFee.toLocaleString("it-IT", {
+                      style: "currency",
+                      currency: "VND",
+                    })}</span>
                 </div>
                 <div className="d-flex align-items-center justify-content-between gap-45">
                   <h5>Tổng thanh toán</h5>

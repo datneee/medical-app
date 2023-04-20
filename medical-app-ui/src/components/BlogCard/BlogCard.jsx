@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 import styles from "./BlogCard.scss";
 
+
+
 const BlogCard = (props) => {
   const { grid } = props;
   return (

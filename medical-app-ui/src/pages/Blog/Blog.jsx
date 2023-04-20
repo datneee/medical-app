@@ -4,7 +4,41 @@ import BreadCrum from "../../components/BreadCrum/BreadCrum";
 
 import styles from "./Blog.scss";
 import { Meta, BlogCard } from "../../components";
+const blogs = [
+  {
+    id: 1,
+    title: "(Covid) Theo dõi và dùng khẩu trang khi ra ngoài",
+    date: new Date(),
+    header: "",
+    body: "",
+    foooter: ""
+  },
+  {
+    id: 2,
+    title: "Khám sức khỏe thường xuyên",
+    date: new Date(),
+    header: "",
+    body: "",
+    foooter: ""
+  },
+  {
+    id: 3,
+    title: "Xây dựng chế độ ăn uống lành mạnh",
+    date: new Date(),
+    header: "",
+    body: "",
+    foooter: ""
+  },
+  {
+    id: 4,
+    title: "Thường xuyên tập thể dục, vận động cơ thể",
+    date: new Date(),
+    header: "",
+    body: "",
+    foooter: ""
+  }
 
+]
 const Blog = () => {
   return (
     <div>
@@ -41,10 +75,7 @@ const Blog = () => {
             </div>
             <div className="col-9">
               <div className="row">
-                <BlogCard grid={6} />
-                <BlogCard grid={6} />
-                <BlogCard grid={6} />
-                <BlogCard grid={6} />
+                {blogs?.map((item) => <BlogCard key={item?.id} blog={item} grid={6} />)}
               </div>
             </div>
           </div>

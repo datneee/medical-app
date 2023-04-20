@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 const ListSpecialProducts = ({ products }) => {
   const [specialProducts, setSpecialProducts] = useState();
 
-  const [seeMore, setSeeMore] = useState(false);
+  const [seeMore, setSeeMore] = useState(true);
 
   const handleSeeMore = () => {
     setSpecialProducts(products);
@@ -18,7 +18,7 @@ const ListSpecialProducts = ({ products }) => {
   useEffect(() => {
     setSpecialProducts(products.slice(0, 6));
     setSeeMore(false);
-  }, []);
+  }, [seeMore]);
   return (
     <section className="special-product py-5 home-wrapper-2">
       <div className="container-xxl">

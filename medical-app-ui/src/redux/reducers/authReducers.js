@@ -3,8 +3,8 @@ import { UserAuth } from "../../utils/constants/common";
 const initState = {
   error: null,
   success: false,
-  token: "",
-  user: null,
+  token: JSON.parse(localStorage.getItem("auth"))?.token,
+  user: JSON.parse(localStorage.getItem("auth"))?.user,
   id: "",
   cart: [],
   buyedTotal: null,
@@ -13,6 +13,7 @@ const initState = {
   loading: false,
   message: "",
   comment: null,
+  shipFees: []
 };
 
 const reducer = (state = initState, { type, payload }) => {
@@ -22,6 +23,11 @@ const reducer = (state = initState, { type, payload }) => {
         ...state,
         loading: payload,
       };
+    case UserAuth.GET_SHIPFEES:
+      return {
+        ...state,
+        shipFees: payload
+      }
     case UserAuth.SUCCESS:
       return {
         ...state,

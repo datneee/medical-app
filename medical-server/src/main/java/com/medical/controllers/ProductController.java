@@ -88,15 +88,18 @@ public class ProductController extends BaseController<Product> {
             throw new NotFoundException(Common.MSG_NOT_FOUND);
         return this.resSuccess(product);
     }
-
+    @PutMapping(value = "/{id}/addTicket")
+    public ResponseEntity<?> addTicketToProduct(@PathVariable("id") Integer id, @RequestParam(name = "ticket") Integer ticket) throws Exception {
+        return new ResponseEntity<>(service.addTicket(id, ticket), HttpStatus.OK);
+    }
     @GetMapping(value = "/existsTitle/{title}")
-        public ResponseEntity<?> existedByProductTitle(@PathVariable("title") String title){
-            return new ResponseEntity<>(service.existsProductByTitle(title) , HttpStatus.OK);
+    public ResponseEntity<?> existedByProductTitle(@PathVariable("title") String title){
+        return new ResponseEntity<>(service.existsProductByTitle(title) , HttpStatus.OK);
     }
 
     @PostMapping(value = "/buy")
-    public ResponseEntity<?> buyProduct(@RequestParam(name = "userId") Integer userId, @RequestParam(name = "productId") Integer productId, @RequestParam(name = "amount") Integer amount){
-        service.buyOneItem(userId, productId, amount);
+    public ResponseEntity<?> buyProduct(@RequestParam(name = "userId") Integer userId, @RequestParam(name = "productId") Integer productId, @RequestParam(name = "amount") Integer amount, @RequestParam(name = "payment") String payment){
+        service.buyOneItem(userId, productId, amount, payment);
         return new ResponseEntity<>(Common.MSG_SUCCESS, HttpStatus.OK);
     }
 

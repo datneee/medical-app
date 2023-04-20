@@ -31,6 +31,9 @@ public class Order implements Serializable {
     @Column(name = "amount")
     private Integer amount;
 
+    @Column(name = "shipment")
+    private String shipment;
+
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
 

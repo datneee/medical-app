@@ -32,6 +32,41 @@ const responsive = {
     slidesToSlide: 1, // optional, default to 1.
   },
 };
+const blogs = [
+  {
+    id: 1,
+    title: "(Covid) Theo dõi và dùng khẩu trang khi ra ngoài",
+    date: new Date(),
+    header: "",
+    body: "",
+    foooter: ""
+  },
+  {
+    id: 2,
+    title: "Khám sức khỏe thường xuyên",
+    date: new Date(),
+    header: "",
+    body: "",
+    foooter: ""
+  },
+  {
+    id: 3,
+    title: "Xây dựng chế độ ăn uống lành mạnh",
+    date: new Date(),
+    header: "",
+    body: "",
+    foooter: ""
+  },
+  {
+    id: 4,
+    title: "Thường xuyên tập thể dục, vận động cơ thể",
+    date: new Date(),
+    header: "",
+    body: "",
+    foooter: ""
+  }
+
+]
 const Home = () => {
   const dispatch = useDispatch();
   const service = useSelector((state) => state?.service);
@@ -205,8 +240,8 @@ const Home = () => {
             <div className="col-4">
               <div className="famous-card bg-dark ">
                 <div className="famous-content color-white ">
-                  <h5>Big Screen</h5>
-                  <h6>Smarrt Watch Series 7</h6>
+                  <h5>Blog #1</h5>
+                  <h6>(Covid) Theo dõi và dùng khẩu trang khi ra ngoài </h6>
                   <p>From $399 or $16.62 / mo . forr 24 mo</p>
                 </div>
                 <div className="famous-image">
@@ -217,8 +252,8 @@ const Home = () => {
             <div className="col-4">
               <div className="famous-card  ">
                 <div className="famous-content color-dark">
-                  <h5>Big Screen</h5>
-                  <h6>Smarrt Watch Series 7</h6>
+                  <h5>Blog #2</h5>
+                  <h6>Khám sức khỏe thường xuyên</h6>
                   <p>From $399 or $16.62 / mo . forr 24 mo</p>
                 </div>
                 <div className="famous-image">
@@ -229,12 +264,12 @@ const Home = () => {
             <div className="col-4">
               <div className="famous-card  ">
                 <div className="famous-content color-dark">
-                  <h5>Big Screen</h5>
-                  <h6>Smarrt Watch Series 7</h6>
+                  <h5>Blog #3</h5>
+                  <h6>Xây dựng chế độ ăn uống lành mạnh</h6>
                   <p>From $399 or $16.62 / mo . forr 24 mo</p>
                 </div>
                 <div className="famous-image">
-                  <img src="images/famous-2.png" alt="" />
+                  <img src="images/b1.png" alt="" />
                 </div>
               </div>
             </div>

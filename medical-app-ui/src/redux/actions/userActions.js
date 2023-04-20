@@ -54,6 +54,7 @@ export const login =
         );
       } else {
         dispatch(authLoginAction(res));
+        localStorage.setItem("auth", JSON.stringify(res));
         navigate("/");
       }
     } catch (error) {
@@ -83,6 +84,7 @@ export const registration = (body) => async (dispatch) => {
   }
 };
 export const authLogoutAction = () => {
+  localStorage.removeItem("auth");
   return {
     type: UserAuth.LOG_OUT,
   };
@@ -252,9 +254,9 @@ export const fetchBuyCart = (userId) => async (dispatch) => {
     });
 };
 export const fetchBuyProductOnly =
-  (userId, productId, amount) => async (dispatch) => {
+  (userId, productId, amount, payment) => async (dispatch) => {
     dispatch(loadAction(true));
-    await AuthServices.buyProductOnly(userId, productId, amount)
+    await AuthServices.buyProductOnly(userId, productId, amount, payment)
       .then((res) => {
         if (
           JSON.stringify(res).includes("Error") ||
@@ -324,3 +326,23 @@ export const fetchOrderItem = (userId) => async (dispatch) => {
       dispatch(loadAction(false));
     });
 };
+const getAllShipFeesAction = (payload) => {
+  return {
+    type: UserAuth.GET_SHIPFEES,
+    payload: payload
+  }
+}
+export const fetchAllShipFees = () => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.getAllShipFees()
+    .then((res) => {
+      if (res) {
+        dispatch(getAllShipFeesAction(res))
+      }
+    })
+    .catch((rej) => {
+    })
+    .finally(() => {
+      dispatch(loadAction(false));
+    });
+}

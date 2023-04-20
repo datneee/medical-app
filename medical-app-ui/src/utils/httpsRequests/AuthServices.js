@@ -51,17 +51,17 @@ const AuthServices = {
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
     }),
-  buyCart: (userId) =>
+  buyCart: (userId, payment) =>
     new Promise((resolve, reject) => {
       axiosClient
-        .post(`${paths.BUY_CART}/${userId}`)
+        .post(`${paths.BUY_CART}/${userId}?payment=${payment}`)
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
     }),
-  buyProductOnly: (userId, productId, amount) =>
+  buyProductOnly: (userId, productId, amount, payment) =>
     new Promise((resolve, reject) => {
       axiosClient
-        .post(`${paths.BUY_PRODUCT}?userId=${userId}&productId=${productId}&amount=${amount}`)
+        .post(`${paths.BUY_PRODUCT}?userId=${userId}&productId=${productId}&amount=${amount}&payment=${payment}`)
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
     }),
@@ -80,6 +80,13 @@ const AuthServices = {
         .get(`${paths.GET_ORDER}/${id}`)
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
+    }),
+  getAllShipFees: () => 
+    new Promise((resolve, reject) => {
+      axiosClient
+        .get(paths.SHIP_FEES)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej))
     }),
 };
 export default AuthServices;

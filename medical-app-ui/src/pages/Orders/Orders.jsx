@@ -18,6 +18,7 @@ const Orders = () => {
   const auth = useSelector((state) => state?.auth);
   const user = auth?.user;
   const orders = auth?.orders;
+  const total = auth?.buyedTotal;
   const handleChangeSelectFilter = (e) => {
     setSelectFilter(e.target.value);
   };

@@ -50,6 +50,10 @@ public class Product implements Serializable {
     @Column(name = "`status`" , columnDefinition = "1")
     private StatusCodeProductEnum status;
 
+    @OneToOne
+    @JoinColumn(name = "ticketId")
+    private Ticket ticket;
+
     public Product(String title, String descriptions, int originalPrice, int promotionPrice,Integer currentAmount, Integer amount) {
         this.title = title;
         this.descriptions = descriptions;

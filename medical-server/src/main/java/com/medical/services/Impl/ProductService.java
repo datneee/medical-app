@@ -6,10 +6,7 @@ import com.medical.constants.StatusCodeEnum;
 import com.medical.constants.StatusCodeProductEnum;
 import com.medical.dto.ProductDTO;
 import com.medical.dto.pagination.PaginateDTO;
-import com.medical.entity.Order;
-import com.medical.entity.OrderItem;
-import com.medical.entity.Product;
-import com.medical.entity.ProductImages;
+import com.medical.entity.*;
 import com.medical.forms.CreateProductForm;
 import com.medical.forms.UpdateProductForm;
 import com.medical.repositories.IProductRepository;
@@ -42,6 +39,8 @@ public class ProductService extends BasePagination<Product, IProductRepository> 
     private IBrandService brandService;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private ITicketService ticketService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -51,6 +50,20 @@ public class ProductService extends BasePagination<Product, IProductRepository> 
         super(iProductRepository);
     }
 
+
+    @Override
+    public Product addTicket(Integer productId, Integer ticketId) throws Exception {
+
+        try {
+            Product product = this.getById(productId);
+            Ticket ticket = ticketService.getTicketById(ticketId);
+            product.setTicket(ticket);
+            product.setPromotionPrice(product.getOriginalPrice() * ticket.getDiscount() / 100 );
+            return product;
+        } catch (Exception e) {
+            throw new Exception("Invalid information !");
+        }
+    }
 
     @Override
     public PaginateDTO<Product> getAllProducts(Integer page, Integer perPage, GenericSpecification<Product> specification) {
@@ -69,8 +82,9 @@ public class ProductService extends BasePagination<Product, IProductRepository> 
         return repository.findProductById(id);
     }
     @Override
-    public void buyOneItem(Integer userId, Integer productId , Integer amount) {
+    public void buyOneItem(Integer userId, Integer productId , Integer amount, String payment) {
         Order order = new Order(userService.findById(userId), 0);
+        order.setShipment(payment);
         orderService.createOrder(order);
         Product product = this.getById(productId);
         OrderItem orderItem = new OrderItem(amount ,order, product);

@@ -156,13 +156,19 @@
             line-height: 20px;
             font-weight: 400;
             color: inherit;
-            margin-bottom: 7px;
          }
          h6 {
-            font-size: 28px;
+            font-size: 20px;
             line-height: 38px;
             font-weight: 500;
             color: inherit;
+            word-wrap: break-word;
+            white-space: normal;
+            overflow: hidden;
+            display: -webkit-box;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
 
          }
          p {
@@ -170,6 +176,13 @@
             line-height: 24px;
             font-weight: 100;
             color: inherit;
+            word-wrap: break-word;
+            white-space: normal;
+            overflow: hidden;
+            display: -webkit-box;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
          }
       }
       .famous-image {
