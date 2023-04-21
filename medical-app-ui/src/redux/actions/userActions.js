@@ -190,7 +190,7 @@ export const changeAmountCartItem = (id, amount) => async (dispatch) => {
       ) {
         dispatch(haveErrorAction("Có lỗi, vui lòng thử lại !"));
       } else {
-        dispatch(changeAmountCartItemAction(true));
+        dispatch(getCartItemById(id))
       }
     })
     .catch((rej) => {
@@ -198,9 +198,27 @@ export const changeAmountCartItem = (id, amount) => async (dispatch) => {
     })
     .finally(() => {
       dispatch(loadAction(false));
-      dispatch(isSuccessAction(false));
     });
 };
+export const getCartItemById = (id) => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.getCartItemById(id)
+    .then((res) => {
+      dispatch(getCartItemByIdAction(res))
+    })
+    .catch((rej) => {
+      console.log(rej);
+    })
+    .finally(() => {
+      dispatch(loadAction(false));
+    })
+}
+const getCartItemByIdAction = (payload) => {
+  return {
+    type: UserAuth.GET_CARTIEM,
+    payload: payload,
+  };
+}
 const getCartItemAction = (payload) => {
   return {
     type: UserAuth.GET_CART,

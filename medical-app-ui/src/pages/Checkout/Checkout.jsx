@@ -47,14 +47,13 @@ const Checkout = () => {
   let total = auth?.buyedTotal + shipFee;
   if (total == 0) {
     total = cartItems.reduce((total, item) => {
-      return item?.product?.promotionPrice
-        ? total + item?.amount * item?.product?.promotionPrice + shipFee
-        : total + item?.amount * item?.product?.originalPrice + shipFee;
+      return total + item?.amount * item?.product?.promotionPrice + shipFee
     }, 0);
   }
   const orderHanlder = () => {
     const payment =
       method == "banking" ? "Banking QR" : "Thanh toán khi nhận hàng";
+      dispatch(setTotalPriceToCheckoutAction(total))
     switch (useQuery.get("actor")) {
       case "cart":
         dispatch(fetchBuyCart(user?.id, payment));
@@ -156,9 +155,7 @@ const Checkout = () => {
                   <h4 className="checkout-col-4">Total Price</h4>
                 </div>
                 {cartItems?.map((item) => {
-                  const totalPrice = item?.product?.promotionPrice
-                    ? item?.amount * item?.product?.promotionPrice
-                    : item?.amount * item?.product?.originalPrice;
+                  const totalPrice = item?.amount * item?.product?.promotionPrice;
 
                   return (
                     <div key={item?.id} className="checkout-wrapper-data py-3">
@@ -183,21 +180,13 @@ const Checkout = () => {
                       </div>
                       <div className="checkout-col-2">
                         <h5 className="price">
-                          {item?.product?.promotionPrice
-                            ? item?.product?.promotionPrice.toLocaleString(
+                          {item?.product?.promotionPrice.toLocaleString(
                                 "it-IT",
                                 {
                                   style: "currency",
                                   currency: "VND",
                                 }
-                              )
-                            : item?.product?.originalPrice.toLocaleString(
-                                "it-IT",
-                                {
-                                  style: "currency",
-                                  currency: "VND",
-                                }
-                              )}
+                          )}
                         </h5>
                       </div>
                       <div className="checkout-col-3 d-flex align-items-center gap-10">
@@ -294,7 +283,7 @@ const Checkout = () => {
                     Tổng tiền hàng
                   </h5>
                   <span>
-                    {total.toLocaleString("it-IT", {
+                    {(total - shipFee).toLocaleString("it-IT", {
                       style: "currency",
                       currency: "VND",
                     })}

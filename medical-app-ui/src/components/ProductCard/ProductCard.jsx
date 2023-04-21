@@ -74,14 +74,7 @@ const ProductCard = (props) => {
                 style: "currency",
                 currency: "VND",
               })}
-            </span>{" "}
-            &nbsp;
-            <strike>
-              {product?.originalPrice?.toLocaleString("it-IT", {
-                style: "currency",
-                currency: "VND",
-              })}
-            </strike>
+            </span>
           </p>
         </div>
         <div className="action-bar position-absolute">

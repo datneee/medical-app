@@ -16,14 +16,11 @@ const Cart = () => {
   const auth = useSelector((state) => state?.auth);
   const user = auth?.user;
   const cartItems = auth?.cart;
-
   const cartId = user?.cart?.id;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const priceCheckout = cartItems?.reduce((total, item) => {
-    return item?.product?.promotionPrice
-      ? total + item?.amount * item?.product?.promotionPrice
-      : total + item?.amount * item?.product?.originalPrice;
+    return  total + item?.amount * item?.product?.promotionPrice;
   }, 0);
 
   const handleCheckoutCart = () => {

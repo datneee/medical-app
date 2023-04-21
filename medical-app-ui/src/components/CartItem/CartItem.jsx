@@ -13,26 +13,19 @@ import { Link } from "react-router-dom";
 
 const CartItem = ({ className, CartItem }) => {
   const [quantity, setQuantity] = useState(CartItem?.amount);
+
+  
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state?.auth);
+  const user = auth?.user;
+  const ct = auth?.cartItem;
+  const totalPrice = quantity * CartItem?.product?.promotionPrice;
   const handleChangeInput = (event) => {
     const value = event.target.value;
     if (value.startsWith(" ")) {
       setQuantity(event.target.value);
     }
   };
-
-  const debouncedQuantity = useDebounce(quantity, 650);
-  const dispatch = useDispatch();
-  const auth = useSelector((state) => state?.auth);
-  const user = auth?.user;
-  const cartId = user?.cart?.id;
-  const success = auth?.success;
-  if (success) {
-    dispatch(isSuccessAction(false));
-    dispatch(getCartItem(cartId));
-  }
-  const totalPrice = CartItem?.product?.promotionPrice
-    ? quantity * CartItem?.product?.promotionPrice
-    : quantity * CartItem?.product?.originalPrice;
   const increasingQuantity = () => {
     if (quantity < 100) {
       setQuantity((prev) => prev + 1);
@@ -43,6 +36,7 @@ const CartItem = ({ className, CartItem }) => {
       setQuantity((prev) => prev - 1);
     }
   };
+  const debouncedQuantity = useDebounce(quantity, 650);
   const deleteCartItemHandler = () => {
     if (
       window.confirm("Xóa " + CartItem?.product?.title + " ra khỏi giỏ hàng ?")
@@ -50,9 +44,9 @@ const CartItem = ({ className, CartItem }) => {
       dispatch(deleteCart(CartItem?.id, user?.id));
     }
   };
-  // useEffect(() => {
-  //   dispatch(changeAmountCartItem(CartItem?.id, debouncedQuantity));
-  // }, [debouncedQuantity]);
+  useEffect(() => {
+    // dispatch(changeAmountCartItem(CartItem?.id, debouncedQuantity));
+  }, [debouncedQuantity]);
   return (
     <div className={className}>
       <div className="cart-col-1 d-flex align-items-center gap-10">
@@ -77,15 +71,10 @@ const CartItem = ({ className, CartItem }) => {
       <div className="cart-col-2">
         <h5 className="price">
           {" "}
-          {CartItem?.product?.promotionPrice
-            ? CartItem?.product?.promotionPrice.toLocaleString("it-IT", {
+          {CartItem?.product?.promotionPrice.toLocaleString("it-IT", {
                 style: "currency",
                 currency: "VND",
-              })
-            : CartItem?.product?.originalPrice.toLocaleString("it-IT", {
-                style: "currency",
-                currency: "VND",
-              })}
+          })}
         </h5>
       </div>
       <div className="cart-col-3 d-flex align-items-center gap-10">

@@ -18,6 +18,11 @@ public class CartItemController {
     @Autowired
     private ICartItemService service;
 
+
+    @GetMapping()
+    public ResponseEntity<?> getCartItemById(@RequestParam(value = "id") Integer id) {
+        return new ResponseEntity<>(service.getCartItemById(id), HttpStatus.OK);
+    }
     @PutMapping(value = "/{id}/{Amount}")
     public ResponseEntity<?> updateAmountCartItems(@PathVariable("id") Integer id,
                                                    @PathVariable("Amount") Integer Amount){

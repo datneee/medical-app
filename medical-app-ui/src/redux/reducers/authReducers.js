@@ -13,7 +13,8 @@ const initState = {
   loading: false,
   message: "",
   comment: null,
-  shipFees: []
+  shipFees: [],
+  cartItem: {}
 };
 
 const reducer = (state = initState, { type, payload }) => {
@@ -77,6 +78,11 @@ const reducer = (state = initState, { type, payload }) => {
         ...state,
         cart: payload,
       };
+    case UserAuth.GET_CARTIEM:
+        return {
+          ...state,
+          cartItem: payload
+        }
     case UserAuth.DELETE_CARTITEM:
       return {
         ...state,

@@ -98,9 +98,7 @@ const SingleProduct = () => {
       dispatch(setCheckout([{ amount: quantity, product }]));
       dispatch(
         setTotalPriceToCheckoutAction(
-          product?.promotionPrice
-            ? quantity * product?.promotionPrice
-            : quantity * product?.originalPrice
+          quantity * product?.promotionPrice
         )
       );
       dispatch(loadAction(true));
@@ -205,7 +203,27 @@ const SingleProduct = () => {
                     <RatingChanged />
                     <span>{"( by reviewers )"}</span>
                   </div>
-                  <div className="border-bottom product-rate">
+                  {product?.promotionPrice == product?.originalPrice ? (
+                    <div className="border-bottom product-rate">
+                    <span className="red-p">
+                      {product?.promotionPrice?.toLocaleString("it-IT", {
+                        style: "currency",
+                        currency: "VND",
+                      })}
+                    </span>
+                    <div className="d-flex align-items-center gap-15">
+                      <FaShippingFast className="color-red" />
+                      <div className="d-flex flex-column">
+                        <h6>Gì cũng rẻ</h6>
+                        <p>
+                          Giá tốt nhất so với các sản phẩm cùng loại trên
+                          Medical Shop
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  ) : (
+                    <div className="border-bottom product-rate">
                     <span className="red-p">
                       {product?.promotionPrice?.toLocaleString("it-IT", {
                         style: "currency",
@@ -230,6 +248,9 @@ const SingleProduct = () => {
                       </div>
                     </div>
                   </div>
+                  )}
+                  
+                  
 
                   <div className="border-bottom d-flex align-items-center gap-30 product-brand">
                     <h4>Brand:</h4>

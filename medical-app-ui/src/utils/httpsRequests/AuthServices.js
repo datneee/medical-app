@@ -30,6 +30,13 @@ const AuthServices = {
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
     }),
+  getCartItemById: (id) =>
+    new Promise((resolve, reject) => {
+      axiosClient
+        .get(`${paths.GET_CARTITEM}?id=${id}`)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej))
+    }),
   addItemToCart: (userId, productId, amount) =>
     new Promise((resolve, reject) => {
       axiosClient

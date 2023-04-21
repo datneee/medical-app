@@ -69,13 +69,13 @@ const OrderItem = ({ id, amount, orderItems, option = "all" }) => {
           <div className="order-products">
             <div className="order-wrapper-heading py-3">
               <h4 className="orderItem-col-1">Product</h4>
-              <h4 className="orderItem-col-2">Price</h4>
+              <h4 className="orderItem-col-2">Price checkout</h4>
               <h4 className="orderItem-col-3">Quantity</h4>
               <h4 className="orderItem-col-4">Total Price</h4>
               <h4 className="orderItem-col-4">Status</h4>
             </div>
             {orderItems?.map((item) => {
-              const totalPrice = item?.amount * item?.product?.originalPrice;
+              const totalPrice = item?.amount * item?.product?.promotionPrice;
               return (
                 <div key={item?.id} className="orderItem-wrapper-data py-3">
                   <div className="orderItem-col-1 d-flex align-items-center gap-10">
@@ -100,7 +100,7 @@ const OrderItem = ({ id, amount, orderItems, option = "all" }) => {
                   </div>
                   <div className="orderItem-col-2">
                     <h5 className="price">
-                      {item?.product?.originalPrice.toLocaleString("it-IT", {
+                      {item?.product?.promotionPrice.toLocaleString("it-IT", {
                         style: "currency",
                         currency: "VND",
                       })}
