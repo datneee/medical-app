@@ -10,7 +10,7 @@ public interface ICartService {
 
 
 
-    void buyListCartItems(Integer userId, String payment);
+    void buyListCartItems(Integer userId, String payment, String shipAddress);
 
 
     Cart updateCartAmount(Integer amount , Cart cart);

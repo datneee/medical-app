@@ -85,7 +85,7 @@ const Categories = () => {
                 style={{ fontWeight: "500" }}
                 htmlFor="ctName"
               >
-                Create Category
+                Tạo mới danh mục
               </label>
             )}
             {category && (
@@ -94,7 +94,7 @@ const Categories = () => {
                 style={{ fontWeight: "500" }}
                 htmlFor="ctName"
               >
-                Edit Category
+                Chỉnh sửa danh mục
               </label>
             )}
           </Modal.Title>
@@ -106,7 +106,7 @@ const Categories = () => {
               style={{ fontWeight: "500" }}
               htmlFor="ctName"
             >
-              Category Name
+              Tên danh mục
             </label>
 
             <input
@@ -125,7 +125,7 @@ const Categories = () => {
                 style={{ fontWeight: "500" }}
                 htmlFor="ctName"
               >
-                Category Status
+                Trạng thái danh mục
               </label>
 
               <select
@@ -137,10 +137,10 @@ const Categories = () => {
                   selected={category?.status == "NOT_ACTIVE"}
                   value="NOT_ACTIVE"
                 >
-                  NOT ACTIVE
+                  Không kích hoạt
                 </option>
                 <option selected={category?.status == "ACTIVE"} value="ACTIVE">
-                  ACTIVE
+                  Được kích hoạt
                 </option>
               </select>
             </div>
@@ -151,7 +151,7 @@ const Categories = () => {
               style={{ fontWeight: "500" }}
               htmlFor="ctName"
             >
-              Category descriptions
+              Mô tả danh mục
             </label>
             <textarea
               onChange={(e) => setDescriptions(e.target.value)}
@@ -160,7 +160,7 @@ const Categories = () => {
               className="form-control"
               type="text"
               id="ctname"
-              placeholder="Enter category name ..."
+              placeholder="Nhập mô tả danh mục ..."
             />
           </div>
           <div className="form-group mb-2 d-flex gap-10 flex-column">
@@ -183,11 +183,11 @@ const Categories = () => {
             variant="secondary"
             onClick={handleClose}
           >
-            Cancel
+            Hủy
           </button>
           {category ? (
             <button className="btn" variant="btn" onClick={handleEditCategory}>
-              Edit
+              Chỉnh sửa
             </button>
           ) : (
             <button
@@ -195,7 +195,7 @@ const Categories = () => {
               variant="btn"
               onClick={handleCreateCategory}
             >
-              Create
+              Tạo
             </button>
           )}
         </Modal.Footer>
@@ -204,7 +204,7 @@ const Categories = () => {
         <div class="row gap-15">
           <div class="col-lg-12">
             <h1 class="page-header">
-              <small>Danh sách</small>
+              <small>Danh sách </small>
               Danh mục
             </h1>
           </div>
@@ -218,7 +218,7 @@ const Categories = () => {
                 onChange={handleSearchCategory}
               />
               <button onClick={handleOpenModalCreate} className="btn">
-                Create new category
+                Tạo mới danh mục
               </button>
             </div>
           </div>
@@ -229,11 +229,11 @@ const Categories = () => {
             <thead>
               <tr align="center">
                 <th>ID</th>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th>Hình ảnh</th>
+                <th>Tên danh mục</th>
+                <th>Mô tả</th>
+                <th>Trạng thái</th>
+                <th>Chức năng</th>
               </tr>
             </thead>
             <tbody
@@ -271,7 +271,7 @@ const Categories = () => {
                         onClick={() => handleOpenEditCategory(item?.id)}
                         to={"#"}
                       >
-                        Edit
+                        Chỉnh sửa
                       </Link>
                     </div>
                   </td>

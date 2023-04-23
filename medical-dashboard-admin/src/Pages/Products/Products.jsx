@@ -226,7 +226,7 @@ const Products = () => {
                 style={{ fontWeight: "500" }}
                 htmlFor="ctName"
               >
-                Create Product
+                Tạo mới sản phẩm
               </label>
             )}
             {product && (
@@ -235,7 +235,7 @@ const Products = () => {
                 style={{ fontWeight: "500" }}
                 htmlFor="ctName"
               >
-                Edit Product
+                Chỉnh sửa sản phẩm
               </label>
             )}
           </Modal.Title>
@@ -247,7 +247,7 @@ const Products = () => {
               style={{ fontWeight: "500" }}
               htmlFor="ctName"
             >
-              Title
+              Tiêu đề sản phẩm
             </label>
 
             <input
@@ -257,7 +257,7 @@ const Products = () => {
               className="form-control"
               type="text"
               id="ctname"
-              placeholder="Enter category name ..."
+              placeholder="Nhập tiêu đề sản phẩm ..."
             />
             {/* {<span className="red-warning p-2">Required </span>} */}
           </div>
@@ -267,7 +267,7 @@ const Products = () => {
               style={{ fontWeight: "500" }}
               htmlFor="ctDes"
             >
-              Product descriptions
+              Mô tả sản phẩm
             </label>
             <textarea
               value={descriptions}
@@ -276,7 +276,7 @@ const Products = () => {
               className="form-control"
               type="text"
               id="ctDes"
-              placeholder="Enter category name ..."
+              placeholder="Nhập mô tả sản phẩm ..."
             />
           </div>
           <div className="d-flex align-items-center gap-10 mb-2">
@@ -286,7 +286,7 @@ const Products = () => {
                 style={{ fontWeight: "500" }}
                 htmlFor="ctOrPrice"
               >
-                Original Prices
+                Giá niêm yết sản phẩm
               </label>
               <input
                 ref={originalPriceRef}
@@ -294,7 +294,7 @@ const Products = () => {
                 onChange={(e) => setOriginalPrice(e.target.value)}
                 type="number"
                 className="form-control"
-                placeholder="Enter original Price ..."
+                placeholder="Nhập giá niêm yết sản phẩm..."
                 id="ctOrPrice"
               />
               {/* {<span className="red-warning p-2">Required, Greater than 0 </span>} */}
@@ -305,7 +305,7 @@ const Products = () => {
                 style={{ fontWeight: "500" }}
                 htmlFor="ctProPrice"
               >
-                Promotion Prices
+                Giá ưu đãi
               </label>
               <input
                 ref={promotePricePriceRef}
@@ -313,7 +313,7 @@ const Products = () => {
                 onChange={(e) => setPromotionPrice(e.target.value)}
                 type="number"
                 className="form-control"
-                placeholder="Enter promotion Price ..."
+                placeholder="Nhập giá ưu đãi ..."
                 id="ctProPrice"
               />
               {/* {<span className="red-warning p-2">Required, Greater than 0 </span>} */}
@@ -326,7 +326,7 @@ const Products = () => {
                 style={{ fontWeight: "500" }}
                 htmlFor="ctAmount"
               >
-                Amounts
+                Số lượng kho
               </label>
               <input
                 ref={amountPriceRef}
@@ -334,7 +334,7 @@ const Products = () => {
                 onChange={(e) => setAmount(e.target.value)}
                 type="number"
                 className="form-control"
-                placeholder="Enter amount ..."
+                placeholder="Nhập số lượng ..."
                 id="ctAmount"
               />
               {/* {<span className="red-warning p-2">Required, Greater than 0 </span>} */}
@@ -345,14 +345,14 @@ const Products = () => {
                 style={{ fontWeight: "500" }}
                 htmlFor="ctCurAmount"
               >
-                Current Amounts
+                Số lượng hiện tại
               </label>
               <input
                 value={currentAmount}
                 onChange={(e) => setCurrentAmount(e.target.value)}
                 type="number"
                 className="form-control"
-                placeholder="Enter current amount..."
+                placeholder="Nhập số lượng hiện tại..."
                 id="ctCurAmount"
               />
             </div>
@@ -363,7 +363,7 @@ const Products = () => {
               style={{ fontWeight: "500" }}
               htmlFor="ctCatg"
             >
-              Category
+              Danh mục
             </label>
             <select
               disabled={product != null}
@@ -385,7 +385,7 @@ const Products = () => {
               style={{ fontWeight: "500" }}
               htmlFor="ctBrand"
             >
-              Brand
+              Nhãn hàng
             </label>
             <select
               disabled={product != null}
@@ -408,7 +408,7 @@ const Products = () => {
                 style={{ fontWeight: "500" }}
                 htmlFor="ctStatus"
               >
-                Product Status
+                Trạng thái sản phẩm
               </label>
 
               <select
@@ -418,8 +418,8 @@ const Products = () => {
                 id="ctStatus"
                 className="form-control"
               >
-                <option value="OPENING">OPENING</option>
-                <option value="CLOSED">CLOSED</option>
+                <option value="OPENING">Đang mở</option>
+                <option value="CLOSED">Đã đóng</option>
               </select>
             </div>
           )}
@@ -429,7 +429,7 @@ const Products = () => {
               style={{ fontWeight: "500" }}
               htmlFor="ctHot"
             >
-              Product Hot
+              Sản phẩm được đánh giá hot
             </label>
 
             <select
@@ -481,7 +481,7 @@ const Products = () => {
             variant="secondary"
             onClick={handleClose}
           >
-            Cancel
+            Hủy
           </button>
           {product ? (
             <button
@@ -489,11 +489,11 @@ const Products = () => {
               className="btn"
               variant="btn"
             >
-              Edit
+              Chỉnh sửa
             </button>
           ) : (
             <button onClick={handleCreateProduct} className="btn" variant="btn">
-              Create
+              Tạo
             </button>
           )}
         </Modal.Footer>
@@ -518,7 +518,7 @@ const Products = () => {
                 className="form-control"
               />
               <button onClick={handleOpenModalCreate} className="btn">
-                Create new category
+                Tạo mới sản phẩm
               </button>
             </div>
           </div>
@@ -529,12 +529,12 @@ const Products = () => {
             <thead>
               <tr align="center">
                 <th>ID</th>
-                <th>Title</th>
-                <th>Image</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th>Tiêu đề</th>
+                <th>Hình ảnh</th>
+                <th>Mô tả</th>
+                <th>Giá</th>
+                <th>Trạng thái</th>
+                <th>Chức năng</th>
               </tr>
             </thead>
             <tbody
@@ -577,14 +577,14 @@ const Products = () => {
                         className="delete-btn"
                         to={"#"}
                       >
-                        Delete
+                        Xóa
                       </Link>
                       <Link
                         onClick={() => handleOpenEditProduct(item?.id)}
                         className="edit-btn"
                         to={"#"}
                       >
-                        Edit
+                        Chỉnh sửa
                       </Link>
                     </div>
                   </td>
@@ -593,7 +593,7 @@ const Products = () => {
             </tbody>
           </table>
           <div className="pagination-wrapper">
-            <div className="current-page">Current page: {page + 1}</div>
+            <div className="current-page">Trang hiện tại: {page + 1}</div>
             <Pagination
               currentPage={page}
               setCurrentPage={handlePageChange}
@@ -605,7 +605,7 @@ const Products = () => {
               truncableClassName=""
             >
               <Pagination.PrevButton className="">
-                Previous
+                Quay lại trang trước
               </Pagination.PrevButton>
 
               <div className="d-flex align-items-center justify-content-center flex-grow gap-15">
@@ -616,7 +616,9 @@ const Products = () => {
                 />
               </div>
 
-              <Pagination.NextButton className="">Next</Pagination.NextButton>
+              <Pagination.NextButton className="">
+                Trang tiếp theo
+              </Pagination.NextButton>
             </Pagination>
           </div>
         </div>

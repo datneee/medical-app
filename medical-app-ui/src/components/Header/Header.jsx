@@ -20,8 +20,8 @@ const Header = () => {
     dispatch(authLogoutAction());
   };
   useEffect(() => {
-    dispatch(getCartItem(user?.id))
-  }, [cart?.length])
+    dispatch(getCartItem(user?.id));
+  }, [cart?.length]);
   return (
     <header className="header-wrapper">
       <div className="header header-upper py-3">
@@ -30,7 +30,7 @@ const Header = () => {
             <div className="col-2">
               <h1>
                 <Link to="/" className="text-white logo">
-                  Medical app
+                  Medical Shop
                 </Link>
               </h1>
             </div>
@@ -45,7 +45,7 @@ const Header = () => {
                     className="d-flex align-items-center gap-10 text-white"
                   >
                     <BsChatLeftDots />
-                    <p>ChatAI</p>
+                    <p>Chats</p>
                   </Link>
                 </li>
                 <li className="header-upper-links-item">

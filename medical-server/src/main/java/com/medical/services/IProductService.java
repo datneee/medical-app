@@ -16,7 +16,7 @@ public interface IProductService{
     public PaginateDTO<Product> getAllProducts(Integer page, Integer perPage, GenericSpecification<Product> specification);
 
     public List<OrderItem> getListFeatureProduct() ;
-    void buyOneItem(Integer userId, Integer productId, Integer amount, String payment);
+    void buyOneItem(Integer userId, Integer productId, Integer amount, String payment, String shipAddress);
 
     public Product getById(Integer id);
     public ProductDTO getProductById(Integer id);

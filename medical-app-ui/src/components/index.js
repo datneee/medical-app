@@ -13,3 +13,4 @@ export { default as CartItem } from "./CartItem/CartItem";
 export { default as Verification } from "./Verification/Verification";
 export { default as Comment } from "./Comment/Comment";
 export { default as OrderItem } from "./OrderItem/OrderItem";
+export { default as LearningOptions } from "./LearningOptions/LearningOptions";

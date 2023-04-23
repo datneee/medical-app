@@ -102,8 +102,8 @@ public class ProductController extends BaseController<Product> {
     }
 
     @PostMapping(value = "/buy")
-    public ResponseEntity<?> buyProduct(@RequestParam(name = "userId") Integer userId, @RequestParam(name = "productId") Integer productId, @RequestParam(name = "amount") Integer amount, @RequestParam(name = "payment") String payment){
-        service.buyOneItem(userId, productId, amount, payment);
+    public ResponseEntity<?> buyProduct(@RequestParam(name = "userId") Integer userId, @RequestParam(name = "productId") Integer productId, @RequestParam(name = "amount") Integer amount, @RequestParam(name = "payment") String payment, @RequestParam(name = "shipAddress") String shipAddress){
+        service.buyOneItem(userId, productId, amount, payment, shipAddress);
         return new ResponseEntity<>(Common.MSG_SUCCESS, HttpStatus.OK);
     }
 

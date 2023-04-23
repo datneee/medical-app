@@ -97,9 +97,7 @@ const SingleProduct = () => {
     if (user) {
       dispatch(setCheckout([{ amount: quantity, product }]));
       dispatch(
-        setTotalPriceToCheckoutAction(
-          quantity * product?.promotionPrice
-        )
+        setTotalPriceToCheckoutAction(quantity * product?.promotionPrice)
       );
       dispatch(loadAction(true));
       setTimeout(() => {
@@ -205,55 +203,53 @@ const SingleProduct = () => {
                   </div>
                   {product?.promotionPrice == product?.originalPrice ? (
                     <div className="border-bottom product-rate">
-                    <span className="red-p">
-                      {product?.promotionPrice?.toLocaleString("it-IT", {
-                        style: "currency",
-                        currency: "VND",
-                      })}
-                    </span>
-                    <div className="d-flex align-items-center gap-15">
-                      <FaShippingFast className="color-red" />
-                      <div className="d-flex flex-column">
-                        <h6>Gì cũng rẻ</h6>
-                        <p>
-                          Giá tốt nhất so với các sản phẩm cùng loại trên
-                          Medical Shop
-                        </p>
+                      <span className="red-p">
+                        {product?.promotionPrice?.toLocaleString("it-IT", {
+                          style: "currency",
+                          currency: "VND",
+                        })}
+                      </span>
+                      <div className="d-flex align-items-center gap-15">
+                        <FaShippingFast className="color-red" />
+                        <div className="d-flex flex-column">
+                          <h6>Gì cũng rẻ</h6>
+                          <p>
+                            Giá tốt nhất so với các sản phẩm cùng loại trên
+                            Medical Shop
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
                   ) : (
                     <div className="border-bottom product-rate">
-                    <span className="red-p">
-                      {product?.promotionPrice?.toLocaleString("it-IT", {
-                        style: "currency",
-                        currency: "VND",
-                      })}
-                    </span>{" "}
-                    &nbsp;
-                    <strike>
-                      {product?.originalPrice?.toLocaleString("it-IT", {
-                        style: "currency",
-                        currency: "VND",
-                      })}
-                    </strike>
-                    <div className="d-flex align-items-center gap-15">
-                      <FaShippingFast className="color-red" />
-                      <div className="d-flex flex-column">
-                        <h6>Gì cũng rẻ</h6>
-                        <p>
-                          Giá tốt nhất so với các sản phẩm cùng loại trên
-                          Medical Shop
-                        </p>
+                      <span className="red-p">
+                        {product?.promotionPrice?.toLocaleString("it-IT", {
+                          style: "currency",
+                          currency: "VND",
+                        })}
+                      </span>{" "}
+                      &nbsp;
+                      <strike>
+                        {product?.originalPrice?.toLocaleString("it-IT", {
+                          style: "currency",
+                          currency: "VND",
+                        })}
+                      </strike>
+                      <div className="d-flex align-items-center gap-15">
+                        <FaShippingFast className="color-red" />
+                        <div className="d-flex flex-column">
+                          <h6>Gì cũng rẻ</h6>
+                          <p>
+                            Giá tốt nhất so với các sản phẩm cùng loại trên
+                            Medical Shop
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
                   )}
-                  
-                  
 
                   <div className="border-bottom d-flex align-items-center gap-30 product-brand">
-                    <h4>Brand:</h4>
+                    <h4>Nhãn hàng:</h4>
                     <h6>
                       <a href={product?.brand?.webpage}>
                         {product?.brand?.name}
@@ -261,7 +257,7 @@ const SingleProduct = () => {
                     </h6>
                   </div>
                   <div className="border-bottom d-flex align-item-center gap-30 product-delivery">
-                    <h4>Delivery: </h4>
+                    <h4>Vận chuyển: </h4>
                     <div className="d-flex flex-column gap-10">
                       <div className="d-flex align-items-center gap-10">
                         <FcShipped className="free-ship" />
@@ -273,7 +269,7 @@ const SingleProduct = () => {
                     </div>
                   </div>
                   <div className="border-bottom product-select-quantity d-flex align-items-center gap-30">
-                    <h4>Quantity: </h4>
+                    <h4>Số lượng: </h4>
                     <div className="d-flex align-items-center gap-15">
                       <div className="buttons_added">
                         <input
@@ -311,7 +307,7 @@ const SingleProduct = () => {
                       className="button btn-2 add-to-cart d-flex align-items-center gap-10"
                     >
                       <BsCartPlus className="icon-add-cart" />
-                      <span>Add to cart</span>
+                      <span>Thêm vào giỏ hàng</span>
                     </button>
                     <button
                       onClick={handleBuyNow}
@@ -326,7 +322,7 @@ const SingleProduct = () => {
             <div className="row">
               <div className="col-12 p-0">
                 <div className="main-product-description">
-                  <h4>Description</h4>
+                  <h4>Mô tả sản phẩm</h4>
                   <div className="bg-white p-3">
                     <div
                       style={{
@@ -346,7 +342,7 @@ const SingleProduct = () => {
             <div className="row">
               <div className="col-12 p-0">
                 <div className="main-comments">
-                  <h4>Comments</h4>
+                  <h4>Bình luận sản phẩm</h4>
                   <div className="bg-white p-3">
                     <div className="d-flex flex-column gap-10">
                       <div className="row">
@@ -370,20 +366,21 @@ const SingleProduct = () => {
                             className="btn-comment"
                             type="button"
                           >
-                            Submit
+                            Bình luận
                           </button>
                         </div>
                       </div>
-                      {comments?.map((item) => (
-                        <Comment
-                          key={item?.id}
-                          id={item?.id}
-                          comment={item?.comment}
-                          createdAt={item?.createdAt}
-                          user={item?.user}
-                          userAvatar={item?.userAvatar}
-                        />
-                      ))}
+                      {comments.length > 0 &&
+                        comments?.map((item) => (
+                          <Comment
+                            key={item?.id}
+                            id={item?.id}
+                            comment={item?.comment}
+                            createdAt={item?.createdAt}
+                            user={item?.user}
+                            userAvatar={item?.userAvatar}
+                          />
+                        ))}
                     </div>
                   </div>
                 </div>

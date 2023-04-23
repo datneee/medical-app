@@ -138,7 +138,7 @@ const OurStore = () => {
           <div className="row">
             <div className="col-3">
               <div className="filter-card mb-3">
-                <h3 className="filter-title">Products Hot</h3>
+                <h3 className="filter-title">Các sản phẩm hot</h3>
                 <Carousel className="product-hot-list">
                   {productHots?.map((item) => (
                     <Carousel.Item key={item?.id} interval={2000}>
@@ -173,11 +173,11 @@ const OurStore = () => {
                 </Carousel>
               </div>
               <div className="filter-card mb-3">
-                <h3 className="filter-title">Shop By Categories</h3>
+                <h3 className="filter-title">Lọc theo danh mục</h3>
                 <div>
                   <div className="ps-0">
                     {categories &&
-                      categories.map((category) => (
+                      categories?.map((category) => (
                         <div className="form-check" key={category.id}>
                           <input
                             className="form-check-input"
@@ -204,34 +204,35 @@ const OurStore = () => {
                 </div>
               </div>
               <div className="filter-card mb-3">
-                <h3 className="filter-title">Shop By Brand</h3>
+                <h3 className="filter-title">Lọc theo nhãn hàng</h3>
                 <div>
                   <div className="ps-0">
-                    {brands.map((brand) => (
-                      <div className="form-check" key={brand.id}>
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                          checked={checkedBrand == brand.id}
-                          onChange={() => setCheckedBrand(brand.id)}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="flexCheckDefault"
-                        >
-                          {brand.name}
-                        </label>
-                      </div>
-                    ))}
+                    {brands.length > 0 &&
+                      brands?.map((brand) => (
+                        <div className="form-check" key={brand.id}>
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                            checked={checkedBrand == brand.id}
+                            onChange={() => setCheckedBrand(brand.id)}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="flexCheckDefault"
+                          >
+                            {brand.name}
+                          </label>
+                        </div>
+                      ))}
                   </div>
                 </div>
               </div>
               <div className="filter-card mb-3">
-                <h3 className="filter-title">Filter By</h3>
+                <h3 className="filter-title">Lọc theo</h3>
                 <div style={{ padding: 6 }}>
-                  <h5 className="sub-title">Price</h5>
+                  <h5 className="sub-title">Giá</h5>
                   <div className="d-flex align-items-center gap-10">
                     <div className="form-floating mb-3">
                       <input
@@ -243,7 +244,7 @@ const OurStore = () => {
                         id="inputFrom"
                         placeholder="from"
                       />
-                      <label htmlFor="inputFrom">$ From</label>
+                      <label htmlFor="inputFrom">$ Từ</label>
                     </div>
                     <div className="form-floating mb-3">
                       <input
@@ -254,7 +255,7 @@ const OurStore = () => {
                         id="inputTo"
                         placeholder="to"
                       />
-                      <label htmlFor="inputTo">$ To</label>
+                      <label htmlFor="inputTo">$ Đến</label>
                     </div>
                   </div>
                 </div>
@@ -265,7 +266,7 @@ const OurStore = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="d-flex align-items-center gap-15">
                     <div className="d-flex align-items-center gap-10">
-                      <p className="mb-0 d-block">Short By: </p>
+                      <p className="mb-0 d-block">Sắp xếp theo: </p>
                       <select
                         onChange={handleChangeSelectFilter}
                         value={selectFilter}
@@ -273,22 +274,24 @@ const OurStore = () => {
                         id=""
                         className="form-control form-select"
                       >
-                        <option value="best-selling">Best Selling</option>
+                        <option value="best-selling">
+                          Mặt hàng được quan tâm nhất
+                        </option>
                         <option value="title-ascending">
-                          Alphabetically, A-Z
+                          Theo tên, từ A-Z
                         </option>
                         <option value="price-descending">
-                          Price, low to hight
+                          Theo giá, từ thấp - cao
                         </option>
                         <option value="price-ascending">
-                          Price, hight to low
+                          Theo giá, từ cao - thấp
                         </option>
                       </select>
                     </div>
                   </div>
 
                   <div className="d-flex align-items-center gap-10">
-                    <p className="totalproducts">{pagination.total} products</p>
+                    <p className="totalproducts">{pagination.total} sản phẩm</p>
                     <div className="d-flex gap-10 align-items-center grid">
                       <img
                         onClick={() => setGrid(3)}
@@ -321,7 +324,7 @@ const OurStore = () => {
               {grid == 3 && (
                 <div className="products-list row align-items-center d-flex">
                   {medicals &&
-                    medicals.map((product, index) => (
+                    medicals?.map((product, index) => (
                       <ProductCard key={index} product={product} grid={grid} />
                     ))}
                 </div>
@@ -329,7 +332,7 @@ const OurStore = () => {
               {grid == 4 && (
                 <div className="products-list row align-items-center d-flex">
                   {medicals &&
-                    medicals.map((product, index) => (
+                    medicals?.map((product, index) => (
                       <ProductCard key={index} product={product} grid={grid} />
                     ))}
                 </div>
@@ -337,7 +340,7 @@ const OurStore = () => {
               {grid == 6 && (
                 <div className="products-list row align-items-center d-flex">
                   {medicals &&
-                    medicals.map((product, index) => (
+                    medicals?.map((product, index) => (
                       <ProductCard key={index} product={product} grid={grid} />
                     ))}
                 </div>
@@ -345,13 +348,13 @@ const OurStore = () => {
               {grid == 12 && (
                 <div className="products-list row align-items-center d-flex">
                   {medicals &&
-                    medicals.map((product, index) => (
+                    medicals?.map((product, index) => (
                       <ProductCard key={index} product={product} grid={grid} />
                     ))}
                 </div>
               )}
               <div className="pagination-wrapper">
-                <div className="current-page">Current page: {page + 1}</div>
+                <div className="current-page">Trang hiện tại: {page + 1}</div>
                 <Pagination
                   currentPage={page}
                   setCurrentPage={handlePageChange}
@@ -363,7 +366,7 @@ const OurStore = () => {
                   truncableClassName=""
                 >
                   <Pagination.PrevButton className="">
-                    Previous
+                    Quay lại trang trước
                   </Pagination.PrevButton>
 
                   <div className="d-flex align-items-center justify-content-center flex-grow gap-15">
@@ -375,7 +378,7 @@ const OurStore = () => {
                   </div>
 
                   <Pagination.NextButton className="">
-                    Next
+                    Trang tiếp theo
                   </Pagination.NextButton>
                 </Pagination>
               </div>

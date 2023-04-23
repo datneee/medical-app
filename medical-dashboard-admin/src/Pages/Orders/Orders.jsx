@@ -50,6 +50,8 @@ const Orders = () => {
                   option={selectFilter}
                   id={item?.id}
                   amount={item?.amount}
+                  shipment={item?.shipment}
+                  shipAddress={item?.shipAddress}
                   user={item?.user}
                   orderItems={item?.orderItems}
                   handleSelectStatus={handleSelectStatus}

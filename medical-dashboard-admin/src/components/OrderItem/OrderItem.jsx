@@ -3,7 +3,10 @@ import React, { useEffect, useState } from "react";
 import { VscServerProcess } from "react-icons/vsc";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchChangeStatusOrder, fetchDeleteOrderItem } from "../../redux/actions/userActions";
+import {
+  fetchChangeStatusOrder,
+  fetchDeleteOrderItem,
+} from "../../redux/actions/userActions";
 
 const makeStyle = (status) => {
   if (status === "Processing") {
@@ -27,10 +30,17 @@ const makeStyle = (status) => {
       color: "white",
     };
   }
-}
+};
 
-const OrderItem = ({ id, amount, orderItems, user, option = "all" }) => {
-  
+const OrderItem = ({
+  id,
+  amount,
+  shipment,
+  shipAddress,
+  orderItems,
+  user,
+  option = "all",
+}) => {
   const [change, setChange] = useState();
   const [status, setStatus] = useState([]);
   const dispatch = useDispatch();
@@ -55,23 +65,24 @@ const OrderItem = ({ id, amount, orderItems, user, option = "all" }) => {
   const handleChangeStatus = (e, item) => {
     let statusNew = status;
     if (statusNew?.find((a) => a?.id == item?.id)) {
-      setStatus(statusNew?.filter((a) => a?.id != item?.id))
+      setStatus(statusNew?.filter((a) => a?.id != item?.id));
     }
-    setStatus(prev => [...prev, {id: item?.id, status: e.target.value}]);
-    
-  }
+    setStatus((prev) => [...prev, { id: item?.id, status: e.target.value }]);
+  };
   const handleSubmit = (id) => {
-    const currentStatus = status?.find((a) => a?.id == id)
+    const currentStatus = status?.find((a) => a?.id == id);
     console.log(currentStatus);
     dispatch(fetchChangeStatusOrder(currentStatus?.id, currentStatus?.status));
-    setChange({})
+    setChange({});
   };
   const handleDeleteOrederItem = (id) => {
     if (window.confirm("Bạn có chắc chắn muốn xóa đơn hàng này ?")) {
-      dispatch(fetchDeleteOrderItem(id))
+      dispatch(fetchDeleteOrderItem(id));
     }
-  }
-  useEffect(() => {}, []);
+  };
+  useEffect(() => {
+    console.log(orderItems);
+  }, []);
   return (
     <div className="orderItem-wrapper home-wrapper-2 py-3">
       <div className="">
@@ -89,7 +100,7 @@ const OrderItem = ({ id, amount, orderItems, user, option = "all" }) => {
                 <span>{amount}</span>
               </div>
               <div className="d-flex align-items-center gap-10">
-                <h5  style={{ color: "#6a6a6a" }}>By:</h5>
+                <h5 style={{ color: "#6a6a6a" }}>Tạo bởi:</h5>
                 <span>{user?.fullName}</span>
               </div>
             </div>
@@ -98,15 +109,15 @@ const OrderItem = ({ id, amount, orderItems, user, option = "all" }) => {
         <div className="col-12">
           <div className="order-products">
             <div className="order-wrapper-heading py-3">
-              <h4 className="orderItem-col-1">Product</h4>
-              <h4 className="orderItem-col-2">Price</h4>
-              <h4 className="orderItem-col-3">Quantity</h4>
-              <h4 className="orderItem-col-4">Total Price</h4>
-              <h4 className="orderItem-col-4">Status</h4>
-              <h4 className="orderItem-col-4">Options</h4>
+              <h4 className="orderItem-col-1">Sản phẩm</h4>
+              <h4 className="orderItem-col-2">Giá</h4>
+              <h4 className="orderItem-col-3">Số lượng mua</h4>
+              <h4 className="orderItem-col-4">Tổng giá</h4>
+              <h4 className="orderItem-col-4">Trạng thái</h4>
+              <h4 className="orderItem-col-4">Chức năng</h4>
             </div>
             {orderItems?.map((item) => {
-              const totalPrice = item?.amount * item?.product?.originalPrice;
+              const totalPrice = item?.amount * item?.product?.promotionPrice;
               return (
                 <div key={item?.id} className="orderItem-wrapper-data py-3">
                   <div className="orderItem-col-1 d-flex align-items-center gap-10">
@@ -131,7 +142,7 @@ const OrderItem = ({ id, amount, orderItems, user, option = "all" }) => {
                   </div>
                   <div className="orderItem-col-2">
                     <h5 className="price">
-                      {item?.product?.originalPrice.toLocaleString("it-IT", {
+                      {item?.product?.promotionPrice.toLocaleString("it-IT", {
                         style: "currency",
                         currency: "VND",
                       })}
@@ -148,23 +159,31 @@ const OrderItem = ({ id, amount, orderItems, user, option = "all" }) => {
                   </div>
                   <div className="orderItem-col-5">
                     {change?.id == item?.id ? (
-                      <select value={status?.find((it) => it?.id == item?.id)?.status || item?.status} 
-                              onChange={(e) => handleChangeStatus(e, item)} className="form-control">
+                      <select
+                        value={
+                          status?.find((it) => it?.id == item?.id)?.status ||
+                          item?.status
+                        }
+                        onChange={(e) => handleChangeStatus(e, item)}
+                        className="form-control"
+                      >
                         <option value="Processing" name="processing" id="">
-                          Processing
+                          Chờ xác nhận / thanh toán
                         </option>
                         <option value="Processed" name="Processed" id="">
-                          Processed
+                          Đã xác nhận
                         </option>
                         <option value="Delivering" name="Delivering" id="">
-                          Delivering
+                          Đang vận chuyển
                         </option>
                         <option value="Complete" name="Complete" id="">
-                          Complete
+                          Hoàn thành
                         </option>
                       </select>
                     ) : (
-                      <span className="status" style={makeStyle(item?.status)}>{item?.status}</span>
+                      <span className="status" style={makeStyle(item?.status)}>
+                        {item?.status}
+                      </span>
                     )}
                   </div>
                   <div className="orderItem-col-4 d-flex align-items-center gap-10 justify-content-center">
@@ -185,13 +204,29 @@ const OrderItem = ({ id, amount, orderItems, user, option = "all" }) => {
                         Change
                       </Link>
                     )}
-                    <Link onClick={() => handleDeleteOrederItem(item?.id)} className="edit-btn" to={"#"}>
+                    <Link
+                      onClick={() => handleDeleteOrederItem(item?.id)}
+                      className="edit-btn"
+                      to={"#"}
+                    >
                       Delete
                     </Link>
                   </div>
                 </div>
               );
             })}
+          </div>
+        </div>
+        <div className="col-12">
+          <div className="other-info d-flex align-items-center justify-content-between">
+            <div className="d-flex align-items-center gap-15">
+              <h5>Địa chỉ giao hàng: </h5>
+              <span style={{ color: "#ffc107" }}>{shipAddress}</span>
+            </div>
+            <div className="d-flex align-items-center gap-15">
+              <h5>Hình thức thanh toán: </h5>
+              <span style={{ color: "blue" }}>{shipment}</span>
+            </div>
           </div>
         </div>
       </div>

@@ -53,15 +53,16 @@ const Orders = () => {
               </div>
             </div>
             <div className="col-12 order-container">
-              {orders?.map((item) => (
-                <OrderItem
-                  option={selectFilter}
-                  id={item?.id}
-                  amount={item?.amount}
-                  orderItems={item?.orderItems}
-                  handleSelectStatus={handleSelectStatus}
-                />
-              ))}
+              {orders.length > 0 &&
+                orders?.map((item) => (
+                  <OrderItem
+                    option={selectFilter}
+                    id={item?.id}
+                    amount={item?.amount}
+                    orderItems={item?.orderItems}
+                    handleSelectStatus={handleSelectStatus}
+                  />
+                ))}
             </div>
           </div>
         </div>

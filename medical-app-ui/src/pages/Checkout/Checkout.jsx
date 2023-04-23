@@ -15,6 +15,7 @@ import {
   getCartItem,
   setTotalPriceToCheckoutAction,
 } from "../../redux/actions/userActions";
+import { FaShippingFast } from "react-icons/fa";
 const style = {
   position: "absolute",
   top: "50%",
@@ -47,21 +48,27 @@ const Checkout = () => {
   let total = auth?.buyedTotal + shipFee;
   if (total == 0) {
     total = cartItems.reduce((total, item) => {
-      return total + item?.amount * item?.product?.promotionPrice + shipFee
+      return total + item?.amount * item?.product?.promotionPrice + shipFee;
     }, 0);
   }
   const orderHanlder = () => {
     const payment =
       method == "banking" ? "Banking QR" : "Thanh toán khi nhận hàng";
-      dispatch(setTotalPriceToCheckoutAction(total))
+    dispatch(setTotalPriceToCheckoutAction(total));
     switch (useQuery.get("actor")) {
       case "cart":
-        dispatch(fetchBuyCart(user?.id, payment));
+        dispatch(fetchBuyCart(user?.id, payment, address));
         dispatch(getCartItem(user?.id));
         break;
       case "product":
         dispatch(
-          fetchBuyProductOnly(user?.id, cartItems[0]?.product?.id, 1, payment)
+          fetchBuyProductOnly(
+            user?.id,
+            cartItems[0]?.product?.id,
+            1,
+            payment,
+            address
+          )
         );
         dispatch(getCartItem(user?.id));
         break;
@@ -149,13 +156,14 @@ const Checkout = () => {
             <div className="col-12">
               <div className="checkout-products">
                 <div className="checkout-wrapper-heading py-3">
-                  <h4 className="checkout-col-1">Product</h4>
-                  <h4 className="checkout-col-2">Price</h4>
-                  <h4 className="checkout-col-3">Quantity</h4>
-                  <h4 className="checkout-col-4">Total Price</h4>
+                  <h4 className="checkout-col-1">Sản phẩm</h4>
+                  <h4 className="checkout-col-2">Giá</h4>
+                  <h4 className="checkout-col-3">Số lượng</h4>
+                  <h4 className="checkout-col-4">Tổng giá</h4>
                 </div>
                 {cartItems?.map((item) => {
-                  const totalPrice = item?.amount * item?.product?.promotionPrice;
+                  const totalPrice =
+                    item?.amount * item?.product?.promotionPrice;
 
                   return (
                     <div key={item?.id} className="checkout-wrapper-data py-3">
@@ -179,15 +187,44 @@ const Checkout = () => {
                         </div>
                       </div>
                       <div className="checkout-col-2">
-                        <h5 className="price">
-                          {item?.product?.promotionPrice.toLocaleString(
-                                "it-IT",
-                                {
-                                  style: "currency",
-                                  currency: "VND",
-                                }
+                        <p className="price d-flex flex-column">
+                          {item?.product?.promotionPrice ==
+                          item?.product?.originalPrice ? (
+                            <div className="border-bottom product-rate">
+                              <span className="red-p">
+                                {item?.product?.promotionPrice?.toLocaleString(
+                                  "it-IT",
+                                  {
+                                    style: "currency",
+                                    currency: "VND",
+                                  }
+                                )}
+                              </span>
+                            </div>
+                          ) : (
+                            <div className="border-bottom product-rate">
+                              <span className="red-p">
+                                {item?.product?.promotionPrice?.toLocaleString(
+                                  "it-IT",
+                                  {
+                                    style: "currency",
+                                    currency: "VND",
+                                  }
+                                )}
+                              </span>{" "}
+                              &nbsp;
+                              <strike>
+                                {item?.product?.originalPrice?.toLocaleString(
+                                  "it-IT",
+                                  {
+                                    style: "currency",
+                                    currency: "VND",
+                                  }
+                                )}
+                              </strike>
+                            </div>
                           )}
-                        </h5>
+                        </p>
                       </div>
                       <div className="checkout-col-3 d-flex align-items-center gap-10">
                         {item?.amount}
@@ -208,7 +245,7 @@ const Checkout = () => {
                 <div className="d-flex align-items-center gap-10 info-shipping-address">
                   <div className="d-flex align-items-center gap-10 checkout-voucher-title">
                     <BsTicketPerforated className="voucher-icons" />
-                    <h4>Medical Voucher</h4>
+                    <h4>Voucher tại shop</h4>
                   </div>
                   <input
                     onChange={(event) => setVoucher(event.target.value)}
@@ -224,7 +261,7 @@ const Checkout = () => {
                 <div className="info-shipping-address">
                   <div className="d-flex align-items-center gap-10 ">
                     <div className="d-flex align-items-center gap-10 checkout-method-title">
-                      <h4>Checkout Method</h4>
+                      <h4>Hình thức thanh toán: </h4>
                     </div>
                     <input
                       checked={method == "banking"}
@@ -255,14 +292,14 @@ const Checkout = () => {
                             hệ thống và chờ xác nhận !{" "}
                           </h5>
                         </div>
-                        <img src="/images/QR.jfif" alt="" />
+                        <img src="/images/QR.jpg" alt="" />
                       </div>
                     )}
                     {method == "Off" && (
                       <div id="ship-off">
                         <h6 className="w-25 mt-5">Thanh toán khi nhận hàng</h6>
                         <h6 className="22-50">
-                          Phí thu hộ: 0Đ. ||{" "}
+                          Phí thu hộ: 25000Đ. ||{" "}
                           <span style={{ marginLeft: "10px" }}>
                             Áp dụng ưu đãi về phí vận chuyển để nhận ưu đãi nhé
                             !

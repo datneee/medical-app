@@ -22,7 +22,9 @@ const ListSpecialProducts = () => {
     if (seeMore) {
       dispatch(fetchAllSpecialProduct());
     } else {
-      dispatch(getListSpecialProductAction(specialProducts.slice(0, 6)));
+      if (specialProducts.length > 0) {
+        dispatch(getListSpecialProductAction(specialProducts.slice(0, 6)));
+      }
     }
   }, [seeMore]);
   useEffect(() => {
@@ -33,7 +35,7 @@ const ListSpecialProducts = () => {
       <div className="container-xxl">
         <div className="row">
           <div className="col-12">
-            <h3 className="section-heading">Special Products</h3>
+            <h3 className="section-heading">Sản phẩm đặc biệt ( giảm giá )</h3>
           </div>
         </div>
         <div className="row">
@@ -49,11 +51,11 @@ const ListSpecialProducts = () => {
           >
             {!seeMore ? (
               <button className="see-more" onClick={handleSeeMore}>
-                See more
+                Xem thêm
               </button>
             ) : (
               <button className="see-more" onClick={handleSeeLess}>
-                See less
+                Ẩn bớt
               </button>
             )}
           </div>

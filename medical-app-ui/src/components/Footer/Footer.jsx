@@ -11,7 +11,9 @@ const Footer = () => {
             <div className="col-5">
               <div className="footer-top-data d-flex gap-30 align-items-center">
                 <img src="images/newsletter.png" alt="" />
-                <h2 className="mb-0 text-white">Sign Up for News Letter</h2>
+                <h2 className="mb-0 text-white" style={{ fontSize: "26px" }}>
+                  Đăng ký để nhận thông báo mới nhất
+                </h2>
               </div>
             </div>
             <div className="col-7">
@@ -24,7 +26,7 @@ const Footer = () => {
                   aria-describedby="basic-addon2"
                 />
                 <span className="input-group-text p-2" id="basic-addon2">
-                  <button className="btn button">Subscribe</button>
+                  <button className="btn button">Đăng ký</button>
                 </span>
               </div>
             </div>

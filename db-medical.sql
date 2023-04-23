@@ -155,6 +155,7 @@ CREATE TABLE `orders` (
 	id 								TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
 	user_Id 						TINYINT UNSIGNED NOT NULL,
     shipment						VARCHAR(255),
+    shipAddress						VARCHAR(500),
     amount							TINYINT UNSIGNED DEFAULT 0,
 	FOREIGN KEY(user_Id) REFERENCES `users`(id)
 );

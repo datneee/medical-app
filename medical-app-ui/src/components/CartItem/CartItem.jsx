@@ -10,11 +10,11 @@ import {
 } from "../../redux/actions/userActions";
 import { useDebounce } from "../../hooks";
 import { Link } from "react-router-dom";
+import { FaShippingFast } from "react-icons/fa";
 
 const CartItem = ({ className, CartItem }) => {
   const [quantity, setQuantity] = useState(CartItem?.amount);
 
-  
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
   const user = auth?.user;
@@ -69,13 +69,33 @@ const CartItem = ({ className, CartItem }) => {
         </div>
       </div>
       <div className="cart-col-2">
-        <h5 className="price">
-          {" "}
-          {CartItem?.product?.promotionPrice.toLocaleString("it-IT", {
+        {CartItem?.product?.promotionPrice ==
+        CartItem?.product?.originalPrice ? (
+          <div className="border-bottom product-rate">
+            <span className="">
+              {CartItem?.product?.promotionPrice?.toLocaleString("it-IT", {
                 style: "currency",
                 currency: "VND",
-          })}
-        </h5>
+              })}
+            </span>
+          </div>
+        ) : (
+          <div className="border-bottom product-rate ">
+            <span className="red-p">
+              {CartItem?.product?.promotionPrice?.toLocaleString("it-IT", {
+                style: "currency",
+                currency: "VND",
+              })}
+            </span>{" "}
+            &nbsp;
+            <strike>
+              {CartItem?.product?.originalPrice?.toLocaleString("it-IT", {
+                style: "currency",
+                currency: "VND",
+              })}
+            </strike>
+          </div>
+        )}
       </div>
       <div className="cart-col-3 d-flex align-items-center gap-10">
         <div className="buttons_added">

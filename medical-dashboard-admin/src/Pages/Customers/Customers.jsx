@@ -78,24 +78,24 @@ const Customers = () => {
   const validate = () => {
     const error = null;
     if (!username) {
-      error.username = "Required !";
+      error.username = "Không được để trống !";
     }
     if (!fullName) {
-      error.fullName = "Required !";
+      error.fullName = "Không được để trống !";
     }
     if (!phoneNumber) {
-      error.fullName = "Required !";
+      error.fullName = "Không được để trống !";
     }
     if (!address) {
-      error.address = "Required !";
+      error.address = "Không được để trống !";
     }
     if (!email) {
-      error.email = "Required !";
+      error.email = "Không được để trống !";
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-      error.email = "Invalid email address !";
+      error.email = "Địa chỉ email không hợp lệ !";
     }
     if (!password) {
-      error.password = "Required !";
+      error.password = "Không được để trống !";
     }
     setErrors(error);
   };
@@ -155,7 +155,7 @@ const Customers = () => {
                 style={{ fontWeight: "500" }}
                 htmlFor="ctName"
               >
-                Create Account
+                Tạo mới tài khoản
               </label>
             )}
             {account && (
@@ -164,7 +164,7 @@ const Customers = () => {
                 style={{ fontWeight: "500" }}
                 htmlFor="ctName"
               >
-                Edit Account
+                Chỉnh sửa tài khoản
               </label>
             )}
           </Modal.Title>
@@ -185,7 +185,7 @@ const Customers = () => {
               className="form-control"
               type="text"
               id="ctname"
-              placeholder="Enter username ..."
+              placeholder="Nhập username ..."
             />
             {errors?.username && (
               <span className="red-warning p-2">{errors?.username} </span>
@@ -197,7 +197,7 @@ const Customers = () => {
               style={{ fontWeight: "500" }}
               htmlFor="ctFullName"
             >
-              FullName
+              Họ và tên
             </label>
             <input
               value={fullName}
@@ -205,7 +205,7 @@ const Customers = () => {
               className="form-control"
               type="text"
               id="ctFullName"
-              placeholder="Enter fullName ..."
+              placeholder="Nhập họ và tên ..."
             />
             {errors?.fullName && (
               <span className="red-warning p-2">{errors?.fullName} </span>
@@ -225,7 +225,7 @@ const Customers = () => {
               className="form-control"
               type="text"
               id="ctEmail"
-              placeholder="Enter email ..."
+              placeholder="Nhập email ..."
             />
             {errors?.email && (
               <span className="red-warning p-2">{errors?.email} </span>
@@ -237,7 +237,7 @@ const Customers = () => {
               style={{ fontWeight: "500" }}
               htmlFor="ctPhone"
             >
-              Phone Number
+              Số điện thoại
             </label>
             <input
               value={phoneNumber}
@@ -245,7 +245,7 @@ const Customers = () => {
               className="form-control"
               type="text"
               id="ctPhone"
-              placeholder="Enter Phone Number ..."
+              placeholder="Nhập số điện thoại ..."
             />
             {errors?.phone && (
               <span className="red-warning p-2">{errors?.phone} </span>
@@ -257,7 +257,7 @@ const Customers = () => {
               style={{ fontWeight: "500" }}
               htmlFor="ctAddress"
             >
-              Address
+              Địa chỉ
             </label>
             <textarea
               value={address}
@@ -266,7 +266,7 @@ const Customers = () => {
               className="form-control"
               type="text"
               id="ctAddress"
-              placeholder="Enter address ..."
+              placeholder="Nhập địa chỉ ..."
             />
             {errors?.address && (
               <span className="red-warning p-2">{errors?.address} </span>
@@ -278,13 +278,13 @@ const Customers = () => {
               style={{ fontWeight: "500" }}
               htmlFor="ctPassword"
             >
-              Password
+              Mật khẩu
               {account?.id == user?.id || account?.role == "CLIENT" ? (
                 <a
                   className="text-cover"
                   onClick={() => setChangePassword((prev) => !prev)}
                 >
-                  Change Password
+                  Thay đổi mật khẩu
                 </a>
               ) : (
                 ""
@@ -297,7 +297,7 @@ const Customers = () => {
               className="form-control"
               type="password"
               id="ctPassword"
-              placeholder="Enter password ..."
+              placeholder="Nhập mật khẩu ..."
             />
             {errors?.password && (
               <span className="red-warning p-2">{errors?.password} </span>
@@ -309,7 +309,7 @@ const Customers = () => {
                 onChange={(e) => setNewPassword(e.target.value)}
                 className="form-control mt-4"
                 type="password"
-                placeholder="Enter new password ..."
+                placeholder="Nhập mật khẩu mới..."
               />
             )}
           </div>
@@ -320,7 +320,7 @@ const Customers = () => {
                 style={{ fontWeight: "500" }}
                 htmlFor="ctStatus"
               >
-                Status
+                Trạng thái
               </label>
 
               <select
@@ -330,8 +330,8 @@ const Customers = () => {
                 id="ctStatus"
                 className="form-control"
               >
-                <option value="ACTIVE">ACTIVE</option>
-                <option value="NOT_ACTIVE">NOT_ACTIVE</option>
+                <option value="ACTIVE">Kích hoạt</option>
+                <option value="NOT_ACTIVE">Không kích hoạt</option>
               </select>
             </div>
           )}
@@ -342,7 +342,7 @@ const Customers = () => {
                 style={{ fontWeight: "500" }}
                 htmlFor="ctRole"
               >
-                Role
+                Vị trí
               </label>
               <span className="text-warning">
                 Lưu ý kiểm tra kỹ thông tin chính xác khi đăng ký tài khoản
@@ -368,7 +368,7 @@ const Customers = () => {
               variant="secondary"
               onClick={handleClose}
             >
-              Cancel
+              Hủy
             </button>
             {account ? (
               <button
@@ -376,7 +376,7 @@ const Customers = () => {
                 className="btn"
                 variant="btn"
               >
-                Edit
+                Chỉnh sửa
               </button>
             ) : (
               <button
@@ -384,7 +384,7 @@ const Customers = () => {
                 className="btn"
                 variant="btn"
               >
-                Create
+                Tạo
               </button>
             )}
           </Modal.Footer>
@@ -410,7 +410,7 @@ const Customers = () => {
                 className="form-control"
               />
               <button onClick={handleOpenModalCreate} className="btn">
-                Create new account
+                Tạo mới tài khoản
               </button>
             </div>
           </div>
@@ -422,12 +422,12 @@ const Customers = () => {
               <tr align="center">
                 <th>ID</th>
                 <th>Username</th>
-                <th>FullName</th>
-                <th>Phone Number</th>
-                <th>Address</th>
+                <th>Họ và tên</th>
+                <th>Số điện thoại</th>
+                <th>Địa chỉ</th>
                 <th>Email</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <th>Trạng thái</th>
+                <th>Chức năng</th>
               </tr>
             </thead>
             <tbody
@@ -468,7 +468,7 @@ const Customers = () => {
                             className="delete-btn"
                             to={"#"}
                           >
-                            Delete
+                            Xóa
                           </Link>
                         )}
                         <Link
@@ -476,7 +476,7 @@ const Customers = () => {
                           className="edit-btn"
                           to={"#"}
                         >
-                          Edit
+                          Chỉnh sửa
                         </Link>
                       </div>
                     ) : (
@@ -486,7 +486,7 @@ const Customers = () => {
                           className="view-btn"
                           to={"#"}
                         >
-                          View
+                          Chi tiết
                         </Link>
                       </span>
                     )}

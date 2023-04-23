@@ -137,7 +137,7 @@ export const addToCart = (userId, productId, amount) => async (dispatch) => {
         dispatch(haveErrorAction("Có lỗi, vui lòng thử lại !"));
       } else {
         dispatch(addToCartAction(true));
-        dispatch(getCartItem(userId))
+        dispatch(getCartItem(userId));
       }
     })
     .catch((rej) => {
@@ -190,7 +190,7 @@ export const changeAmountCartItem = (id, amount) => async (dispatch) => {
       ) {
         dispatch(haveErrorAction("Có lỗi, vui lòng thử lại !"));
       } else {
-        dispatch(getCartItemById(id))
+        dispatch(getCartItemById(id));
       }
     })
     .catch((rej) => {
@@ -204,21 +204,21 @@ export const getCartItemById = (id) => async (dispatch) => {
   dispatch(loadAction(true));
   await AuthServices.getCartItemById(id)
     .then((res) => {
-      dispatch(getCartItemByIdAction(res))
+      dispatch(getCartItemByIdAction(res));
     })
     .catch((rej) => {
       console.log(rej);
     })
     .finally(() => {
       dispatch(loadAction(false));
-    })
-}
+    });
+};
 const getCartItemByIdAction = (payload) => {
   return {
     type: UserAuth.GET_CARTIEM,
     payload: payload,
   };
-}
+};
 const getCartItemAction = (payload) => {
   return {
     type: UserAuth.GET_CART,
@@ -249,32 +249,39 @@ export const setTotalPriceToCheckoutAction = (total) => {
     payload: total,
   };
 };
-export const fetchBuyCart = (userId) => async (dispatch) => {
-  dispatch(loadAction(true));
-  await AuthServices.buyCart(userId)
-    .then((res) => {
-      if (
-        JSON.stringify(res).includes("Error") ||
-        JSON.stringify(res).includes("500")
-      ) {
-        dispatch(haveErrorAction("Có lỗi, vui lòng thử lại !"));
-      } else {
-        setCheckout(null);
-        dispatch(buyAction(true));
-      }
-    })
-    .catch((rej) => {
-      dispatch(haveErrorAction("Có lỗi, " + rej));
-    })
-    .finally(() => {
-      dispatch(loadAction(false));
-      dispatch(isSuccessAction(false));
-    });
-};
-export const fetchBuyProductOnly =
-  (userId, productId, amount, payment) => async (dispatch) => {
+export const fetchBuyCart =
+  (userId, payment, shipAddress) => async (dispatch) => {
     dispatch(loadAction(true));
-    await AuthServices.buyProductOnly(userId, productId, amount, payment)
+    await AuthServices.buyCart(userId, payment, shipAddress)
+      .then((res) => {
+        if (
+          JSON.stringify(res).includes("Error") ||
+          JSON.stringify(res).includes("500")
+        ) {
+          dispatch(haveErrorAction("Có lỗi, vui lòng thử lại !"));
+        } else {
+          setCheckout(null);
+          dispatch(buyAction(true));
+        }
+      })
+      .catch((rej) => {
+        dispatch(haveErrorAction("Có lỗi, " + rej));
+      })
+      .finally(() => {
+        dispatch(loadAction(false));
+        dispatch(isSuccessAction(false));
+      });
+  };
+export const fetchBuyProductOnly =
+  (userId, productId, amount, payment, shipAddress) => async (dispatch) => {
+    dispatch(loadAction(true));
+    await AuthServices.buyProductOnly(
+      userId,
+      productId,
+      amount,
+      payment,
+      shipAddress
+    )
       .then((res) => {
         if (
           JSON.stringify(res).includes("Error") ||
@@ -347,20 +354,19 @@ export const fetchOrderItem = (userId) => async (dispatch) => {
 const getAllShipFeesAction = (payload) => {
   return {
     type: UserAuth.GET_SHIPFEES,
-    payload: payload
-  }
-}
+    payload: payload,
+  };
+};
 export const fetchAllShipFees = () => async (dispatch) => {
   dispatch(loadAction(true));
   await AuthServices.getAllShipFees()
     .then((res) => {
       if (res) {
-        dispatch(getAllShipFeesAction(res))
+        dispatch(getAllShipFeesAction(res));
       }
     })
-    .catch((rej) => {
-    })
+    .catch((rej) => {})
     .finally(() => {
       dispatch(loadAction(false));
     });
-}
+};

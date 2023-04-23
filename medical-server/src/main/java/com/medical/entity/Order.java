@@ -34,6 +34,8 @@ public class Order implements Serializable {
     @Column(name = "shipment")
     private String shipment;
 
+    @Column(name = "shipAddress")
+    private String shipAddress;
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
 

@@ -56,6 +56,7 @@ export const login =
         );
       } else {
         dispatch(authLoginAction(res));
+        localStorage.setItem("auth", JSON.stringify(res));
         navigate("/");
       }
     } catch (error) {
@@ -100,6 +101,7 @@ export const fetchUpdateAccount = (id, body) => async (dispatch) => {
   }
 };
 export const authLogoutAction = () => {
+  localStorage.removeItem("auth");
   return {
     type: UserAuth.LOG_OUT,
   };

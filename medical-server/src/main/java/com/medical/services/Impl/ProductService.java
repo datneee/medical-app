@@ -82,9 +82,10 @@ public class ProductService extends BasePagination<Product, IProductRepository> 
         return repository.findProductById(id);
     }
     @Override
-    public void buyOneItem(Integer userId, Integer productId , Integer amount, String payment) {
+    public void buyOneItem(Integer userId, Integer productId , Integer amount, String payment, String shipAddress) {
         Order order = new Order(userService.findById(userId), 0);
         order.setShipment(payment);
+        order.setShipAddress(shipAddress);
         orderService.createOrder(order);
         Product product = this.getById(productId);
         OrderItem orderItem = new OrderItem(amount ,order, product);

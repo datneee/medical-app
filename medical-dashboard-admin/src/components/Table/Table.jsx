@@ -36,7 +36,7 @@ const makeStyle = (status) => {
 export default function BasicTable({ orders }) {
   return (
     <div className="Table">
-      <h3>Recent Orders</h3>
+      <h3 className="mb-3">Các đơn hàng gần đây</h3>
       <TableContainer
         component={Paper}
         style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
@@ -45,9 +45,9 @@ export default function BasicTable({ orders }) {
           <TableHead>
             <TableRow>
               <TableCell align="left">Tracking ID</TableCell>
-              <TableCell align="left">Customer Buyed</TableCell>
-              <TableCell align="left">Date</TableCell>
-              <TableCell align="left">Status</TableCell>
+              <TableCell align="left">Khách mua</TableCell>
+              <TableCell align="left">Ngày</TableCell>
+              <TableCell align="left">Trạng thái</TableCell>
               <TableCell align="left"></TableCell>
             </TableRow>
           </TableHead>
@@ -77,7 +77,7 @@ export default function BasicTable({ orders }) {
                   align="left"
                   className="Details"
                 >
-                  Details
+                  Chi tiết đơn hàng
                 </Link>
               </TableRow>
             ))}

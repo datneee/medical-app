@@ -3,8 +3,8 @@ import { UserAuth } from "../../utils/constants/common";
 const initState = {
   error: null,
   success: false,
-  token: "",
-  user: null,
+  token: JSON.parse(localStorage.getItem("auth"))?.token,
+  user: JSON.parse(localStorage.getItem("auth"))?.user,
   users: [],
   id: "",
   cart: [],
