@@ -8,4 +8,6 @@ public interface IShipFeesService {
 
     List<ShipFees> getListShipFees();
 
+    ShipFees createShipFee(String voucher, Integer fee);
+
 }

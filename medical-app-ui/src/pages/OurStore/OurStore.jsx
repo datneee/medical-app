@@ -46,7 +46,7 @@ const OurStore = () => {
   const category = useQuery.get("category");
   const productId = useQuery.get("productId");
   if (productId) {
-    navigate("/product/" + productId)
+    navigate("/product/" + productId);
   }
   const handlePickProductByCategory = (id) => {
     setCheckCategory(id);
@@ -99,12 +99,56 @@ const OurStore = () => {
       case "best-selling":
         break;
       case "title-ascending":
+        dispatch(
+          fetchAllProducts(
+            page + 1,
+            (12 / grid) * 2,
+            checkedCategory ? JSON.parse(checkedCategory) : category,
+            searchValue,
+            debouncedMinValue,
+            debouncedMaxValue,
+            "title"
+          )
+        );
         break;
       case "title-descending":
+        dispatch(
+          fetchAllProducts(
+            page + 1,
+            (12 / grid) * 2,
+            checkedCategory ? JSON.parse(checkedCategory) : category,
+            searchValue,
+            debouncedMinValue,
+            debouncedMaxValue,
+            "-title"
+          )
+        );
         break;
       case "price-descending":
+        dispatch(
+          fetchAllProducts(
+            page + 1,
+            (12 / grid) * 2,
+            checkedCategory ? JSON.parse(checkedCategory) : category,
+            searchValue,
+            debouncedMinValue,
+            debouncedMaxValue,
+            "promotionPrice"
+          )
+        );
         break;
       case "price-ascending":
+        dispatch(
+          fetchAllProducts(
+            page + 1,
+            (12 / grid) * 2,
+            checkedCategory ? JSON.parse(checkedCategory) : category,
+            searchValue,
+            debouncedMinValue,
+            debouncedMaxValue,
+            "-promotionPrice"
+          )
+        );
         break;
       default:
         break;
@@ -284,6 +328,9 @@ const OurStore = () => {
                         </option>
                         <option value="title-ascending">
                           Theo tên, từ A-Z
+                        </option>
+                        <option value="title-descending">
+                          Theo tên, từ Z-A
                         </option>
                         <option value="price-descending">
                           Theo giá, từ thấp - cao

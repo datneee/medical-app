@@ -174,12 +174,28 @@ const AuthServices = {
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
     }),
-  getAllTicket: () => 
+  getAllTicket: () =>
     new Promise((resolve, reject) => {
       axiosClient
         .get(paths.TICKETS)
         .then((res) => resolve(res))
-        .catch((rej) => reject(rej))
-    })
+        .catch((rej) => reject(rej));
+    }),
+  createTicket: (name, discount, endDate) =>
+    new Promise((resolve, reject) => {
+      axiosClient
+        .post(
+          `${paths.TICKETS}?name=${name}&discount=${discount}&endDate=${endDate}`
+        )
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej));
+    }),
+  createShipFee: (voucher, fee) =>
+    new Promise((resolve, reject) => {
+      axiosClient
+        .post(`${paths.SHIPFEE}?voucher=${voucher}&fee=${fee}`)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej));
+    }),
 };
 export default AuthServices;

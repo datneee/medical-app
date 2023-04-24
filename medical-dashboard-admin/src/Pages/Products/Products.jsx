@@ -17,12 +17,15 @@ import { async } from "q";
 import {
   fetchAllTicket,
   fetchCreateProduct,
+  fetchCreateShipfee,
+  fetchCreateTicket,
   fetchDeleteProduct,
   fetchEditProduct,
 } from "../../redux/actions/userActions";
 
 const Products = () => {
   const [show, setShow] = useState(false);
+  const [show2, setShow2] = useState({ active: false, modal: null });
   const [selectedFile, setSelectedFile] = useState();
   const [product, setProduct] = useState(null);
   const [page, setPage] = useState(0);
@@ -40,6 +43,12 @@ const Products = () => {
   const [ticket, setTicket] = useState();
   const [isHot, setIsHot] = useState();
 
+  const [voucher, setVoucher] = useState("");
+  const [fee, setFee] = useState(0);
+  const [name, setName] = useState("");
+  const [discount, setDiscount] = useState(0);
+  const [endDate, setEndDate] = useState();
+
   const dispatch = useDispatch();
   const service = useSelector((state) => state?.service);
   const auth = useSelector((state) => state?.auth);
@@ -55,6 +64,10 @@ const Products = () => {
   const handleShow = () => setShow(true);
   const handleClose = () => {
     setShow(false);
+  };
+  const handleShow2 = () => setShow2({ active: true });
+  const handleClose2 = () => {
+    setShow2({ active: false });
   };
 
   const handleChooseImage = (e) => {
@@ -105,7 +118,7 @@ const Products = () => {
     setCategory(product?.category?.id);
     setStatus(product?.status);
     setIsHot(product?.isHot);
-    setTicket(product?.ticket?.id)
+    setTicket(product?.ticket?.id);
   };
   const handleOpenEditProduct = async (id) => {
     const productSelected = await ProductServices.getProductById(id);
@@ -202,7 +215,7 @@ const Products = () => {
           : JSON.parse(amount),
         status: status ? status : product?.status,
         isHot: isHot ? isHot : product?.isHot,
-        ticketId: ticket ? ticket : ''
+        ticketId: ticket ? ticket : "",
       };
       dispatch(fetchEditProduct(id, form, selectedFile));
       setShow(false);
@@ -214,16 +227,178 @@ const Products = () => {
       setPage(1);
     }
   };
+  const handleOpenCreateTicket = () => {
+    setShow2({ active: true, modal: "ticket" });
+  };
+  const handleCreateTicket = () => {
+    let date = new Date(endDate).toLocaleDateString("en-US");
+    dispatch(fetchCreateTicket(name, discount, date));
+    setShow2(false);
+  };
+  const handleOpenCreateShipFee = () => {
+    setShow2({ active: true, modal: "ship" });
+  };
+  const handleCreateShipFee = () => {
+    dispatch(fetchCreateShipfee(voucher, fee));
+    setShow2(false);
+  };
   useEffect(() => {
     dispatch(fetchAllProducts(1, 5, null, searchValue));
     dispatch(fetchAllBrand());
     dispatch(fetchAllCategory());
-    dispatch(fetchAllTicket())
+    dispatch(fetchAllTicket());
   }, [debouncedSearchValue]);
   return (
     <div>
       {service?.loading && <Loading />}
       <Meta title={"Management products"} />
+      <Modal show={show2?.active} onHide={handleClose2}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {show2?.modal == "ticket" && (
+              <label
+                className="text-bold p-2"
+                style={{ fontWeight: "500" }}
+                htmlFor="ctName"
+              >
+                Tạo mới khuyến mãi
+              </label>
+            )}
+            {show2?.modal == "ship" && (
+              <label
+                className="text-bold p-2"
+                style={{ fontWeight: "500" }}
+                htmlFor="ctName"
+              >
+                Tạo mới mã giảm giá
+              </label>
+            )}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {show2.modal == "ticket" && (
+            <div className="form-group mb-2">
+              <label
+                className="text-bold p-2"
+                style={{ fontWeight: "500" }}
+                htmlFor="ctTicket"
+              >
+                Tên vé khuyến mãi
+              </label>
+
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="form-control"
+                type="text"
+                id="ctTicket"
+                placeholder="Nhập tên vé khuyến mãi ..."
+              />
+            </div>
+          )}
+          {show2.modal == "ticket" && (
+            <div className="form-group mb-2">
+              <label
+                className="text-bold p-2"
+                style={{ fontWeight: "500" }}
+                htmlFor="ctDis"
+              >
+                Giảm giá
+              </label>
+
+              <input
+                value={discount}
+                onChange={(e) => setDiscount(e.target.value)}
+                className="form-control"
+                type="number"
+                min={0}
+                max={100}
+                id="ctDis"
+                placeholder="Nhập chiết khấu giảm giá ( từ 0-100% ) ..."
+              />
+            </div>
+          )}
+          {show2.modal == "ticket" && (
+            <div className="form-group mb-2">
+              <label
+                className="text-bold p-2"
+                style={{ fontWeight: "500" }}
+                htmlFor="ctEndDate"
+              >
+                Ngày hết hạn
+              </label>
+
+              <input
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className="form-control"
+                type="date"
+                id="ctEndDate"
+                placeholder="Nhập ngày hết hạn ..."
+              />
+            </div>
+          )}
+          {show2.modal == "ship" && (
+            <div className="form-group mb-2">
+              <label
+                className="text-bold p-2"
+                style={{ fontWeight: "500" }}
+                htmlFor="ctVoucher"
+              >
+                Tên voucher
+              </label>
+
+              <input
+                value={voucher}
+                onChange={(e) => setVoucher(e.target.value)}
+                className="form-control"
+                type="text"
+                id="ctVoucher"
+                placeholder="Nhập tên voucher ..."
+              />
+            </div>
+          )}
+          {show2.modal == "ship" && (
+            <div className="form-group mb-2">
+              <label
+                className="text-bold p-2"
+                style={{ fontWeight: "500" }}
+                htmlFor="ctShip"
+              >
+                Phí vận chuyển ưu đãi
+              </label>
+
+              <input
+                value={fee}
+                onChange={(e) => setFee(e.target.value)}
+                className="form-control"
+                type="number"
+                id="ctShip"
+                placeholder="Nhập phí vận chuyển ưu đãi ..."
+              />
+            </div>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn-normal"
+            variant="secondary"
+            onClick={handleClose2}
+          >
+            Hủy
+          </button>
+          {show2.modal == "ship" && (
+            <button onClick={handleCreateShipFee} className="btn" variant="btn">
+              Tạo
+            </button>
+          )}
+          {show2.modal == "ticket" && (
+            <button onClick={handleCreateTicket} className="btn" variant="btn">
+              Tạo
+            </button>
+          )}
+        </Modal.Footer>
+      </Modal>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>
@@ -447,14 +622,13 @@ const Products = () => {
                   className="form-control"
                 >
                   <option value={-1}>--- Chọn khuyến mãi ---</option>
-                  {tickets.length > 0 && tickets?.map((item) => (
+                  {tickets.length > 0 &&
+                    tickets?.map((item) => (
                       <option value={item?.id}>{item?.name}</option>
-                  ))}
-                  
+                    ))}
                 </select>
               </div>
             </div>
-            
           )}
           <div className="form-group mb-2">
             <label
@@ -555,10 +729,10 @@ const Products = () => {
               </button>
             </div>
             <div className="d-flex align-items-center gap-15">
-            <button  className="btn">
+              <button onClick={handleOpenCreateTicket} className="btn">
                 Tạo mới khuyến mãi
               </button>
-              <button  className="btn">
+              <button onClick={handleOpenCreateShipFee} className="btn">
                 Tạo mới mã giảm giá
               </button>
             </div>

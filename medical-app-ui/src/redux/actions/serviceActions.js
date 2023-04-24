@@ -39,7 +39,8 @@ export const fetchAllProducts =
     inCategory,
     searchValue,
     debouncedMinValue,
-    debouncedMaxValue
+    debouncedMaxValue,
+    sort
   ) =>
   async (dispatch) => {
     dispatch(loadAction(true));
@@ -49,7 +50,8 @@ export const fetchAllProducts =
       inCategory,
       searchValue,
       debouncedMinValue,
-      debouncedMaxValue
+      debouncedMaxValue,
+      sort
     )
       .then((res) => {
         dispatch(getListProductAction(res));

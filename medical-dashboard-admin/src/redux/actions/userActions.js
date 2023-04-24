@@ -549,3 +549,31 @@ export const fetchAllTicket = () => async (dispatch) => {
       dispatch(loadAction(false));
     });
 };
+export const fetchCreateTicket =
+  (name, discount, endDate) => async (dispatch) => {
+    dispatch(loadAction(true));
+    await AuthServices.createTicket(name, discount, endDate)
+      .then((res) => {
+        if (res) {
+          alert("Tạo thành công !");
+        }
+      })
+      .catch((rej) => {})
+      .finally(() => {
+        dispatch(loadAction(false));
+      });
+  };
+
+export const fetchCreateShipfee = (voucher, fee) => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.createShipFee(voucher, fee)
+    .then((res) => {
+      if (res) {
+        alert("Tạo thành công !");
+      }
+    })
+    .catch((rej) => {})
+    .finally(() => {
+      dispatch(loadAction(false));
+    });
+};

@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IShipFeesRepository extends JpaRepository<ShipFees, Integer> {
+
+    boolean existsByVoucher(String voucher);
+    ShipFees getByVoucher(String voucher);
 }

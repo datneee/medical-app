@@ -38,4 +38,10 @@ public class Ticket implements Serializable {
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "dd/MM/yyyy ")
     private Date endDate;
+
+    public Ticket(String name, Integer discount, Date endDate) {
+        this.name = name;
+        this.discount = discount;
+        this.endDate = endDate;
+    }
 }

@@ -8,7 +8,8 @@ const ProductServices = {
     inCategory,
     searchValue,
     debouncedMinValue,
-    debouncedMaxValue
+    debouncedMaxValue,
+    sort
   ) =>
     new Promise((resolve, reject) => {
       axiosClient
@@ -17,7 +18,9 @@ const ProductServices = {
             inCategory ? inCategory : ""
           }&search=${searchValue ? searchValue : ""}&mnOPrice=${
             debouncedMinValue ? debouncedMinValue : ""
-          }&mxOPrice=${debouncedMaxValue ? debouncedMaxValue : ""}`
+          }&mxOPrice=${debouncedMaxValue ? debouncedMaxValue : ""}&sort=${
+            sort ? sort : "id"
+          }`
         )
         .then((res) => {
           resolve(res.result);

@@ -25,4 +25,9 @@ public class ShipFees implements Serializable {
 
     @Column(name = "fee")
     private int fee;
+
+    public ShipFees(String voucher, int fee) {
+        this.voucher = voucher;
+        this.fee = fee;
+    }
 }

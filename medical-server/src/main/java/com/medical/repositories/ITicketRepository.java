@@ -8,4 +8,8 @@ import org.springframework.stereotype.Repository;
 public interface ITicketRepository extends JpaRepository<Ticket, Integer> {
 
     Ticket getTicketById(Integer id);
+
+    boolean existsByName(String name);
+
+    Ticket getByName(String name);
 }

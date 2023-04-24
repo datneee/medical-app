@@ -18,4 +18,16 @@ public class ShipFeesService implements IShipFeesService {
     public List<ShipFees> getListShipFees() {
         return shipFeesRepository.findAll();
     }
+
+    @Override
+    public ShipFees createShipFee(String voucher, Integer fee) {
+        ShipFees shipFees;
+        if(shipFeesRepository.existsByVoucher(voucher)) {
+            shipFees = shipFeesRepository.getByVoucher(voucher);
+            shipFees.setFee(fee);
+        } else {
+            shipFees = new ShipFees(voucher, fee);
+        }
+        return shipFeesRepository.save(shipFees);
+    }
 }
