@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineHome, AiOutlineMail } from "react-icons/ai";
 import { BiPhoneCall, BiInfoCircle } from "react-icons/bi";
 import { HiOutlineMail } from "react-icons/hi";
 import { BreadCrum, Meta } from "../../components";
 
 import styles from "./Contact.scss";
+import { useDispatch } from "react-redux";
+import { fetchSubcription } from "../../redux/actions/userActions";
 
 const Contact = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [comments, setComments] = useState('');
+
+  const dispatch = useDispatch();
+  const handleContact = () => {
+    dispatch(fetchSubcription(email, name, phoneNumber, comments));
+  }
+
   return (
     <div>
       <Meta title="Contact" />
@@ -32,6 +44,8 @@ const Contact = () => {
                   <form action="" className="d-flex flex-column gap-15">
                     <div>
                       <input
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                         type="text"
                         placeholder="Name"
                         className="form-control"
@@ -39,6 +53,8 @@ const Contact = () => {
                     </div>
                     <div>
                       <input
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         type="text"
                         placeholder="Email"
                         className="form-control"
@@ -46,6 +62,8 @@ const Contact = () => {
                     </div>
                     <div>
                       <input
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
                         type="text"
                         placeholder="Phone number"
                         className="form-control"
@@ -53,6 +71,8 @@ const Contact = () => {
                     </div>
                     <div>
                       <textarea
+                        value={comments}
+                        onChange={(e) => setComments(e.target.value)}
                         type="text"
                         placeholder="Comments"
                         className="w-100 form-control"
@@ -61,6 +81,8 @@ const Contact = () => {
                       />
                     </div>
                     <button
+                      type="button"
+                      onClick={handleContact}
                       style={{ width: "10rem" }}
                       className="button border-0"
                     >

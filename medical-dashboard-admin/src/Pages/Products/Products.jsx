@@ -15,6 +15,7 @@ import { Pagination } from "react-headless-pagination";
 import ProductServices from "../../utils/httpsRequests/ProducServices";
 import { async } from "q";
 import {
+  fetchAllTicket,
   fetchCreateProduct,
   fetchDeleteProduct,
   fetchEditProduct,
@@ -36,10 +37,13 @@ const Products = () => {
   const [category, setCategory] = useState();
   const [brand, setBrand] = useState();
   const [status, setStatus] = useState();
+  const [ticket, setTicket] = useState();
   const [isHot, setIsHot] = useState();
 
   const dispatch = useDispatch();
   const service = useSelector((state) => state?.service);
+  const auth = useSelector((state) => state?.auth);
+  const tickets = auth?.tickets;
   const brands = service?.brands;
   const categories = service?.categories;
   let products = service?.products;
@@ -101,6 +105,7 @@ const Products = () => {
     setCategory(product?.category?.id);
     setStatus(product?.status);
     setIsHot(product?.isHot);
+    setTicket(product?.ticket?.id)
   };
   const handleOpenEditProduct = async (id) => {
     const productSelected = await ProductServices.getProductById(id);
@@ -197,6 +202,7 @@ const Products = () => {
           : JSON.parse(amount),
         status: status ? status : product?.status,
         isHot: isHot ? isHot : product?.isHot,
+        ticketId: ticket ? ticket : ''
       };
       dispatch(fetchEditProduct(id, form, selectedFile));
       setShow(false);
@@ -212,6 +218,7 @@ const Products = () => {
     dispatch(fetchAllProducts(1, 5, null, searchValue));
     dispatch(fetchAllBrand());
     dispatch(fetchAllCategory());
+    dispatch(fetchAllTicket())
   }, [debouncedSearchValue]);
   return (
     <div>
@@ -402,26 +409,52 @@ const Products = () => {
             </select>
           </div>
           {product && (
-            <div className="form-group mb-2">
-              <label
-                className="text-bold p-2"
-                style={{ fontWeight: "500" }}
-                htmlFor="ctStatus"
-              >
-                Trạng thái sản phẩm
-              </label>
+            <div className="d-flex align-items-center gap-10 justify-content-between">
+              <div className="form-group mb-2 w-50">
+                <label
+                  className="text-bold p-2"
+                  style={{ fontWeight: "500" }}
+                  htmlFor="ctStatus"
+                >
+                  Trạng thái sản phẩm
+                </label>
 
-              <select
-                defaultValue={status ? status : "OPENING"}
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                id="ctStatus"
-                className="form-control"
-              >
-                <option value="OPENING">Đang mở</option>
-                <option value="CLOSED">Đã đóng</option>
-              </select>
+                <select
+                  defaultValue={status ? status : "OPENING"}
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                  id="ctStatus"
+                  className="form-control"
+                >
+                  <option value="OPENING">Đang mở</option>
+                  <option value="CLOSED">Đã đóng</option>
+                </select>
+              </div>
+              <div className="form-group mb-2 w-50">
+                <label
+                  className="text-bold p-2"
+                  style={{ fontWeight: "500" }}
+                  htmlFor="ctTicket"
+                >
+                  Ticket
+                </label>
+
+                <select
+                  defaultValue={ticket ? ticket : -1}
+                  value={ticket}
+                  onChange={(e) => setTicket(Number.parseInt(e.target.value))}
+                  id="ctTicket"
+                  className="form-control"
+                >
+                  <option value={-1}>--- Chọn khuyến mãi ---</option>
+                  {tickets.length > 0 && tickets?.map((item) => (
+                      <option value={item?.id}>{item?.name}</option>
+                  ))}
+                  
+                </select>
+              </div>
             </div>
+            
           )}
           <div className="form-group mb-2">
             <label
@@ -508,7 +541,7 @@ const Products = () => {
               sản phẩm
             </h1>
           </div>
-          <div className="col-12">
+          <div className="col-12 d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center gap-15">
               <input
                 value={searchValue}
@@ -519,6 +552,14 @@ const Products = () => {
               />
               <button onClick={handleOpenModalCreate} className="btn">
                 Tạo mới sản phẩm
+              </button>
+            </div>
+            <div className="d-flex align-items-center gap-15">
+            <button  className="btn">
+                Tạo mới khuyến mãi
+              </button>
+              <button  className="btn">
+                Tạo mới mã giảm giá
               </button>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
 import { Carousel } from "react-bootstrap";
 import { Pagination } from "react-headless-pagination";
 import "react-bootstrap";
@@ -32,6 +32,7 @@ const OurStore = () => {
   const [page, setPage] = useState(0);
   const [selectFilter, setSelectFilter] = useState("best-selling");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const service = useSelector((state) => state?.service);
   let medicals = service?.products;
   let productHots = medicals.filter((item) => item.isHot == "HOT");
@@ -43,6 +44,10 @@ const OurStore = () => {
   const useQuery = new URLSearchParams(useLocation().search);
   const searchValue = useQuery.get("search");
   const category = useQuery.get("category");
+  const productId = useQuery.get("productId");
+  if (productId) {
+    navigate("/product/" + productId)
+  }
   const handlePickProductByCategory = (id) => {
     setCheckCategory(id);
   };

@@ -14,6 +14,7 @@ const initState = {
   message: "",
   comment: null,
   shipFees: [],
+  tickets: [],
   cartItem: {}
 };
 
@@ -28,6 +29,11 @@ const reducer = (state = initState, { type, payload }) => {
       return {
         ...state,
         shipFees: payload
+      }
+    case UserAuth.GET_TICKET:
+      return {
+        ...state,
+        tickets: payload
       }
     case UserAuth.SUCCESS:
       return {

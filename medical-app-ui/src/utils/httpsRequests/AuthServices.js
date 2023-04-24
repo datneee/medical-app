@@ -99,5 +99,20 @@ const AuthServices = {
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
     }),
+  
+  subcription: (email, name, phoneNumber,comments) => 
+    new Promise((resolve, reject) => {
+      axiosClient
+        .post(`${paths.CONTACT}?email=${email}&name=${name}&phoneNumber=${phoneNumber}&comments=${comments}`)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej))
+    }),
+  getAllTicket: () => 
+    new Promise((resolve, reject) => {
+      axiosClient
+        .get(paths.TICKETS)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej))
+    })
 };
 export default AuthServices;

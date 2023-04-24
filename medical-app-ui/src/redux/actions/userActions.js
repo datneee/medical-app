@@ -370,3 +370,35 @@ export const fetchAllShipFees = () => async (dispatch) => {
       dispatch(loadAction(false));
     });
 };
+const getAllTicketAction = (payload) => {
+  return {
+    type: UserAuth.GET_TICKET,
+    payload: payload,
+  };
+};
+export const fetchAllTicket = () => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.getAllTicket()
+    .then((res) => {
+      if (res) {
+        dispatch(getAllTicketAction(res));
+      }
+    })
+    .catch((rej) => {})
+    .finally(() => {
+      dispatch(loadAction(false));
+    });
+};
+export const fetchSubcription = (email, name, phoneNumber, comments) => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.subcription(email, name, phoneNumber, comments)
+  .then((res) => {
+    if (res) {
+      alert("Đăng ký thành công !")
+    }
+  })
+  .catch((rej) => {})
+  .finally(() => {
+    dispatch(loadAction(false));
+  });
+}

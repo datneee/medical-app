@@ -8,6 +8,8 @@ import com.medical.forms.CreateProductForm;
 import com.medical.forms.UpdateProductForm;
 import com.medical.specifications.GenericSpecification;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.List;
 
 public interface IProductService{
@@ -27,7 +29,7 @@ public interface IProductService{
 
     public Product getProductByTitle(String title);
 
-    Product createProduct(CreateProductForm form);
+    Product createProduct(CreateProductForm form) throws MessagingException, IOException;
 
     void updateProduct(Integer id, UpdateProductForm form);
 

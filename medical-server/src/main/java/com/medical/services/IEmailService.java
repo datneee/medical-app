@@ -9,6 +9,6 @@ import java.io.IOException;
 public interface IEmailService {
     void send(String subject, String content, String to, Boolean isHtmlFormat) throws MessagingException;
 
-    void sendEmail(Mail mail) throws MessagingException, IOException;
+    void sendEmail(Mail mail, String template) throws MessagingException, IOException;
     void sendEmail(Mail mail, User user, String token) throws MessagingException, IOException, TemplateException;
 }

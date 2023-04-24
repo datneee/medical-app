@@ -174,5 +174,12 @@ const AuthServices = {
         .then((res) => resolve(res))
         .catch((rej) => reject(rej));
     }),
+  getAllTicket: () => 
+    new Promise((resolve, reject) => {
+      axiosClient
+        .get(paths.TICKETS)
+        .then((res) => resolve(res))
+        .catch((rej) => reject(rej))
+    })
 };
 export default AuthServices;

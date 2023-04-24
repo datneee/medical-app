@@ -112,7 +112,7 @@ public class Product implements Serializable {
 
     @PrePersist
     public void PrePersist(){
-        if (this.title != null) this.promotionPrice = this.originalPrice * this.ticket.getDiscount() / 100;
+        if (this.ticket != null) this.promotionPrice = this.originalPrice * this.ticket.getDiscount() / 100;
         if(this.status == null)
             this.status = StatusCodeProductEnum.OPENING;
         if(this.promotionPrice == null)

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Meta, BreadCrum } from "../../components";
 
 import { HiOutlineArrowLeft } from "react-icons/hi";
@@ -91,6 +91,7 @@ const blogs = [
 ];
 const SingleBlog = () => {
   const { id } = useParams("id");
+  
   const blog = blogs.find((item) => item?.id == id);
   useEffect(() => {
     window.scroll(0, 0);

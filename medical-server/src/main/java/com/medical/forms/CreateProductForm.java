@@ -39,6 +39,8 @@ public class CreateProductForm {
     @NotNull
     private Integer brandId;
 
+    private Integer ticketId;
+
     public Product toEntity(){
 
         Product p = new Product(

@@ -53,7 +53,7 @@ public class EmailService implements IEmailService {
 
         mailSender.send(mimeMessage);
     }
-    public void sendEmail(Mail mail) throws MessagingException, IOException {
+    public void sendEmail(Mail mail, String template) throws MessagingException, IOException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message,
                 MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
@@ -62,8 +62,8 @@ public class EmailService implements IEmailService {
         Context context = new Context();
         context.setVariables(mail.getProps());
 
-        final String template = "inlined-css-template";
-        String html = templateEngine.process(template, context);
+        final String tmp =  template;
+        String html = templateEngine.process(tmp, context);
 
         helper.setTo(mail.getMailTo());
         helper.setText(html, true);

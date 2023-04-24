@@ -80,7 +80,7 @@ public class AuthController {
         model.put("type", "NEWSLETTER");
         mail.setProps(model);
 
-        mailService.sendEmail(mail);
+        mailService.sendEmail(mail, "inlined-css-template");
     }
     private void sendInlinedCssEmail(Mail mail, User user, String token) throws MessagingException, IOException {
 
@@ -95,7 +95,7 @@ public class AuthController {
         model.put("tokenActive", token );
         mail.setProps(model);
 
-        mailService.sendEmail(mail);
+        mailService.sendEmail(mail, "inlined-css-template");
     }
     @Transactional
     @PostMapping("/signup")

@@ -17,9 +17,12 @@ import com.medical.specifications.SearchOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +34,8 @@ public class ProductController extends BaseController<Product> {
 
     @Autowired
     private IProductService service;
+
+
 
     @GetMapping
     public ResponseEntity<?> getAllProducts(ProductFilter productFilter, HttpServletRequest request){
@@ -108,13 +113,13 @@ public class ProductController extends BaseController<Product> {
     }
 
     @PostMapping
-//    @PreAuthorize("@userAuthorizer.isAdmin(authentication)")
-    public ResponseEntity<?> createProduct(@RequestBody CreateProductForm form){
+    @PreAuthorize("@userAuthorizer.isAdmin(authentication)")
+    public ResponseEntity<?> createProduct(@RequestBody CreateProductForm form) throws MessagingException, IOException {
         return new ResponseEntity<>(service.createProduct(form),HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{id}")
-//    @PreAuthorize("@userAuthorizer.isAdmin(authentication)")
+    @PreAuthorize("@userAuthorizer.isAdmin(authentication)")
     public ResponseEntity<?> updateProduct(@PathVariable("id") Integer id , @RequestBody UpdateProductForm form){
         service.updateProduct(id,form);
         return new ResponseEntity<>("updated Successful",HttpStatus.OK);

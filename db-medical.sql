@@ -188,6 +188,14 @@ CREATE TABLE ResetPasswordUserToken(
     userId  TINYINT UNSIGNED UNIQUE KEY,
     FOREIGN KEY(userId) REFERENCES users(id)
 );
+DROP TABLE IF EXISTS ContactInfo;
+CREATE TABLE ContactInfo (
+	id 				TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    email			VARCHAR(255) UNIQUE,
+    `name`			VARCHAR(255),
+    phoneNumber		VARCHAR(255),
+    comments		VARCHAR(255)
+);
 -- -- ====================================  TRIGGER  ============================================
 DROP TRIGGER IF EXISTS auto_setEndDateOfTicket;
 DELIMITER $$

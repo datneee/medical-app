@@ -56,7 +56,7 @@ export const login =
         );
       } else {
         dispatch(authLoginAction(res));
-        localStorage.setItem("auth", JSON.stringify(res));
+        localStorage.setItem("admin", JSON.stringify(res));
         navigate("/");
       }
     } catch (error) {
@@ -101,7 +101,7 @@ export const fetchUpdateAccount = (id, body) => async (dispatch) => {
   }
 };
 export const authLogoutAction = () => {
-  localStorage.removeItem("auth");
+  localStorage.removeItem("admin");
   return {
     type: UserAuth.LOG_OUT,
   };
@@ -525,6 +525,26 @@ export const fetchDeleteOrderItem = (id) => async (dispatch) => {
     .catch((rej) => {
       console.error(rej);
     })
+    .finally(() => {
+      dispatch(loadAction(false));
+    });
+};
+
+const getAllTicketAction = (payload) => {
+  return {
+    type: UserAuth.GET_TICKET,
+    payload: payload,
+  };
+};
+export const fetchAllTicket = () => async (dispatch) => {
+  dispatch(loadAction(true));
+  await AuthServices.getAllTicket()
+    .then((res) => {
+      if (res) {
+        dispatch(getAllTicketAction(res));
+      }
+    })
+    .catch((rej) => {})
     .finally(() => {
       dispatch(loadAction(false));
     });

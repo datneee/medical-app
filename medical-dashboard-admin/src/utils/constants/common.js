@@ -24,6 +24,7 @@ export const UserAuth = {
   SET_PRICE_CHECKOUT: "SET PRICE CHECKOUT",
   COMMENT: "COMMENT",
   GET_USERS: "GET USERS",
+  GET_TICKET: "GET ALL TICKETS"
 };
 export const Service = {
   LOADING: "LOADING ACTION",
@@ -56,4 +57,5 @@ export const paths = {
   GET_ORDER: "/orders",
   ORDERS_ITEM: "/orderitems",
   RATING: "/rates",
+  TICKETS: "/tickets",
 };

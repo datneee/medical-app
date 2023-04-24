@@ -9,6 +9,7 @@ import com.medical.dto.pagination.PaginateDTO;
 import com.medical.entity.*;
 import com.medical.forms.CreateProductForm;
 import com.medical.forms.UpdateProductForm;
+import com.medical.models.Mail;
 import com.medical.repositories.IProductRepository;
 import com.medical.services.*;
 import com.medical.specifications.GenericSpecification;
@@ -17,7 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProductService extends BasePagination<Product, IProductRepository> implements IProductService {
@@ -37,13 +42,23 @@ public class ProductService extends BasePagination<Product, IProductRepository> 
 
     @Autowired
     private IBrandService brandService;
+
     @Autowired
     private IUserService userService;
+
     @Autowired
     private ITicketService ticketService;
 
     @Autowired
+    private IContactInfoService contactInfoService;
+
+    @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private IEmailService mailService;
+
+
 
     @Autowired
     public ProductService(IProductRepository iProductRepository){
@@ -115,15 +130,48 @@ public class ProductService extends BasePagination<Product, IProductRepository> 
         return repository.findProductByTitle(title);
     }
 
+    private void sendInlinedCssEmail(Mail mail, User user, Product product) throws MessagingException, IOException {
+
+
+        mail.setSubject("Email notification of new product information !");
+
+        Map<String, Object> model = new HashMap<String, Object>();
+//        model.put("name", user.getFullName());
+        model.put("address", "Medical supporter, 38 Nguyen Xa ");
+        model.put("sign", "PVD - Developer");
+        model.put("type", "TRANSACTIONAL");
+        model.put("product", product);
+        mail.setProps(model);
+
+        mailService.sendEmail(mail, "notification-template");
+    }
     @Override
-    public Product createProduct(CreateProductForm form) {
+    public Product createProduct(CreateProductForm form) throws MessagingException, IOException {
         Product product = form.toEntity();
         product.setIsHot(IsHotProductEnum.valueOf(form.getIsHot()));
         product.setStatus(StatusCodeProductEnum.OPENING);
         product.setCategory(categoryService.getCategoryById(form.getCategoryId()));
         product.setBrand(brandService.getBrandById(form.getBrandId()));
 
-        return repository.save(product);
+        if (form.getTicketId() != null) {
+            product.setTicket(ticketService.getTicketById(form.getTicketId()));
+        } else {
+            product.setTicket(null);
+        }
+
+
+        Product productSaved = repository.save(product);
+        List<ContactInfo> contactInfos = contactInfoService.getListContactInfos();
+        if (contactInfos.size() > 0) {
+            for (ContactInfo contactInfo: contactInfos) {
+                Mail mail = new Mail();
+                mail.setFrom("pvd14092001@gmail.com");
+                mail.setMailTo(contactInfo.getEmail());
+                mail.setSubject("Email notification of new product information !");
+                this.sendInlinedCssEmail(mail, null, productSaved);
+            }
+        }
+        return  productSaved;
     }
 
     @Override
@@ -135,6 +183,7 @@ public class ProductService extends BasePagination<Product, IProductRepository> 
         product.setCategory(p.getCategory());
         product.setIsHot(IsHotProductEnum.valueOf(form.getIsHot()));
         product.setStatus(StatusCodeProductEnum.valueOf(form.getStatus()));
+        product.setTicket(ticketService.getTicketById(form.getTicketId()));
 
         //product.setCategory(categoryService.getCategoryById(repository.findProductById(id).getCategory().getId()));
         product.setCreatedDate(p.getCreatedDate());

@@ -34,6 +34,7 @@ public class UpdateProductForm {
     private Integer amount;
     private String isHot;
     private String status;
+    private Integer ticketId;
 
 
 //    @NotNull

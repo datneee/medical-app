@@ -1,8 +1,17 @@
 import React from "react";
 import styles from "./Footer.module.scss";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { fetchSubcription } from "../../redux/actions/userActions";
 
 const Footer = () => {
+  const [email, setEmail] = useState('');
+
+  const dispatch = useDispatch();
+  const handleSubcription = () => {
+    dispatch(fetchSubcription(email));
+  }
   return (
     <>
       <footer className="py-3">
@@ -19,6 +28,8 @@ const Footer = () => {
             <div className="col-7">
               <div className="input-group">
                 <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   type="text"
                   className="form-control py-2"
                   placeholder="Your Email Address ..."
@@ -26,7 +37,7 @@ const Footer = () => {
                   aria-describedby="basic-addon2"
                 />
                 <span className="input-group-text p-2" id="basic-addon2">
-                  <button className="btn button">Đăng ký</button>
+                  <button onClick={handleSubcription} className="btn button">Đăng ký</button>
                 </span>
               </div>
             </div>

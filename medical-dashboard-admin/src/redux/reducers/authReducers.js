@@ -3,8 +3,8 @@ import { UserAuth } from "../../utils/constants/common";
 const initState = {
   error: null,
   success: false,
-  token: JSON.parse(localStorage.getItem("auth"))?.token,
-  user: JSON.parse(localStorage.getItem("auth"))?.user,
+  token: JSON.parse(localStorage.getItem("admin"))?.token,
+  user: JSON.parse(localStorage.getItem("admin"))?.user,
   users: [],
   id: "",
   cart: [],
@@ -14,6 +14,7 @@ const initState = {
   loading: false,
   message: "",
   comment: null,
+  tickets: [],
   categoryIsCreated: false,
 };
 
@@ -24,6 +25,11 @@ const reducer = (state = initState, { type, payload }) => {
         ...state,
         loading: payload,
       };
+    case UserAuth.GET_TICKET:
+        return {
+          ...state,
+          tickets: payload
+        }
     case UserAuth.SUCCESS:
       return {
         ...state,
