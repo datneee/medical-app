@@ -14,27 +14,48 @@ import { FaShippingFast } from "react-icons/fa";
 
 const CartItem = ({ className, CartItem }) => {
   const [quantity, setQuantity] = useState(CartItem?.amount);
-
+  const [editQuantity, setEditQuantity] = useState({
+    id: "",
+    status: false,
+  });
+  if (editQuantity.id == CartItem?.id && editQuantity.status) {
+    console.log("replace cartItem: " + CartItem?.id);
+  }
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
   const user = auth?.user;
-  const ct = auth?.cartItem;
+  let _cartItem = auth?.cartItem;
+
   const totalPrice = quantity * CartItem?.product?.promotionPrice;
   const handleChangeInput = (event) => {
     const value = event.target.value;
-    if (value.startsWith(" ")) {
-      setQuantity(event.target.value);
+    if (!value || value == 0) {
+      setQuantity(CartItem?.amount);
+    } else {
+      setQuantity(value);
     }
   };
-  const increasingQuantity = () => {
+  const increasingQuantity = (id) => {
     if (quantity < 100) {
       setQuantity((prev) => prev + 1);
     }
+    setEditQuantity({
+      id,
+      status: true,
+    });
+    dispatch(changeAmountCartItem(id, quantity + 1));
+    window.location.reload();
   };
-  const handleReduceQuantity = () => {
+  const handleReduceQuantity = (id) => {
     if (quantity > 1) {
-      setQuantity((prev) => prev - 1);
+      setQuantity(quantity + 1);
     }
+    setEditQuantity({
+      id,
+      status: true,
+    });
+    dispatch(changeAmountCartItem(id, quantity <= 1 ? 1 : quantity - 1));
+    window.location.reload();
   };
   const debouncedQuantity = useDebounce(quantity, 650);
   const deleteCartItemHandler = () => {
@@ -42,11 +63,21 @@ const CartItem = ({ className, CartItem }) => {
       window.confirm("Xóa " + CartItem?.product?.title + " ra khỏi giỏ hàng ?")
     ) {
       dispatch(deleteCart(CartItem?.id, user?.id));
+      window.location.reload();
     }
   };
-  useEffect(() => {
-    // dispatch(changeAmountCartItem(CartItem?.id, debouncedQuantity));
-  }, [debouncedQuantity]);
+  const handleBlur = (id) => {
+    setEditQuantity({
+      id,
+      status: true,
+    });
+    if (CartItem?.amount != quantity) {
+      dispatch(changeAmountCartItem(id, quantity));
+      window.location.reload();
+    }
+  };
+
+  useEffect(() => {}, []);
   return (
     <div className={className}>
       <div className="cart-col-1 d-flex align-items-center gap-10">
@@ -100,13 +131,14 @@ const CartItem = ({ className, CartItem }) => {
       <div className="cart-col-3 d-flex align-items-center gap-10">
         <div className="buttons_added">
           <input
-            onClick={handleReduceQuantity}
+            onClick={() => handleReduceQuantity(CartItem?.id)}
             className="minus is-form"
             type="button"
             value="-"
           />
           <input
             onChange={handleChangeInput}
+            onBlur={() => handleBlur(CartItem?.id)}
             aria-label="quantity"
             className="input-qty"
             name="quantity"
@@ -116,7 +148,7 @@ const CartItem = ({ className, CartItem }) => {
             value={quantity}
           />
           <input
-            onClick={increasingQuantity}
+            onClick={() => increasingQuantity(CartItem?.id)}
             className="plus is-form"
             type="button"
             value="+"

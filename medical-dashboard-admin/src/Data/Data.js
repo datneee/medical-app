@@ -26,22 +26,22 @@ export const SidebarData = [
   },
   {
     icon: UilClipboardAlt,
-    heading: "Orders",
+    heading: "Quản lí đơn hàng",
     path: "/orders",
   },
   {
     icon: UilUsersAlt,
-    heading: "Customers",
+    heading: "Quản lí tài khoản",
     path: "/customers",
   },
   {
     icon: UilPackage,
-    heading: "Products",
+    heading: "Quản lí sản phẩm",
     path: "/products",
   },
   {
     icon: UilChart,
-    heading: "Categories",
+    heading: "Quản lí danh mục",
     path: "/categories",
   },
 ];
@@ -49,7 +49,8 @@ export const SidebarData = [
 // Analytics Cards Data
 export const cardsData = [
   {
-    title: "Sales",
+    id: "revenue",
+    title: "Tổng doanh thu",
     color: {
       backGround: "linear-gradient(180deg, #bb67ff 0%, #c484f3 100%)",
       boxShadow: "0px 10px 20px 0px #e0c6f5",
@@ -59,29 +60,14 @@ export const cardsData = [
     png: UilUsdSquare,
     series: [
       {
-        name: "Sales",
+        name: "Doanh thu",
         data: [31, 40, 28, 51, 42, 109, 100],
       },
     ],
   },
   {
-    title: "Revenue",
-    color: {
-      backGround: "linear-gradient(180deg, #FF919D 0%, #FC929D 100%)",
-      boxShadow: "0px 10px 20px 0px #FDC0C7",
-    },
-    barValue: 80,
-    value: "14,270",
-    png: UilMoneyWithdrawal,
-    series: [
-      {
-        name: "Revenue",
-        data: [10, 100, 50, 70, 80, 30, 40],
-      },
-    ],
-  },
-  {
-    title: "Expenses",
+    id: "order",
+    title: "Thống kê đơn hàng",
     color: {
       backGround:
         "linear-gradient(rgb(248, 212, 154) -146.42%, rgb(255 202 113) -46.42%)",

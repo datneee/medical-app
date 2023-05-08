@@ -52,35 +52,36 @@ export default function BasicTable({ orders }) {
             </TableRow>
           </TableHead>
           <TableBody style={{ color: "white" }}>
-            {orders?.map((row) => (
-              <TableRow
-                key={row?.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  #{row?.id}
-                </TableCell>
-                <TableCell align="left">{row?.user?.fullName}</TableCell>
-                <TableCell align="left">
-                  {row?.orderItems[0]?.createdDate}
-                </TableCell>
-                <TableCell align="left">
-                  <span
-                    className="status"
-                    style={makeStyle(row?.orderItems[0]?.status)}
-                  >
-                    {row?.orderItems[0]?.status}
-                  </span>
-                </TableCell>
-                <Link
-                  to={"/orders?id=" + row?.id}
-                  align="left"
-                  className="Details"
+            {orders.length > 0 &&
+              orders?.map((row) => (
+                <TableRow
+                  key={row?.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  Chi tiết đơn hàng
-                </Link>
-              </TableRow>
-            ))}
+                  <TableCell component="th" scope="row">
+                    #{row?.id}
+                  </TableCell>
+                  <TableCell align="left">{row?.user?.fullName}</TableCell>
+                  <TableCell align="left">
+                    {row?.orderItems[0]?.createdDate}
+                  </TableCell>
+                  <TableCell align="left">
+                    <span
+                      className="status"
+                      style={makeStyle(row?.orderItems[0]?.status)}
+                    >
+                      {row?.orderItems[0]?.status}
+                    </span>
+                  </TableCell>
+                  <Link
+                    to={"/orders?id=" + row?.id}
+                    align="left"
+                    className="Details"
+                  >
+                    Chi tiết đơn hàng
+                  </Link>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

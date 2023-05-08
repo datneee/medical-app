@@ -6,12 +6,20 @@ import { useDispatch } from "react-redux";
 import { fetchSubcription } from "../../redux/actions/userActions";
 
 const Footer = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
 
   const dispatch = useDispatch();
   const handleSubcription = () => {
-    dispatch(fetchSubcription(email));
-  }
+    if (
+      /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$/.test(
+        email
+      )
+    ) {
+      dispatch(fetchSubcription(email));
+    } else {
+      alert("Email không hợp lệ !");
+    }
+  };
   return (
     <>
       <footer className="py-3">
@@ -37,7 +45,9 @@ const Footer = () => {
                   aria-describedby="basic-addon2"
                 />
                 <span className="input-group-text p-2" id="basic-addon2">
-                  <button onClick={handleSubcription} className="btn button">Đăng ký</button>
+                  <button onClick={handleSubcription} className="btn button">
+                    Đăng ký
+                  </button>
                 </span>
               </div>
             </div>

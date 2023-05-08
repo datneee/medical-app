@@ -8,6 +8,7 @@ import java.util.List;
 public interface IOrderItemService {
 
     List<OrderItem> getAllOrderItemsByStatus(StatusOrderItem status);
+    List<OrderItem> getMonthlyOrder(int month);
 
     OrderItem getOrderItemById(Integer id);
 

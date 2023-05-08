@@ -17,7 +17,6 @@ const ProductCard = (props) => {
   const handleAddToCart = async () => {
     if (user) {
       await dispatch(addToCart(user?.id, product?.id, 1));
-      alert("Thêm vào giỏ hàng thành công !");
     } else {
       alert("Bạn cần đăng nhập để sử dụng giỏ hàng !");
     }

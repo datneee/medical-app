@@ -15,7 +15,7 @@ const initState = {
   comment: null,
   shipFees: [],
   tickets: [],
-  cartItem: {}
+  cartItem: null,
 };
 
 const reducer = (state = initState, { type, payload }) => {
@@ -28,13 +28,13 @@ const reducer = (state = initState, { type, payload }) => {
     case UserAuth.GET_SHIPFEES:
       return {
         ...state,
-        shipFees: payload
-      }
+        shipFees: payload,
+      };
     case UserAuth.GET_TICKET:
       return {
         ...state,
-        tickets: payload
-      }
+        tickets: payload,
+      };
     case UserAuth.SUCCESS:
       return {
         ...state,
@@ -85,10 +85,10 @@ const reducer = (state = initState, { type, payload }) => {
         cart: payload,
       };
     case UserAuth.GET_CARTIEM:
-        return {
-          ...state,
-          cartItem: payload
-        }
+      return {
+        ...state,
+        cartItem: payload,
+      };
     case UserAuth.DELETE_CARTITEM:
       return {
         ...state,

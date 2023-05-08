@@ -54,7 +54,7 @@ const Header = () => {
                     className="d-flex align-items-center gap-10 text-white"
                   >
                     <FiShoppingBag />
-                    <p>Your ordered</p>
+                    <p>Đơn hàng của tôi</p>
                   </Link>
                 </li>
                 {user ? (

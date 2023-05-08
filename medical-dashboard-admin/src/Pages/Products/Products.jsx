@@ -720,7 +720,7 @@ const Products = () => {
               <input
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
-                placeholder="Tìm kiếm danh mục theo tên..."
+                placeholder="Tìm kiếm sản phẩm theo tên..."
                 style={{ width: "24rem" }}
                 className="form-control"
               />

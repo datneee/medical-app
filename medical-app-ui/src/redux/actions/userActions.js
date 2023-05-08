@@ -138,6 +138,7 @@ export const addToCart = (userId, productId, amount) => async (dispatch) => {
       } else {
         dispatch(addToCartAction(true));
         dispatch(getCartItem(userId));
+        alert("Thêm vào giỏ hàng thành công !");
       }
     })
     .catch((rej) => {
@@ -389,16 +390,17 @@ export const fetchAllTicket = () => async (dispatch) => {
       dispatch(loadAction(false));
     });
 };
-export const fetchSubcription = (email, name, phoneNumber, comments) => async (dispatch) => {
-  dispatch(loadAction(true));
-  await AuthServices.subcription(email, name, phoneNumber, comments)
-  .then((res) => {
-    if (res) {
-      alert("Đăng ký thành công !")
-    }
-  })
-  .catch((rej) => {})
-  .finally(() => {
-    dispatch(loadAction(false));
-  });
-}
+export const fetchSubcription =
+  (email, name, phoneNumber, comments) => async (dispatch) => {
+    dispatch(loadAction(true));
+    await AuthServices.subcription(email, name, phoneNumber, comments)
+      .then((res) => {
+        if (res) {
+          alert("Đăng ký thành công !");
+        }
+      })
+      .catch((rej) => {})
+      .finally(() => {
+        dispatch(loadAction(false));
+      });
+  };

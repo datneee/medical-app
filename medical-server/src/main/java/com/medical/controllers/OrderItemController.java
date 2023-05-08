@@ -28,7 +28,10 @@ public class OrderItemController {
     public ResponseEntity getOrderItemById(@PathVariable("id") Integer id){
         return new ResponseEntity(service.getOrderItemById(id) , HttpStatus.OK);
     }
-
+    @GetMapping(value = "/orderInMonth")
+    public ResponseEntity<?> getMonthlyOrder(@Param("month") int month){
+        return new ResponseEntity<>(service.getMonthlyOrder(month) , HttpStatus.OK);
+    }
 
     @GetMapping(value = "/revenue")
     public ResponseEntity<?> getMonthlyRevenue(@Param("month") int month){

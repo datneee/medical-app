@@ -24,7 +24,7 @@ const makeStyle = (status) => {
       color: "white",
     };
   }
-}
+};
 const OrderItem = ({ id, amount, orderItems, option = "all" }) => {
   if (option != "all") {
     switch (option) {
@@ -68,11 +68,11 @@ const OrderItem = ({ id, amount, orderItems, option = "all" }) => {
         <div className="col-12">
           <div className="order-products">
             <div className="order-wrapper-heading py-3">
-              <h4 className="orderItem-col-1">Product</h4>
-              <h4 className="orderItem-col-2">Price checkout</h4>
-              <h4 className="orderItem-col-3">Quantity</h4>
-              <h4 className="orderItem-col-4">Total Price</h4>
-              <h4 className="orderItem-col-4">Status</h4>
+              <h4 className="orderItem-col-1">Sản phẩm</h4>
+              <h4 className="orderItem-col-2">Đơn giá</h4>
+              <h4 className="orderItem-col-3">Số lượng</h4>
+              <h4 className="orderItem-col-4">Tổng giá</h4>
+              <h4 className="orderItem-col-4">Trạng thái</h4>
             </div>
             {orderItems?.map((item) => {
               const totalPrice = item?.amount * item?.product?.promotionPrice;
@@ -96,6 +96,9 @@ const OrderItem = ({ id, amount, orderItems, option = "all" }) => {
                       </Link>
 
                       <p className="title">{item?.product?.descriptions}</p>
+                      <span style={{ marginTop: "4px" }}>
+                        <b>Ngày đặt:</b> {item?.createdDate}
+                      </span>
                     </div>
                   </div>
                   <div className="orderItem-col-2">
@@ -116,7 +119,9 @@ const OrderItem = ({ id, amount, orderItems, option = "all" }) => {
                     })}
                   </div>
                   <div className="orderItem-col-5">
-                    <span style={makeStyle(item?.status)} className="status" >{item?.status}</span>
+                    <span style={makeStyle(item?.status)} className="status">
+                      {item?.status}
+                    </span>
                   </div>
                 </div>
               );

@@ -25,6 +25,7 @@ const Cart = () => {
 
   const handleCheckoutCart = () => {
     if (cartItems.length > 0) {
+      dispatch(setTotalPriceToCheckoutAction(priceCheckout));
       dispatch(setCheckout(cartItems));
       dispatch(loadAction(true));
       setTimeout(() => {
@@ -37,7 +38,6 @@ const Cart = () => {
   };
   useEffect(() => {
     dispatch(getCartItem(cartId));
-    dispatch(setTotalPriceToCheckoutAction(priceCheckout));
   }, []);
   return (
     <div>

@@ -45,7 +45,7 @@ const Sidebar = () => {
                 onClick={() => setSelected(index)}
               >
                 <item.icon />
-                <span>{item.heading}</span>
+                <span style={{ whiteSpace: "nowrap" }}>{item.heading}</span>
               </Link>
             );
           })}

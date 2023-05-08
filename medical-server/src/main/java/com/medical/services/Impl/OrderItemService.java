@@ -28,6 +28,11 @@ public class OrderItemService implements IOrderItemService {
     }
 
     @Override
+    public List<OrderItem> getMonthlyOrder(int month) {
+        return repository.getMonthlyOrder(month);
+    }
+
+    @Override
     public OrderItem getOrderItemById(Integer id) {
         return repository.findOrderItemById(id);
     }

@@ -9,15 +9,23 @@ import { useDispatch } from "react-redux";
 import { fetchSubcription } from "../../redux/actions/userActions";
 
 const Contact = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [comments, setComments] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [comments, setComments] = useState("");
 
   const dispatch = useDispatch();
   const handleContact = () => {
-    dispatch(fetchSubcription(email, name, phoneNumber, comments));
-  }
+    if (
+      /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$/.test(
+        email
+      )
+    ) {
+      dispatch(fetchSubcription(email));
+    } else {
+      alert("Email không hợp lệ !");
+    }
+  };
 
   return (
     <div>
