@@ -78,7 +78,7 @@ export const cardsData = [
     png: UilClipboardAlt,
     series: [
       {
-        name: "Expenses",
+        name: "Số đơn",
         data: [10, 25, 15, 30, 12, 15, 20],
       },
     ],

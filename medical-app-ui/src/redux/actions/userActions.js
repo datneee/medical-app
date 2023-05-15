@@ -1,5 +1,6 @@
 import { UserAuth, paths } from "../../utils/constants/common";
 import AuthServices from "../../utils/httpsRequests/AuthServices";
+import { fetchOneProduct } from "./serviceActions";
 
 const authLoginAction = (payload) => {
   return {
@@ -25,7 +26,7 @@ const loadAction = (payload) => {
     type: UserAuth.LOADING,
   };
 };
-const haveErrorAction = (error) => {
+export const haveErrorAction = (error) => {
   return {
     type: UserAuth.ERROR,
     payload: error,
@@ -55,6 +56,7 @@ export const login =
       } else {
         dispatch(authLoginAction(res));
         localStorage.setItem("auth", JSON.stringify(res));
+        dispatch(getCartItem(res?.user?.id));
         navigate("/");
       }
     } catch (error) {
@@ -115,7 +117,6 @@ export const resetPassword = (email, navigate) => async (dispatch) => {
     })
     .finally(() => {
       dispatch(loadAction(false));
-      dispatch(haveErrorAction(null));
       dispatch(isSuccessAction(false));
     });
 };
@@ -329,6 +330,7 @@ export const fetchCommentProduct =
       })
       .finally(() => {
         dispatch(loadAction(false));
+        dispatch(fetchOneProduct(productId));
       });
   };
 const getOrderItemAction = (payload) => {

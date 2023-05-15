@@ -5,7 +5,10 @@ import { CgSpinnerTwo } from "react-icons/cg";
 
 import { BreadCrum, Loading, Meta } from "../../../components";
 import styles from "./ForgotPassword.scss";
-import { resetPassword } from "../../../redux/actions/userActions";
+import {
+  haveErrorAction,
+  resetPassword,
+} from "../../../redux/actions/userActions";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +17,7 @@ const ForgotPassword = () => {
   const auth = useSelector((state) => state?.auth);
 
   const handleResetPassword = () => {
+    dispatch(haveErrorAction(null));
     dispatch(resetPassword(email, navigate));
   };
   return (

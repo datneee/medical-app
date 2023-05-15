@@ -12,7 +12,6 @@ const MainDash = () => {
   const user = auth?.user;
   const orders = auth?.orders;
   const dispatch = useDispatch();
-
   const handleLogOut = () => {
     dispatch(authLogoutAction());
   };

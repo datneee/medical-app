@@ -124,7 +124,6 @@ const SingleProduct = () => {
     } else {
       if (inputComment.trim()) {
         dispatch(fetchCommentProduct(user?.id, product?.id, inputComment));
-        dispatch(fetchOneProduct(id));
 
         setInputComment("");
       } else {

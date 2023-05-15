@@ -70,6 +70,7 @@ public class OrderItemService implements IOrderItemService {
             orderItem.setReceivedDate(currentDatePlusOne);
         }else if(orderItem.getStatus() == StatusOrderItem.Delivering && status == StatusOrderItem.Complete){
             orderItem.setStatus(StatusOrderItem.Complete);
+            orderItem.setReceivedDate(new Date());
         }
         repository.save(orderItem);
     }

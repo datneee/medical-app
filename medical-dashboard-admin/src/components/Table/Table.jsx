@@ -52,7 +52,7 @@ export default function BasicTable({ orders }) {
             </TableRow>
           </TableHead>
           <TableBody style={{ color: "white" }}>
-            {orders.length > 0 &&
+            {orders?.length > 0 &&
               orders?.map((row) => (
                 <TableRow
                   key={row?.id}

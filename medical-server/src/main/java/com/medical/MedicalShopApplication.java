@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Bean;
 @Slf4j  
 @EnableConfigurationProperties({MailInfoProperties.class, StorageProperties.class, MailInfoProperties.class})
 public class MedicalShopApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(MedicalShopApplication.class, args);
     }

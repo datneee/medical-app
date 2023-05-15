@@ -17,7 +17,10 @@ const Categories = () => {
   const [name, setName] = useState();
   const [descriptions, setDescriptions] = useState();
   const [status, setStatus] = useState();
+  const [errors, setErrors] = useState(true);
+
   const handleClose = () => {
+    setErrors(true);
     setShow(false);
   };
   const handleOpenModalCreate = () => {
@@ -26,9 +29,19 @@ const Categories = () => {
     setName("");
     setDescriptions("");
   };
+  const validate = () => {
+    const error = {};
+    if (!name) {
+      error.name = "Tên danh mục là bắt buộc !";
+    }
+    setErrors(error);
+  };
   const handleCreateCategory = () => {
-    dispatch(fetchCreateCategory(name, descriptions, selectedFile));
-    setShow(false);
+    validate();
+    if ((errors != {}) & !errors) {
+      dispatch(fetchCreateCategory(name, descriptions, selectedFile));
+      handleClose();
+    }
   };
   const handleOpenEditCategory = (id) => {
     const category = categories.find((item) => item?.id == id);
@@ -117,6 +130,9 @@ const Categories = () => {
               id="ctname"
               placeholder="Enter category name ..."
             />
+            {errors?.name && (
+              <span className="red-warning p-2">{errors?.name} </span>
+            )}
           </div>
           {category && (
             <div className="form-group mb-2">

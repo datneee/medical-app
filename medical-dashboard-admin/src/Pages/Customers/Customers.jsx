@@ -36,6 +36,7 @@ const Customers = () => {
   const message = auth?.message;
   const handleShow = () => setShow(true);
   const handleClose = () => {
+    setErrors(true);
     setShow(false);
   };
   const resetForm = () => {
@@ -76,26 +77,26 @@ const Customers = () => {
     setShow(true);
   };
   const validate = () => {
-    const error = null;
+    const error = {};
     if (!username) {
-      error.username = "Không được để trống !";
+      error.username = "Username không được để trống !";
     }
     if (!fullName) {
-      error.fullName = "Không được để trống !";
+      error.fullName = "FullName không được để trống !";
     }
     if (!phoneNumber) {
-      error.fullName = "Không được để trống !";
+      error.phoneNumber = "Số điện thoại không được để trống !";
     }
     if (!address) {
-      error.address = "Không được để trống !";
+      error.address = "Địa chỉ không được để trống !";
     }
     if (!email) {
-      error.email = "Không được để trống !";
+      error.email = "Email không được để trống !";
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
       error.email = "Địa chỉ email không hợp lệ !";
     }
     if (!password) {
-      error.password = "Không được để trống !";
+      error.password = "Mật khẩu không được để trống !";
     }
     setErrors(error);
   };
@@ -106,7 +107,7 @@ const Customers = () => {
   };
   const handleCreateAccount = () => {
     validate();
-    if (!errors) {
+    if ((errors != {}) & !errors) {
       dispatch(
         registration({
           username,
@@ -117,7 +118,7 @@ const Customers = () => {
           address,
         })
       );
-      setShow(false);
+      handleClose();
     }
   };
   const handleEditAccount = (id) => {

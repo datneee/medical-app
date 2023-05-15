@@ -5,7 +5,7 @@ import { CgSpinnerTwo } from "react-icons/cg";
 
 import styles from "./Login.scss";
 import { BreadCrum, Meta, Loading } from "../../../components";
-import { login } from "../../../redux/actions/userActions";
+import { haveErrorAction, login } from "../../../redux/actions/userActions";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -17,7 +17,9 @@ const Login = () => {
   const handleLogin = async () => {
     dispatch(login({ username, password }, navigate));
   };
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(haveErrorAction(null));
+  }, []);
 
   return (
     <div style={{ position: "relative", overflow: "hidden" }}>

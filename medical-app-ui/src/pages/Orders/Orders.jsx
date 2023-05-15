@@ -53,7 +53,7 @@ const Orders = () => {
               </div>
             </div>
             <div className="col-12 order-container">
-              {orders.length > 0 &&
+              {orders?.length > 0 &&
                 orders?.map((item) => (
                   <OrderItem
                     option={selectFilter}

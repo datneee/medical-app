@@ -1,8 +1,9 @@
 .MainDash{
-    /* padding-top: 1rem; */
+    padding: 2rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    gap: 30px;
+    margin: 12px 32px;
 }
 
 @media screen and (max-width: 1200px) {

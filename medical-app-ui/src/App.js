@@ -37,7 +37,14 @@ function App() {
             <Route path="blog" element={<Blog />} />
             <Route path="blog/:id" element={<SingleBlog />} />
             <Route path="contact" element={<Contact />} />
-            <Route path="chat" element={<Chat />} />
+            <Route
+              path="chat"
+              element={
+                <Verification>
+                  <Chat />
+                </Verification>
+              }
+            />
             <Route
               path="ordered"
               element={

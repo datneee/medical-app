@@ -60,14 +60,14 @@ function CompactCard({ param, setExpanded }) {
         boxShadow: param.color.boxShadow,
       }}
       layoutId="expandableCard"
-      // onClick={setExpanded}
+      onClick={setExpanded}
     >
       <div className="radialBar">
         <select
           style={{ background: "transparent", color: "white" }}
           className="form-control form-select"
           onClick={(e) => {
-            e.preventDefault();
+            e.stopPropagation();
           }}
           onChange={(e) => setMonth(e.target.value)}
           defaultValue={month}
@@ -137,6 +137,38 @@ function CompactCard({ param, setExpanded }) {
 
 // Expanded Card
 function ExpandedCard({ param, setExpanded }) {
+  if (param.id == "revenue") {
+    // param.series[0].data = [];
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].forEach(async (element) => {
+      await axiosClient
+        .get("http://localhost:8080/api/v1/orderitems/revenue?month=" + element)
+        .then((res) => {
+          param.series[0].data[element - 1] = res.toLocaleString("it-IT", {
+            style: "currency",
+            currency: "VND",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  } else if (param.id == "order") {
+    // param.series[0].data = [];
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].forEach(async (element) => {
+      await axiosClient
+        .get(
+          "http://localhost:8080/api/v1/orderitems/orderInMonth?month=" +
+            element
+        )
+        .then((res) => {
+          param.series[0].data[element - 1] = res.length;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  }
+  console.log(param);
   const data = {
     options: {
       chart: {
@@ -174,15 +206,20 @@ function ExpandedCard({ param, setExpanded }) {
         show: true,
       },
       xaxis: {
-        type: "datetime",
+        type: "string",
         categories: [
-          "2018-09-19T00:00:00.000Z",
-          "2018-09-19T01:30:00.000Z",
-          "2018-09-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-09-19T04:30:00.000Z",
-          "2018-09-19T05:30:00.000Z",
-          "2018-09-19T06:30:00.000Z",
+          "Tháng 1",
+          "Tháng 2",
+          "Tháng 3",
+          "Tháng 4",
+          "Tháng 5",
+          "Tháng 6",
+          "Tháng 7",
+          "Tháng 8",
+          "Tháng 9",
+          "Tháng 10",
+          "Tháng 11",
+          "Tháng 12",
         ],
       },
     },

@@ -5,13 +5,13 @@ import { UilSignOutAlt } from "@iconscout/react-unicons";
 import { SidebarData } from "../../Data/Data";
 import { UilBars } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const [selected, setSelected] = useState(0);
 
   const [expanded, setExpaned] = useState(true);
-
+  console.log();
   const sidebarVariants = {
     true: {
       left: "0",
@@ -28,19 +28,23 @@ const Sidebar = () => {
         animate={window.innerWidth <= 768 ? `${expanded}` : ""}
       >
         {/* logo */}
-        <div className="logo">
+        <Link to={"/"} className="logo" style={{ cursor: "pointer" }}>
           <img src={Logo} alt="logo" />
           <span>
             Sh<span>o</span>ps
           </span>
-        </div>
+        </Link>
 
         <div className="menu">
           {SidebarData.map((item, index) => {
             return (
               <Link
                 to={item.path}
-                className={selected === index ? "menuItem active" : "menuItem"}
+                className={
+                  window.location.pathname == item.path
+                    ? "menuItem active"
+                    : "menuItem"
+                }
                 key={index}
                 onClick={() => setSelected(index)}
               >

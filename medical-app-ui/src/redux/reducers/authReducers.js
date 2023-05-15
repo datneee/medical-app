@@ -15,7 +15,7 @@ const initState = {
   comment: null,
   shipFees: [],
   tickets: [],
-  cartItem: null,
+  cartItem: [],
 };
 
 const reducer = (state = initState, { type, payload }) => {
