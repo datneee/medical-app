@@ -1,3 +1,4 @@
+import {Configuration, OpenAIApi} from "openai"
 class ActionProvider {
   constructor(createChatBotMessage, setStateFunc) {
     this.createChatBotMessage = createChatBotMessage;
@@ -10,13 +11,71 @@ class ActionProvider {
     );
     this.addMessageToState(message);
   };
+  recommendation = async (mes) => {
+    await fetch("http://localhost:8080/api/v1/products/sodl?des=" + mes.slice(4))
+      .then(res => res.json())
+      .then(res => {
+        const products =  res;
+        const message = this.createChatBotMessage(
+          "Tôi có thể gợi ý cho bạn một số sản phẩm của cửa hàng dưới đây :",
+          {
+            widget: "productRecommend",
+            loading: true,
+            terminateLoading: true,
+            products: products,
+          }
+        );
+        this.addMessageToState(message)
+      })
+      
+
+  }
+  handleChatCommunity = async (mes) => {
+    const OPENAI_KEY = "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"
+    const openai = new OpenAIApi(new Configuration({
+      apiKey: OPENAI_KEY
+    }))
+
+    await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + OPENAI_KEY,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: [{
+          role: "user",
+          content: mes
+        }]
+      })
+    })
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      const message = this.createChatBotMessage(res.choices[0].message.content);
+      this.addMessageToState(message)
+    })
+    // await openai.createChatCompletion({
+    //   model: "gpt-3.5-turbo",
+    //   messages: [{
+    //     role: "user",
+    //     content: mes
+    //   }],
+      
+    // })
+    // .then(res => {
+    //   this.addMessageToState(res.data.choices[0].message.content);
+    // })
+  }
   handleBeforeSendSolutions = () => {
     const message = this.createChatBotMessage(
       "Bạn có thể cho chúng tôi bạn đang cảm thấy thế nào chứ ?"
     );
     this.addMessageToState(message);
   };
-  handleOptions = (options) => {
+  handleOptions = (options) => {  
     const message = this.createChatBotMessage(
       "Làm thế nào để tôi giúp bạn? Dưới đây là một số tùy chọn có thể.",
       {

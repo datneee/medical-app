@@ -85,7 +85,10 @@ public class ProductController extends BaseController<Product> {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-
+    @GetMapping(value = "/sodl")
+    public ResponseEntity<?> searchProductByDescriptions(@RequestParam(name = "des") String des) {
+        return new ResponseEntity<>(service.searchProductByDescriptions(des), HttpStatus.OK);
+    }
     @GetMapping(value = "/title/{title}")
     public ResponseEntity<?> getProductByTitle(@PathVariable("title") String title){
         Product product  = service.getProductByTitle(title);

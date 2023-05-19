@@ -185,7 +185,6 @@ function ExpandedCard({ param, setExpanded }) {
         color: "#000",
         opacity: 0.35,
       },
-
       fill: {
         colors: ["#fff"],
         type: "gradient",

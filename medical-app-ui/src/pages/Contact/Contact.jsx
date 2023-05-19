@@ -7,6 +7,7 @@ import { BreadCrum, Meta } from "../../components";
 import styles from "./Contact.scss";
 import { useDispatch } from "react-redux";
 import { fetchSubcription } from "../../redux/actions/userActions";
+import { useEffect } from "react";
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -26,7 +27,9 @@ const Contact = () => {
       alert("Email không hợp lệ !");
     }
   };
-
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, [])
   return (
     <div>
       <Meta title="Contact" />

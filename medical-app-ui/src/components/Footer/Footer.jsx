@@ -91,7 +91,7 @@ const Footer = () => {
                   <Link className="text-white py-2 mb-1">Private Policy</Link>
                   <Link className="text-white py-2 mb-1">Shipping Policy</Link>
                   <Link className="text-white py-2 mb-1">Teams of Service</Link>
-                  <Link className="text-white py-2 mb-1">Blogs</Link>
+                  <Link to={"/blog"} className="text-white py-2 mb-1">Blogs</Link>
                 </div>
               </div>
             </div>
@@ -99,9 +99,9 @@ const Footer = () => {
               <h4 className="text-white mb-4">Account</h4>
               <div>
                 <div className="footer-links d-flex flex-column">
-                  <Link className="text-white py-2 mb-1">About Us</Link>
+                  <Link to={"/about"} className="text-white py-2 mb-1">About Us</Link>
                   <Link className="text-white py-2 mb-1">Faq</Link>
-                  <Link className="text-white py-2 mb-1">Contact</Link>
+                  <Link to={"/contact"} className="text-white py-2 mb-1">Contact</Link>
                   <Link className="text-white py-2 mb-1">Size Chart</Link>
                 </div>
               </div>
@@ -109,10 +109,10 @@ const Footer = () => {
             <div className="col-2">
               <h4 className="text-white mb-4">Quick Links</h4>
               <div className="footer-links d-flex flex-column">
-                <Link className="text-white py-2 mb-1">Laptops</Link>
-                <Link className="text-white py-2 mb-1">HeadPhones</Link>
-                <Link className="text-white py-2 mb-1">Tablets</Link>
-                <Link className="text-white py-2 mb-1">Watch</Link>
+                <Link to={"/store?category=1"} className="text-white py-2 mb-1">Chăm sóc sắc đẹp</Link>
+                <Link to={"/store?category=2"} className="text-white py-2 mb-1">Chăm sóc cá nhân</Link>
+                <Link to={"/store?category=3"} className="text-white py-2 mb-1">Thiết bị y tế</Link>
+                <Link to={"/store?category=5"} className="text-white py-2 mb-1">Thuốc</Link>
               </div>
             </div>
           </div>

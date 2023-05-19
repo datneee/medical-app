@@ -1,7 +1,11 @@
 import React from "react";
 import { Meta, BreadCrum } from "../../components";
+import { useEffect } from "react";
 
 const About = () => {
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, [])
   return (
     <div>
       <Meta title={"About"} />

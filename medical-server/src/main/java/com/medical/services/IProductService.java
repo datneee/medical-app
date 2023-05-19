@@ -44,4 +44,6 @@ public interface IProductService{
     long getProductCount();
 
     void deleteProduct(Integer id);
+
+    List<Product> searchProductByDescriptions(String des);
 }

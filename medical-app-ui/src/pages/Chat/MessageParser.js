@@ -4,7 +4,7 @@ class MessageParser {
     this.state = state;
   }
 
-  parse(message) {
+  async parse(message) {
     const lowerCaseMessage = message.toLowerCase();
     console.log(message);
     if (
@@ -13,6 +13,7 @@ class MessageParser {
       lowerCaseMessage.includes("hi")
     ) {
       this.actionProvider.greet();
+      return;
     }
     if (
       lowerCaseMessage.includes("bệnh") ||
@@ -31,6 +32,7 @@ class MessageParser {
       message.includes("do for me")
     ) {
       return this.actionProvider.handleOptions({ withAvatar: true });
+      
     }
     if (
       message.includes("talk") ||
@@ -75,6 +77,12 @@ class MessageParser {
     ) {
       return this.actionProvider.handleThanks();
     }
+    if (
+      message.includes("/rcm")
+    ) {
+      return this.actionProvider.recommendation(message)
+    }
+    await this.actionProvider.handleChatCommunity(message)
   }
 }
 

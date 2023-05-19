@@ -21,6 +21,9 @@ public interface IProductRepository extends JpaRepository<Product , Integer> , J
     @Query(value = "SELECT * FROM products WHERE ticketId IS NOT NULL;", nativeQuery = true)
     List<Product> getListSpecialProduct();
 
+    @Query(value = "SELECT * FROM products p WHERE p.descriptions LIKE %?1%", nativeQuery = true)
+    List<Product> searchProductByDescriptions(String des);
+
     @Modifying
     @Query(value = "DELETE FROM Product p WHERE p.id = :id")
     void deleteById(@Param("id") Integer id);

@@ -258,7 +258,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: medium;
     position: relative;
     margin-right: auto;
-    text-align: right;
+    text-align: left;
     max-width: 75%;
 }
 .react-chatbot-kit-chat-bot-message-container {

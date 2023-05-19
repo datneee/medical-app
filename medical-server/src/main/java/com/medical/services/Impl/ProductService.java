@@ -242,5 +242,10 @@ public class ProductService extends BasePagination<Product, IProductRepository> 
         repository.deleteById(id);
     }
 
+    @Override
+    public List<Product> searchProductByDescriptions(String des) {
+        return repository.searchProductByDescriptions(des);
+    }
+
 
 }

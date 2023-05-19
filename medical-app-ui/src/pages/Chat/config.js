@@ -6,6 +6,7 @@ import GlobalStatistics from "./widgets/GlobalStatistics";
 import LocalStatistics from "./widgets/LocalStatistics";
 import Contact from "./widgets/Contact";
 import MedicineDelivery from "./widgets/MedicineDelivery";
+import ProductsRecommendation from "./widgets/ProductsRecommendation";
 
 const config = {
   botName: "Medical bot",
@@ -51,6 +52,11 @@ const config = {
     {
       widgetName: "learningOptions",
       widgetFunc: (props) => <LearningOptions {...props} />,
+    },
+    {
+      widgetName: "productRecommend",
+      widgetFunc: (props) => <ProductsRecommendation {...props}/>,
+      mapStateToProps: ["messages"],
     },
     {
       widgetName: "overview",
